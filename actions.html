@@ -82,7 +82,7 @@
     </div>
     <h1 class="display-5 fw-bold my-4">HTR-United + Github Actions</h1>
     <div class="col-lg-6 mx-auto">
-      <p class="mb-4">Github Actions are a way to run specific code everytime you change your data. The following form will generate a configuration file to use our <a href="tools.html">4 tools</a> automatically and ensure both complete compatibility with the HTR-United initiative and high quality data. Some options below will focus on controling the data, your cataloging file or simply automatically updating it with the metrics of your choice !</p>
+      <p class="mb-4" vanilla-i18n="actions.introduction">Github Actions are a way to run specific code everytime you change your data. The following form will generate a configuration file to use our <a href="tools.html">4 tools</a> automatically and ensure both complete compatibility with the HTR-United initiative and high quality data. Some options below will focus on controling the data, your cataloging file or simply automatically updating it with the metrics of your choice !</p>
       </div>
   </div>
 
@@ -91,24 +91,24 @@
   <form class="container col-xxl-8 px-4 py-4" id="use-data">
     <div class="row">
       <div class="col">
-        <h2>Informations générales sur la structure du dossier</h2>
+        <h2 vanilla-i18n="actions.generalInformations">Informations générales sur la structure du dossier</h2>
       </div>
     </div>
     <div class="form-group row my-2">
-      <label for="htrUnitedFilename" class="col-sm-3 col-form-label">Nom du fichier de catalogage</label>
+      <label for="htrUnitedFilename" vanilla-i18n="actions.htrUnitedFilename" class="col-sm-3 col-form-label" vanilla-i18n="actions.fileName">Nom du fichier de catalogage</label>
       <div class="col-sm-9">
         <input type="text" name="htrUnitedFilename" class="form-control" id="htrUnitedFilename" placeholder="htr-united.yml" required="true" value="htr-united.yml" aria-describedby="htrUnitedFilenameHelp">
-        <div id="htrUnitedFilenameHelp" class="form-text"><p style="text-align: justify;">This file should have been generated with <a href="document-your-data.html">the form on this website</a>: it describes your whole repository with metadata, make sure you did that first ! This file is generally named <code>htr-united.yml</code> and should be at the root of your github repository.</p></div>
+        <div id="htrUnitedFilenameHelp" class="form-text"><p vanilla-i18n="actions.htrUnitedFilenameHelp" style="text-align: justify;" vanilla-i18n="actions.htrUnitedFilenameHelp">This file should have been generated with <a href="document-your-data.html">the form on this website</a>: it describes your whole repository with metadata, make sure you did that first ! This file is generally named <code>htr-united.yml</code> and should be at the root of your github repository.</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
-      <label for="dataUnixPath" class="col-sm-3 col-form-label">Chemin des données (Format UNIX)</label>
+      <label for="dataUnixPath" vanilla-i18n="actions.dataUnixPath" class="col-sm-3 col-form-label">Chemin des données (Format UNIX)</label>
       <div class="col-sm-9">
         <input type="text" name="dataUnixPath" class="form-control" id="dataUnixPath" placeholder="./french/data/*.xml ./english/data/*.xml" required="true" value="" aria-describedby="dataUnixPathHelp">
         <div id="dataUnixPathHelp" class="row form-text">
           <div class="col-md-8">
-            <p style="text-align: justify;">This path is the path on your repository. Use <code>*</code> for a filename wildcard, <code>**</code> for a folder wildcard. You can have a single path, such as <code>./data/*.xml</code> or multiple, such as <code>./french/data/*.xml ./english/data/*.xml</code>. If you have a structure such as <code>./data/a_book/some.xml</code> and <code>./data/b_book/some.xml</code>, the UNIX path is <code>./data/**/*.xml</code></p>
-            <p>In the example on the right, if <code>TNAH-2021-Project-Correspondance-Berlioz</code> is the root of your data repository, the path to get all XML would be <code>donnees/**/*.xml</code></p>
+            <p vanilla-i18n="actions.dataUnixPathHelpP1" style="text-align: justify;">This path is the path on your repository. Use <code>*</code> for a filename wildcard, <code>**</code> for a folder wildcard. You can have a single path, such as <code>./data/*.xml</code> or multiple, such as <code>./french/data/*.xml ./english/data/*.xml</code>. If you have a structure such as <code>./data/a_book/some.xml</code> and <code>./data/b_book/some.xml</code>, the UNIX path is <code>./data/**/*.xml</code></p>
+            <p vanilla-i18n="actions.dataUnixPathHelpP2">In the example on the right, if <code>TNAH-2021-Project-Correspondance-Berlioz</code> is the root of your data repository, the path to get all XML would be <code>donnees/**/*.xml</code></p>
           </div>
           <div class="col-md-4">
             <img src="static/img/folder.png" alt="folder-structure" class="img-fluid" />
@@ -118,7 +118,7 @@
       </div>
     </div>
     <div class="form-group row my-2">
-      <label for="format" class="col-sm-3 col-form-label"><i18n vanilla-i18n="form.field.std">Format des données</i18n></label>
+      <label for="format" class="col-sm-3 col-form-label" vanilla-i18n="form.field.std">Format des données</label>
       <div class="col-sm-3">
         <select name="format" id="format" class="form-control">
           <option value="Alto-XML">ALTO XML</option>
@@ -127,168 +127,168 @@
       </div>
     </div>
     <div class="form-group row my-2">
-      <label for="branchName" class="col-sm-3 col-form-label">Nom de la branche principale</label>
+      <label for="branchName" vanilla-i18n="actions.branchName" class="col-sm-3 col-form-label">Nom de la branche principale</label>
       <div class="col-sm-9">
-        <input type="text" name="branchName" class="form-control" id="branchName" placeholder="Generaly main or master" required="true" value="main" aria-describedby="branchNameHelp">
-        <div id="branchNameHelp" class="form-text"><p style="text-align: justify;">Generaly <code>main</code> or <code>master</code>.</p></div>
+        <input type="text" name="branchName" class="form-control" id="branchName" placeholder="main" required="true" value="main" aria-describedby="branchNameHelp">
+        <div id="branchNameHelp" class="form-text"><p vanilla-i18n="actions.branchNameHelp" style="text-align: justify;">Generaly <code>main</code> or <code>master</code>.</p></div>
       </div>
     </div>
     <hr />
     <div class="row">
       <div class="col">
-        <h2>Test du fichier de catalogage</h2>
-        <p class="form-text">This uses <a href="tools.html">HTRUC</a>.</p>
+        <h2 vanilla-i18n="actions.testCatalog">Test du fichier de catalogage</h2>
+        <p class="form-text"><span vanilla-i18n="actions.thisUses">This uses</span> <a href="tools.html">HTRUC</a>.</p>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label" for="activateHTRUC">
+          <label class="form-check-label" for="activateHTRUC" vanilla-i18n="actions.activateHTRUC">
             <b>Activer</b>
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activateHTRUC" aria-describedby="activateHTRUCHelp" checked="true">
         </div>
-        <div id="activateHTRUCHelp" class="form-text"><p style="text-align: justify;">This will run a test on your <code>htr-united.yml</code> and makes sure it's compliant with the schemas. If the schema evolves, it allows you to ensure your compatibility with it.</p></div>
+        <div id="activateHTRUCHelp" class="form-text"><p vanilla-i18n="actions.activateHTRUCHelp" style="text-align: justify;">This will run a test on your <code>htr-united.yml</code> and makes sure it's compliant with the schemas. If the schema evolves, it allows you to ensure your compatibility with it.</p></div>
       </div>
     </div>
     <hr />
     <div class="row">
       <div class="col">
-        <h2>Génération de rapports</h2>
-        <p class="form-text">This uses <a href="tools.html">HTR United Metadata Generator</a>.</p>
+        <h2 vanilla-i18n="actions.testReport">Génération de rapports</h2>
+        <p class="form-text"><span vanilla-i18n="actions.thisUses">This uses</span> <a href="tools.html">HTR United Metadata Generator</a>.</p>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label" for="activateHUMG">
+          <label class="form-check-label" for="activateHUMG" vanilla-i18n="actions.activateHUMG">
             <b>Activer</b>
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activateHUMG" aria-describedby="activateHUMGHelp" checked="true">
         </div>
-        <div id="activateHUMGHelp" class="form-text"><p style="text-align: justify;">This will produces in depth overview of how many characters, zones, lines and pages you have, but also gives you the amount of zone or lines per type if you typed your zones and lines.</p></div>
+        <div id="activateHUMGHelp" class="form-text"><p vanilla-i18n="actions.activateHUMGHelp" style="text-align: justify;">This will produces in depth overview of how many characters, zones, lines and pages you have, but also gives you the amount of zone or lines per type if you typed your zones and lines.</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label"  for="updateCatalogFile">
+          <label class="form-check-label"  for="updateCatalogFile" vanilla-i18n="actions.updateCatalogFile">
             Update the catalog file
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="updateCatalogFile" aria-describedby="updateCatalogFileHelp">
         </div>
-        <div id="updateCatalogFileHelp" class="form-text"><p style="text-align: justify;"><span>Using the computed metrics (line, characters, files, zones), update the <code>volume</code> information of the cataloging file automatically.</span> <br/><span class="fa fa-exclamation-triangle" aria-label="Warning"></span> <span>This automatically pushes new files to your repository. This does not damage your data.</span></p></div>
+        <div id="updateCatalogFileHelp" class="form-text"><p vanilla-i18n="actions.updateCatalogFileHelp" style="text-align: justify;"><span>Using the computed metrics (line, characters, files, zones), update the <code>volume</code> information of the cataloging file automatically.</span> <br/><span class="fa fa-exclamation-triangle" aria-label="Warning"></span> <span>This automatically pushes new files to your repository. This does not damage your data.</span></p></div>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label"  for="generateBadge">
+          <label class="form-check-label"  for="generateBadge" vanilla-i18n="actions.generateBadge">
             Generate badges
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="generateBadge" aria-describedby="generateBadgeHelp">
         </div>
-        <div id="generateBadgeHelp" class="form-text"><p style="text-align: justify;"><span>Using this, badges will be generated, such as <img src="./static/img/example_badge.svg" /> which you can include in your README file to show how cool you are.</span> <br/><span class="fa fa-exclamation-triangle" aria-label="Warning"></span> <span>This automatically pushes new files to your repository. This does not damage your data.</span></p> </div>
+        <div id="generateBadgeHelp" class="form-text"><p vanilla-i18n="actions.generateBadgeHelp" style="text-align: justify;"><span>Using this, badges will be generated, such as <img src="./static/img/example_badge.svg" /> which you can include in your README file to show how cool you are.</span> <br/><span class="fa fa-exclamation-triangle" aria-label="Warning"></span> <span>This automatically pushes new files to your repository. This does not damage your data.</span></p> </div>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label"  for="gitRelease">
+          <label class="form-check-label"  for="gitRelease" vanilla-i18n="actions.gitRelease">
             Automatically create a release
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="gitRelease" aria-describedby="gitReleaseHelp">
         </div>
-        <div id="gitReleaseHelp" class="form-text"><p style="text-align: justify;">Creates a Github release everytime master is changed. Coupled with <a href="https://coderefinery.github.io/github-without-command-line/doi/">Zenodo</a>, this will allow you to have long term preservation and DOI (Digital Object Identifier) for your repository !</p></div>
+        <div id="gitReleaseHelp" class="form-text"><p vanilla-i18n="actions.gitReleaseHelp" style="text-align: justify;">Creates a Github release everytime master is changed. Coupled with <a href="https://coderefinery.github.io/github-without-command-line/doi/">Zenodo</a>, this will allow you to have long term preservation and DOI (Digital Object Identifier) for your repository !</p></div>
       </div>
     </div>
     <hr />
     <div class="row">
       <div class="col">
-        <h2>Test des fichiers XML (Structure)</h2>
-        <p class="form-text">This uses <a href="tools.html">HTRVX</a>.</p>
+        <h2 vanilla-i18n="actions.testXML">Test des fichiers XML (Structure)</h2>
+        <p class="form-text"><span vanilla-i18n="actions.thisUses">This uses</span> <a href="tools.html">HTRVX</a>.</p>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label" for="activateHTRVX">
+          <label class="form-check-label" for="activateHTRVX" vanilla-i18n="actions.activateHTRVX">
               <b>Activer</b>
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activateHTRVX" aria-describedby="activateHTRVXHelp" checked="true">
         </div>
-        <div id="activateHTRVXHelp" class="form-text"><p style="text-align: justify;">This will help you make sure that your XML is valid and follows some other specifications.</p></div>
+        <div id="activateHTRVXHelp" class="form-text"><p vanilla-i18n="actions.activateHTRVXHelp" style="text-align: justify;">This will help you make sure that your XML is valid and follows some other specifications.</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label"  for="activateSegmonto">
+          <label class="form-check-label"  for="activateSegmonto" vanilla-i18n="actions.activateSegmonto">
               Test your compatibility with Segmonto
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activateSegmonto" aria-describedby="activateSegmontoHelp">
         </div>
-        <div id="activateSegmontoHelp" class="form-text"><p style="text-align: justify;">Segmonto is an ontology for typing Zones (sometimes called Regions) and Lines. This ensures you are compatible with it. <em>cf.</em> <a href="https://hal.archives-ouvertes.fr/hal-03336528">Publication</a> or <a href="https://segmonto.github.io/">Segmonto Guidelines</a>.</p></div>
+        <div id="activateSegmontoHelp" class="form-text"><p vanilla-i18n="actions.activateSegmontoHelp" style="text-align: justify;">Segmonto is an ontology for typing Zones (sometimes called Regions) and Lines. This ensures you are compatible with it. <em>cf.</em> <a href="https://hal.archives-ouvertes.fr/hal-03336528">Publication</a> or <a href="https://segmonto.github.io/">Segmonto Guidelines</a>.</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label"  for="activateEmptyLine">
+          <label class="form-check-label"  for="activateEmptyLine" vanilla-i18n="actions.activateEmptyLine">
               Check for empty lines or childless regions
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activateEmptyLine" aria-describedby="activateEmptyLineHelp" checked="true">
         </div>
-        <div id="activateEmptyLineHelp" class="form-text"><p style="text-align: justify;">This will warn you about empty lines or regions without lines, without raising an error: this won't make the test fail !</p></div>
+        <div id="activateEmptyLineHelp" class="form-text"><p vanilla-i18n="actions.activateEmptyLineHelp" style="text-align: justify;">This will warn you about empty lines or regions without lines, without raising an error: this won't make the test fail !</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label"  for="activateRaiseEmptyLine">
+          <label class="form-check-label"  for="activateRaiseEmptyLine" vanilla-i18n="actions.activateRaiseEmptyLine">
             Raise an error when empty lines or childless regions are found
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activateRaiseEmptyLine" aria-describedby="activateRaiseEmptyLineHelp">
         </div>
-        <div id="activateRaiseEmptyLineHelp" class="form-text"><p style="text-align: justify;">This is used on top of the former check. This will raise an error if a line has no text or if a region has no lines.</p></div>
+        <div id="activateRaiseEmptyLineHelp" class="form-text"><p vanilla-i18n="actions.activateRaiseEmptyLineHelp" style="text-align: justify;">This is used on top of the former check. This will raise an error if a line has no text or if a region has no lines.</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label"   for="activateXSD">
+          <label class="form-check-label"   for="activateXSD" vanilla-i18n="actions.activateXSD">
             Check XML Schema
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activateXSD" aria-describedby="activateXSDHelp" checked="true">
         </div>
-        <div id="activateXSDHelp" class="form-text"><p style="text-align: justify;">This just makes sure you are compatible with the XML schema. This should always be the case if you use a Graphical User Interface such as Transkribus or eScriptorium.</p></div>
+        <div id="activateXSDHelp" class="form-text"><p vanilla-i18n="actions.activateXSDHelp" style="text-align: justify;">This just makes sure you are compatible with the XML schema. This should always be the case if you use a Graphical User Interface such as Transkribus or eScriptorium.</p></div>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <h2>Contrôle des caractères</h2>
-        <p class="form-text">This uses <a href="tools.html">ChocoMufin</a>.</p>
+        <h2 vanilla-i18n="actions.testChars">Contrôle des caractères</h2>
+        <p class="form-text"><span vanilla-i18n="actions.thisUses">This uses</span> <a href="tools.html">ChocoMufin</a>.</p>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label" for="activatechocoMufin">
+          <label class="form-check-label" for="activatechocoMufin" vanilla-i18n="actions.activatechocoMufin">
               <b>Activer</b>
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activatechocoMufin" aria-describedby="activatechocoMufinHelp">
         </div>
-        <div id="activatechocoMufinHelp" class="form-text"><p style="text-align: justify;">This will read the text of each lines and summarize the characters found.</p></div>
+        <div id="activatechocoMufinHelp" class="form-text"><p vanilla-i18n="actions.activatechocoMufinHelp" style="text-align: justify;">This will read the text of each lines and summarize the characters found.</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
-      <label for="chocoMufinMode" class="offset-1 col-sm-2 col-form-label">Mode</label>
+      <label for="chocoMufinMode" vanilla-i18n="actions.chocoMufinMode" class="offset-1 col-sm-2 col-form-label">Mode</label>
       <div class="col-sm-9">
         <select name="chocoMufinMode" id="chocoMufinMode" class="form-control" aria-described-by="chocoMufinModeHelp">
           <option value="generate">Génération de table</option>
           <option value="control">Contrôle des caractères</option>
         </select>
-        <div id="chocoMufinModeHelp" class="form-text"><p style="text-align: justify;">In <code>Generate</code> mode, the Actions won't control your characters but will instead list all characters used. In <code>Control</code> mode, you need to provide a file named <code>table.csv</code> to help ChocoMufin control your data. See <a href="https://github.com/ponteIneptique/choco-mufin">the tutorial</a> for more details.</p></div>
+        <div id="chocoMufinModeHelp" class="form-text"><p vanilla-i18n="actions.chocoMufinModeHelp" style="text-align: justify;">In <code>Generate</code> mode, the Actions won't control your characters but will instead list all characters used. In <code>Control</code> mode, you need to provide a file named <code>table.csv</code> to help ChocoMufin control your data. See <a href="https://github.com/ponteIneptique/choco-mufin">the tutorial</a> for more details.</p></div>
       </div>
     </div>
   </form>
@@ -320,12 +320,6 @@
 
     <!--<script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>-->
 
-
-    <script type="text/javascript" src="static/js/yaml.min.js"></script>
-
-    <script type="text/javascript" src="static/js/typeahead.js"></script>
-    <script type="text/javascript" src="static/js/form_consts.js"></script>
-    <script type="text/javascript" src="static/js/form.js"></script>
     <!-- i18n -->
     <script type="text/javascript" src="static/js/i18n-advanced.js"></script>
     <script type="text/javascript" src="static/js/i18n.js"></script>

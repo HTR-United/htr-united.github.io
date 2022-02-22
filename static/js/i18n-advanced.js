@@ -128,9 +128,13 @@ class vanilla_i18n {
 
     elements.forEach((element) => {
       var keys = element.getAttribute(this._i18nDataAttr).split(".");
-      var text = keys.reduce((obj, i) => obj[i], translation);
-      if (text) {
-        element.innerHTML = text;
+      try {
+        var text = keys.reduce((obj, i) => obj[i], translation);
+        if (text) {
+          element.innerHTML = text;
+        } 
+      } catch {
+        console.log("Not found", keys);
       }
     });
   }
