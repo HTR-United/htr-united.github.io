@@ -95,6 +95,16 @@
       </div>
     </div>
     <div class="form-group row my-2">
+      <label for="githubURL" vanilla-i18n="actions.githubURL" class="col-sm-3 col-form-label" vanilla-i18n="actions.githubURL">URL Github du dépôt</label>
+      <div class="col-sm-9">
+        <div class="input-group">
+          <span class="input-group-text" id="basic-addon3">https://github.com/</span>
+          <input type="text" name="githubURL" class="form-control" id="githubURL" placeholder="account/repository" required="true" aria-describedby="githubURLHelp">
+        </div>
+        <div id="githubURLHelp" class="form-text"><p vanilla-i18n="actions.githubURLHelp" style="text-align: justify;" vanilla-i18n="actions.githubURLHelp">This should look like https://github.com/<code>htr-united/cremma-medieval</code> or https://github.com/<code>demo-user/demo-repository</code>.</p></div>
+      </div>
+    </div>
+    <div class="form-group row my-2">
       <label for="htrUnitedFilename" vanilla-i18n="actions.htrUnitedFilename" class="col-sm-3 col-form-label" vanilla-i18n="actions.fileName">Nom du fichier de catalogage</label>
       <div class="col-sm-9">
         <input type="text" name="htrUnitedFilename" class="form-control" id="htrUnitedFilename" placeholder="htr-united.yml" required="true" value="htr-united.yml" aria-describedby="htrUnitedFilenameHelp">
@@ -146,7 +156,7 @@
           <label class="form-check-label" for="activateHTRUC" vanilla-i18n="actions.activateHTRUC">
             <b>Activer</b>
           </label>
-          <input class="form-check-input" type="checkbox" value="yes" id="activateHTRUC" aria-describedby="activateHTRUCHelp" checked="true">
+          <input class="form-check-input" type="checkbox" value="yes" id="activateHTRUC" name="activateHTRUC" aria-describedby="activateHTRUCHelp" checked="true">
         </div>
         <div id="activateHTRUCHelp" class="form-text"><p vanilla-i18n="actions.activateHTRUCHelp" style="text-align: justify;">This will run a test on your <code>htr-united.yml</code> and makes sure it's compliant with the schemas. If the schema evolves, it allows you to ensure your compatibility with it.</p></div>
       </div>
@@ -164,7 +174,7 @@
           <label class="form-check-label" for="activateHUMG" vanilla-i18n="actions.activateHUMG">
             <b>Activer</b>
           </label>
-          <input class="form-check-input" type="checkbox" value="yes" id="activateHUMG" aria-describedby="activateHUMGHelp" checked="true">
+          <input class="form-check-input" type="checkbox" value="yes" id="activateHUMG" name="activateHUMG" aria-describedby="activateHUMGHelp" checked="true">
         </div>
         <div id="activateHUMGHelp" class="form-text"><p vanilla-i18n="actions.activateHUMGHelp" style="text-align: justify;">This will produces in depth overview of how many characters, zones, lines and pages you have, but also gives you the amount of zone or lines per type if you typed your zones and lines.</p></div>
       </div>
@@ -175,7 +185,7 @@
           <label class="form-check-label"  for="updateCatalogFile" vanilla-i18n="actions.updateCatalogFile">
             Update the catalog file
           </label>
-          <input class="form-check-input" type="checkbox" value="yes" id="updateCatalogFile" aria-describedby="updateCatalogFileHelp">
+          <input class="form-check-input" type="checkbox" value="yes" id="updateCatalogFile" name="updateCatalogFile" aria-describedby="updateCatalogFileHelp">
         </div>
         <div id="updateCatalogFileHelp" class="form-text"><p vanilla-i18n="actions.updateCatalogFileHelp" style="text-align: justify;"><span>Using the computed metrics (line, characters, files, zones), update the <code>volume</code> information of the cataloging file automatically.</span> <br/><span class="fa fa-exclamation-triangle" aria-label="Warning"></span> <span>This automatically pushes new files to your repository. This does not damage your data.</span></p></div>
       </div>
@@ -186,7 +196,7 @@
           <label class="form-check-label"  for="generateBadge" vanilla-i18n="actions.generateBadge">
             Generate badges
           </label>
-          <input class="form-check-input" type="checkbox" value="yes" id="generateBadge" aria-describedby="generateBadgeHelp">
+          <input class="form-check-input" type="checkbox" value="yes" id="generateBadge" name="generateBadge" aria-describedby="generateBadgeHelp">
         </div>
         <div id="generateBadgeHelp" class="form-text"><p vanilla-i18n="actions.generateBadgeHelp" style="text-align: justify;"><span>Using this, badges will be generated, such as <img src="./static/img/example_badge.svg" /> which you can include in your README file to show how cool you are.</span> <br/><span class="fa fa-exclamation-triangle" aria-label="Warning"></span> <span>This automatically pushes new files to your repository. This does not damage your data.</span></p> </div>
       </div>
@@ -197,7 +207,7 @@
           <label class="form-check-label"  for="gitRelease" vanilla-i18n="actions.gitRelease">
             Automatically create a release
           </label>
-          <input class="form-check-input" type="checkbox" value="yes" id="gitRelease" aria-describedby="gitReleaseHelp">
+          <input class="form-check-input" type="checkbox" value="yes" id="gitRelease" name="gitRelease" aria-describedby="gitReleaseHelp">
         </div>
         <div id="gitReleaseHelp" class="form-text"><p vanilla-i18n="actions.gitReleaseHelp" style="text-align: justify;">Creates a Github release everytime master is changed. Coupled with <a href="https://coderefinery.github.io/github-without-command-line/doi/">Zenodo</a>, this will allow you to have long term preservation and DOI (Digital Object Identifier) for your repository !</p></div>
       </div>
@@ -215,7 +225,7 @@
           <label class="form-check-label" for="activateHTRVX" vanilla-i18n="actions.activateHTRVX">
               <b>Activer</b>
           </label>
-          <input class="form-check-input" type="checkbox" value="yes" id="activateHTRVX" aria-describedby="activateHTRVXHelp" checked="true">
+          <input class="form-check-input" type="checkbox" value="yes" id="activateHTRVX" name="activateHTRVX" aria-describedby="activateHTRVXHelp" checked="true">
         </div>
         <div id="activateHTRVXHelp" class="form-text"><p vanilla-i18n="actions.activateHTRVXHelp" style="text-align: justify;">This will help you make sure that your XML is valid and follows some other specifications.</p></div>
       </div>
@@ -226,7 +236,7 @@
           <label class="form-check-label"  for="activateSegmonto" vanilla-i18n="actions.activateSegmonto">
               Test your compatibility with Segmonto
           </label>
-          <input class="form-check-input" type="checkbox" value="yes" id="activateSegmonto" aria-describedby="activateSegmontoHelp">
+          <input class="form-check-input" type="checkbox" value="yes" id="activateSegmonto" name="activateSegmonto" aria-describedby="activateSegmontoHelp">
         </div>
         <div id="activateSegmontoHelp" class="form-text"><p vanilla-i18n="actions.activateSegmontoHelp" style="text-align: justify;">Segmonto is an ontology for typing Zones (sometimes called Regions) and Lines. This ensures you are compatible with it. <em>cf.</em> <a href="https://hal.archives-ouvertes.fr/hal-03336528">Publication</a> or <a href="https://segmonto.github.io/">Segmonto Guidelines</a>.</p></div>
       </div>
@@ -237,7 +247,7 @@
           <label class="form-check-label"  for="activateEmptyLine" vanilla-i18n="actions.activateEmptyLine">
               Check for empty lines or childless regions
           </label>
-          <input class="form-check-input" type="checkbox" value="yes" id="activateEmptyLine" aria-describedby="activateEmptyLineHelp" checked="true">
+          <input class="form-check-input" type="checkbox" value="yes" id="activateEmptyLine" name="activateEmptyLine" aria-describedby="activateEmptyLineHelp" checked="true">
         </div>
         <div id="activateEmptyLineHelp" class="form-text"><p vanilla-i18n="actions.activateEmptyLineHelp" style="text-align: justify;">This will warn you about empty lines or regions without lines, without raising an error: this won't make the test fail !</p></div>
       </div>
@@ -248,7 +258,7 @@
           <label class="form-check-label"  for="activateRaiseEmptyLine" vanilla-i18n="actions.activateRaiseEmptyLine">
             Raise an error when empty lines or childless regions are found
           </label>
-          <input class="form-check-input" type="checkbox" value="yes" id="activateRaiseEmptyLine" aria-describedby="activateRaiseEmptyLineHelp">
+          <input class="form-check-input" type="checkbox" value="yes" id="activateRaiseEmptyLine" name="activateRaiseEmptyLine" aria-describedby="activateRaiseEmptyLineHelp">
         </div>
         <div id="activateRaiseEmptyLineHelp" class="form-text"><p vanilla-i18n="actions.activateRaiseEmptyLineHelp" style="text-align: justify;">This is used on top of the former check. This will raise an error if a line has no text or if a region has no lines.</p></div>
       </div>
@@ -259,7 +269,7 @@
           <label class="form-check-label"   for="activateXSD" vanilla-i18n="actions.activateXSD">
             Check XML Schema
           </label>
-          <input class="form-check-input" type="checkbox" value="yes" id="activateXSD" aria-describedby="activateXSDHelp" checked="true">
+          <input class="form-check-input" type="checkbox" value="yes" id="activateXSD" name="activateXSD" aria-describedby="activateXSDHelp" checked="true">
         </div>
         <div id="activateXSDHelp" class="form-text"><p vanilla-i18n="actions.activateXSDHelp" style="text-align: justify;">This just makes sure you are compatible with the XML schema. This should always be the case if you use a Graphical User Interface such as Transkribus or eScriptorium.</p></div>
       </div>
@@ -276,7 +286,7 @@
           <label class="form-check-label" for="activatechocoMufin" vanilla-i18n="actions.activatechocoMufin">
               <b>Activer</b>
           </label>
-          <input class="form-check-input" type="checkbox" value="yes" id="activatechocoMufin" aria-describedby="activatechocoMufinHelp">
+          <input class="form-check-input" type="checkbox" value="yes" id="activatechocoMufin" name="activatechocoMufin" aria-describedby="activatechocoMufinHelp">
         </div>
         <div id="activatechocoMufinHelp" class="form-text"><p vanilla-i18n="actions.activatechocoMufinHelp" style="text-align: justify;">This will read the text of each lines and summarize the characters found.</p></div>
       </div>
@@ -291,7 +301,32 @@
         <div id="chocoMufinModeHelp" class="form-text"><p vanilla-i18n="actions.chocoMufinModeHelp" style="text-align: justify;">In <code>Generate</code> mode, the Actions won't control your characters but will instead list all characters used. In <code>Control</code> mode, you need to provide a file named <code>table.csv</code> to help ChocoMufin control your data. See <a href="https://github.com/ponteIneptique/choco-mufin">the tutorial</a> for more details.</p></div>
       </div>
     </div>
+    <hr/>
+    <div class="row">
+      <div class="col">
+        <p class="text-center">
+          <button class="btn btn-info btn-lg mt-4 py-3" type="submit" vanilla-i18n="actions.generate">Générer le fichier Github action</button>
+        </p>
+      </div>
+    </div>
   </form>
+  <section class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h3 vanilla-i18n="actions.steps">Étapes de mise en place</h3>
+        <p>(1) Récupérez le contenu, au choix:</p>
+        <div class="btn-group btn-group-sm my-1">
+          <a id="downloadOutput" class="btn btn-sm btn-primary"><span class="fa fa-download"></span> <span i18n-vanilla="actions.download">Téléchargez</span></a>
+          <a id="copyOutput" class="btn btn-sm btn-success"><span class="fa fa-copy"></span>  <span i18n-vanilla="actions.copy">Copiez</span></a>
+        </div>
+        <p>(2) Ajoutez le à votre dépôt en l'ajoutant dans le dossier <code>.github/workflows</code>:<br/ ><a href="" id="goToGithub" class="btn btn-sm btn-info"><span class="fab fa-github"></span> Github</a></p>
+
+      </div>
+      <div class="col-md-9">
+        <pre id="output" class="my-3 p-4 rounded output-field" style="overflow-y: hidden;"></pre>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <div class="bg-dark text-secondary px-4 py-2 text-center">
@@ -324,6 +359,8 @@
     <script type="text/javascript" src="static/js/i18n-advanced.js"></script>
     <script type="text/javascript" src="static/js/i18n.js"></script>
     <!-- end of i18n -->
+    <script type="text/javascript" src="static/js/yaml.min.js"></script>
+    <script type="text/javascript" src="static/js/actions.js"></script>
   </body>
 </html>
 
