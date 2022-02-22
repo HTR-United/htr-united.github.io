@@ -3,7 +3,8 @@
         receiver = document.querySelector("#output"),
         link_downloadOutput = document.querySelector("#downloadOutput"),
         link_copyOutput = document.querySelector("#copyOutput"),
-        link_goToGithub = document.querySelector("#goToGithub");
+        link_goToGithub = document.querySelector("#goToGithub"),
+        link_editGithub = document.querySelector("#editGithub");
 
 
   function selectText(node) {
@@ -44,7 +45,8 @@
     e.preventDefault();
     let data = Object.fromEntries(new FormData(form));
 
-    link_goToGithub.href = `https://github.com/${data.githubURL}/new/master?filename=.github/workflows/htr-united-workflows.yml`;
+    link_goToGithub.href = `https://github.com/${data.githubURL}/new/${data.branchName}?filename=.github/workflows/htr-united-workflows.yml`;
+    link_editGithub.href = `https://github.com/${data.githubURL}/edit/${data.branchName}/.github/workflows/htr-united-workflows.yml`;
 
 
 
@@ -94,6 +96,9 @@
       }
       actions.jobs.HTR_United_Metadata_Generator = {
         "runs-on": "ubuntu-latest",
+        "env": {
+          "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
+        },
         "steps": [
           {
             "uses": "actions/checkout@v2"
@@ -169,16 +174,16 @@
           "name": `Automatically update ${commitMessage.join(' & ')}`,
             "if": `github.ref == 'refs/heads/${data.branchName}'`,
           "run": localRun.join("\n")
+        }); 
+      }
+      if (data.gitRelease) {
+        actions.jobs.HTR_United_Metadata_Generator.steps.push({
+          "uses": "rymndhng/release-on-push-action@master",
+          "with": {
+            "bump_version_scheme": "patch",
+            "use_github_release_notes": true
+          }
         });
-        if (data.gitRelease) {
-          actions.jobs.HTR_United_Metadata_Generator.steps.push({
-            "uses": "rymndhng/release-on-push-action@master",
-            "with": {
-              "bump_version_scheme": "patch",
-              "use_github_release_notes": true
-            }
-          });
-        } 
       }
     }
     if (data.activatechocoMufin) {

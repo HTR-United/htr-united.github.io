@@ -314,12 +314,16 @@
     <div class="row">
       <div class="col-md-3">
         <h3 vanilla-i18n="actions.steps">Étapes de mise en place</h3>
-        <p>(1) Récupérez le contenu, au choix:</p>
+        <p vanilla-i18n="actions.step1">(1) Récupérez le contenu, au choix:</p>
         <div class="btn-group btn-group-sm my-1">
-          <a id="downloadOutput" class="btn btn-sm btn-primary"><span class="fa fa-download"></span> <span i18n-vanilla="actions.download">Téléchargez</span></a>
-          <a id="copyOutput" class="btn btn-sm btn-success"><span class="fa fa-copy"></span>  <span i18n-vanilla="actions.copy">Copiez</span></a>
+          <a id="downloadOutput" class="btn btn-sm btn-primary"><span class="fa fa-download"></span> <span vanilla-i18n="actions.download">Téléchargez</span></a>
+          <a id="copyOutput" class="btn btn-sm btn-success"><span class="fa fa-copy"></span>  <span vanilla-i18n="actions.copy">Copiez</span></a>
         </div>
-        <p>(2) Ajoutez le à votre dépôt en l'ajoutant dans le dossier <code>.github/workflows</code>:<br/ ><a href="" id="goToGithub" class="btn btn-sm btn-info"><span class="fab fa-github"></span> Github</a></p>
+        <p><span vanilla-i18n="actions.step2">(2) Ajoutez le à votre dépôt en l'ajoutant dans le dossier</span> <code>.github/workflows</code></p>
+        <ul>
+          <li><a href="" id="goToGithub"><span class="fa fa-upload"></span> <span vanilla-i18n="actions.add">Ajouter la configuration sur</span> Github.</a></li>
+          <li><a href="" id="editGithub"><span class="fa fa-edit"></span> <span vanilla-i18n="actions.edit">Éditer la configuration</span> Github.</a></li>
+        </ul>
 
       </div>
       <div class="col-md-9">
