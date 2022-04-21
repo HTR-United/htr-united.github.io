@@ -63,6 +63,15 @@
     };
 
 
+    const createElementFromHTML = function(htmlString) {
+      /* Transform the html string into a HTML node */
+      let div = document.createElement('div');
+      div.innerHTML = htmlString.trim();
+
+      // Change this to div.childNodes to support multiple top-level nodes.
+      return div.firstChild;
+    }
+
     document.querySelector(".add-author").addEventListener("click", addAuthor);
 
     const metricOriginal = document.querySelector(".metric-form");
@@ -237,11 +246,32 @@
         options: languages,
         multiple: true,
         autocomplete: true, // default: false
-        value: ["frm", "fro", "lat", "eng", "fra"], 
+        value: [], 
 
         icon: "fa fa-times", // uses Font Awesome
         inlineIcon: false // custom cross icon for multiple select.
     });
+    const langDetailsContainer = document.querySelector(".script-details-container");
+    const updateScripts = function (scripts) {
+      [...document.querySelectorAll("div.script-details")].forEach(function(el) {
+        if (scripts.includes(el.getAttribute("data-script")) === false) {
+          el.remove();
+        }
+        // Remove element not in scripts.
+      });
+      [...scripts].forEach(function(single_script) {
+        let scriptDetails = document.querySelector(`div.script-details[data-script='${single_script}']`);
+        if (scriptDetails) {
+          return null;
+        }
+        langDetailsContainer.append(createElementFromHTML(`<div class="script-details row my-1" data-script="${single_script}">
+          <label class="col-sm-3 col-form-label">- Script</label>
+          <div class="col-md-3"><input type="text" value="${single_script}" name="script" class="form-control" disabled/></div>
+          <label class="col-sm-3 col-form-label" for="script-detail-${single_script}">Details</label>
+          <div class="col-md-3"><input type="text" value="" name="qualify" class="form-control" id="script-detail-${single_script}"/></div>
+        </div>`));
+      });
+    };
     const scriptSelect = new SelectPure(".scripts", {
         options: scripts,
         multiple: true,
@@ -249,8 +279,10 @@
         value: ["Latn"],
             
         icon: "fa fa-times", // uses Font Awesome
-        inlineIcon: false // custom cross icon for multiple select.
+        inlineIcon: false, // custom cross icon for multiple select.
+        onChange: (scripts) => { updateScripts(scripts) }
     });
+    updateScripts(scriptSelect.value());
 
     let downloadBind = false;
 
@@ -280,6 +312,16 @@
       })
     });
 
+    const getScripts = function(values) {
+      return values.map(function (local_script) {
+        let qualify = document.querySelector(`#script-detail-${local_script}`);
+        if (qualify && qualify.value.trim() != "") {
+          return {"iso": local_script, "qualify": qualify.value};
+        }
+        return {"iso": local_script}
+      });
+    };
+
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       let data = Object.fromEntries(new FormData(form));
@@ -296,7 +338,7 @@
         ...updateOrIgnore(data.projectWebsite, "project-website"),
         "language": languageSelect.value(),
         "software": data.software,
-        "script": scriptSelect.value(),
+        "script": getScripts(scriptSelect.value()),
         "script-type": data.scriptType,
         "time": {
           "notBefore": data["date-begin"],
