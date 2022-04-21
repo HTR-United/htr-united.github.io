@@ -163,6 +163,7 @@
       for (var i = 0; i < authors.length; i++) {
         let surname = authors[i].querySelector("input[name='authoritySurname']").value,
             name = authors[i].querySelector("input[name='authorityName']").value,
+            orcid = authors[i].querySelector("input[name='authorityORCID']").value,
             status = authors[i].querySelector("input[name='authorityType']:checked");
 
         if (name.trim() === "") { continue; }
@@ -171,6 +172,9 @@
           "name": name,
           "surname": surname,
           "type": (status===null) ? "person" : "institution"
+        }
+        if (orcid.trim() !== "") {
+          a["orcid"] = orcid;
         }
         let roles = authors[i].querySelectorAll("input.roles[type='checkbox']:checked");
         if (roles.length > 0) {
