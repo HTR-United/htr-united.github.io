@@ -52,7 +52,7 @@ def treat_csv(filename="htr-united_i18n.csv", dictionary=None):
 	return dictionary
 
 Output = treat_csv()
-Output = treat_csv("catalog-your-data-i18n.csv", dictionary=Output)
+Output = treat_csv("document-your-data-i18n.csv", dictionary=Output)
 
 # Dump output
 for lang in Output:

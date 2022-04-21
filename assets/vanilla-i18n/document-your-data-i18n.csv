@@ -50,7 +50,7 @@ form.field.software_placeholder,"You can use the following buttons to populate t
 # Member field
 #
 form.field.authors,Authority and role(s),Acteur-rice-s du projet
-form.field.member.add,Add a member,Ajouter une personne
+form.field.member.add,Add a member,"Ajouter une personne"
 form.field.member.rm,Remove a member,Supprimer cette personne
 form.field.member.name,"Author's last name","Nom de l'auteur-rice"
 form.field.member.surname,"Author's first name","Prénom de l'auteur-rice"
@@ -60,6 +60,10 @@ form.field.member.mainCreator,Project Manager,Responsable du projet
 form.field.member.qualityControl,Quality Control,Contrôle Qualité
 form.field.member.digitizer,Digitization,Numérisation
 form.field.member.support,Support,Assistance
+form.field.member.status,This contributor is an institution,Cet auteur est une institution
+#form.field.member.person,Person,Personne
+#form.field.member.institution,Institution,Institution
+form.field.member.roles,Roles,Rôles
 #
 # Year
 #

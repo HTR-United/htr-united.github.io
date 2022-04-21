@@ -31,7 +31,7 @@
       let new_elem = authorOriginal.cloneNode(true),
           add_button = new_elem.querySelector(".add-author"),
           remove_button = new_elem.querySelector(".remove-author"),
-          checkboxes = new_elem.querySelectorAll(".form-check-inline"),
+          checkboxes = new_elem.querySelectorAll(".form-check"),
           text_inputs = new_elem.querySelectorAll("input[type='text']");
 
 
@@ -46,14 +46,16 @@
             cat = inp.value;
         inp.setAttribute("id", `cb-${cat}-${idForAuthors.toString()}`);
         checkboxes[i].querySelector("label").setAttribute("for", inp.id);
-        inp.checked = null;
+        if (inp.getAttribute("type") != "radio") {
+          inp.checked = null;
+        }
       }
 
       idForAuthors++;
       // Insert element in the DOM
-      authorOriginal.after(new_elem);
+      [...document.querySelectorAll(".author")].pop().after(new_elem);
       // Un-hide the element for removal
-      remove_button.classList.remove("invisible");
+      remove_button.classList.remove("d-none");
 
       // Register events
       add_button.addEventListener("click", addAuthor);
@@ -160,15 +162,17 @@
       }
       for (var i = 0; i < authors.length; i++) {
         let surname = authors[i].querySelector("input[name='authoritySurname']").value,
-            name = authors[i].querySelector("input[name='authorityName']").value;
+            name = authors[i].querySelector("input[name='authorityName']").value,
+            status = authors[i].querySelector("input[name='authorityType']:checked");
 
         if (name.trim() === "") { continue; }
 
         let a = {
           "name": name,
-          "surname": surname
+          "surname": surname,
+          "type": (status===null) ? "person" : "institution"
         }
-        let roles = authors[i].querySelectorAll("input[type='checkbox']:checked");
+        let roles = authors[i].querySelectorAll("input.roles[type='checkbox']:checked");
         if (roles.length > 0) {
           a.roles = [...roles].map((o) => o.value);
         }
