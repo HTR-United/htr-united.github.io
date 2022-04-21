@@ -182,6 +182,24 @@
             </div>
           </div>
           <p><small class="text-muted"><i18n vanilla-i18n="form.field.std_info">Les licenses sont ici proposées à titre indicatif.</i18n></small></p>
+          <div class="form-group row my-2">
+            <label for="desc" class="col-sm-3 col-form-label"><i18n vanilla-i18n="form.field.software">Name of software(s) used to create the ground truth</i18n><span class="required">*</span></label>
+            <div class="col-sm-9">
+              <input type="text" name="software" class="form-control" id="software" placeholder="Description" vanilla-i18n-placeholder="form.field.software_placeholder" required="true"/>
+            </div>
+            <div class="offset-sm-3 col-sm-9">
+              <div class="row">
+                <div class="col-md-3 text-muted small">You can use the following buttons to populate the field.</div>
+                <div class="col-md-9">
+                  <div class="btn-group btn-group-sm">
+                    <a class="btn btn-sm btn-outline-info software-key" href="#">eScriptorium + Kraken</a>
+                    <a class="btn btn-sm btn-outline-info software-key" href="#">Transkribus</a>
+                    <a class="btn btn-sm btn-outline-info software-key" href="#">OCR For All</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="row">
             <div class="col">
               <h2><i18n vanilla-i18n="form.title.project">Informations générales sur le projet</i18n></h2>
@@ -211,34 +229,34 @@
                     <button class="btn btn-danger btn-sm remove-author invisible col-sm mx-2"><i18n vanilla-i18n="form.field.member.rm">Supprimer cette personne</i18n></button>
                   </div>
                 </div>
-                <i18n vanilla-i18n="form.field.roles"><div class="col-sm-12">
-                  <input type="text" name="authorityName" class="form-control mb-2" placeholder="Nom de l'auteur-rice">
-                  <input type="text" name="authoritySurname" class="form-control mb-2" placeholder="Prénom de l'auteur-rice">
+                <div class="col-sm-12">
+                  <input type="text" name="authorityName" class="form-control mb-2" vanilla-i18n-placeholder="form.field.member.name"/>
+                  <input type="text" name="authoritySurname" class="form-control mb-2" vanilla-i18n-placeholder="form.field.member.surname"/>
                   <div class="form-check-inline checkbox checkbox-inline my-1 py-2">
                     <input type="checkbox" value="transcriber" name="roleTranscriber" id="roleTranscriber">
-                    <label class="form-check-label" for="roleTranscriber">Transcription</label>
+                    <label class="form-check-label" for="roleTranscriber"><i18n vanilla-i18n="form.field.member.transcriber">Transcription</i18n></label>
                   </div>
                   <div class="form-check-inline my-1 py-2">
                     <input type="checkbox" value="aligner" name="roleAligner" id="roleAligner">
-                    <label class="form-check-label" for="roleAligner">Alignement</label>
+                    <label class="form-check-label" for="roleAligner"><i18n vanilla-i18n="form.field.member.aligner">Alignement</i18n></label>
                   </div>
                   <div class="form-check-inline my-1 py-2">
                     <input type="checkbox" value="project-manager" name="roleMainCreator" id="roleMainCreator">
-                    <label class="form-check-label" for="roleMainCreator">Responsable du projet</label>
+                    <label class="form-check-label" for="roleMainCreator"><i18n vanilla-i18n="form.field.member.mainCreator">Responsable du projet</i18n></label>
                   </div>
                   <div class="form-check-inline my-1 py-2">
                     <input type="checkbox" value="quality-control" name="roleQualityControl" id="roleQualityControl">
-                    <label class="form-check-label" for="roleQualityControl">Contrôle Qualité</label>
+                    <label class="form-check-label" for="roleQualityControl"><i18n vanilla-i18n="form.field.member.qualityControl">Contrôle Qualité</i18n></label>
                   </div>
                   <div class="form-check-inline my-1 py-2">
                     <input type="checkbox" value="digitization" name="roleDigitization" id="roleDigitization">
-                    <label class="form-check-label" for="roleDigitization">Numérisation</label>
+                    <label class="form-check-label" for="roleDigitization"><i18n vanilla-i18n="form.field.member.digitizer">Numérisation</i18n></label>
                   </div>
                   <div class="form-check-inline my-1 py-2">
                     <input type="checkbox" value="support" name="roleSupport" id="roleSupport">
-                    <label class="form-check-label" for="roleSupport">Assistance</label>
+                    <label class="form-check-label" for="roleSupport"><i18n vanilla-i18n="form.field.member.support">Assistance</i18n></label>
                   </div>
-                </div></i18n>
+                </div>
               </div>
             </div>
           </div>
@@ -262,18 +280,18 @@
             <div class="col offset-3"><p><small class="text-muted"><i18n vanilla-i18n="form.field.year.info">Préférez, pour des données au siècle près, 1200 pour un début au 13e siècle et 1299 pour une fin au 13e siècle. Les dates n'ont pas besoin d'être précises, cela reste une indication</i18n></small></p></div>
           </div>
           <div class="form-group row my-2">
-            <label for="language" class="col-sm-3 col-form-label"><i18n vanilla-i18n="form.fields.languages.label">Langue</i18n><span class="required">*</span></label>
+            <label for="language" class="col-sm-3 col-form-label"><i18n vanilla-i18n="form.field.languages.label">Langue</i18n><span class="required">*</span></label>
             <div class="col-sm-9">
               <span class="language"></span>
-              <small class="form-text text-muted"><i18n vanilla-i18n="form.fields.languages.helper">Pour faciliter l'entrée de données, des valeurs par défaut sont sélectionnées. Cliquez dessus pour les désélectionner.</i18n>
+              <small class="form-text text-muted"><i18n vanilla-i18n="form.field.languages.helper">Pour faciliter l'entrée de données, des valeurs par défaut sont sélectionnées. Cliquez dessus pour les désélectionner.</i18n>
               /</small>
             </div>
           </div>
           <div class="form-group row my-2">
-            <label for="script" class="col-sm-3 col-form-label"><i18n vanilla-i18n="form.fields.scripts.label">Langue</i18n><span class="required">*</span></label>
+            <label for="script" class="col-sm-3 col-form-label"><i18n vanilla-i18n="form.field.scripts.label">Langue</i18n><span class="required">*</span></label>
             <div class="col-sm-9">
               <span class="scripts"></span>
-              <small class="form-text text-muted"><i18n vanilla-i18n="form.fields.scripts.helper">Pour faciliter l'entrée de données, des valeurs par défaut sont sélectionnées. Cliquez dessus pour les désélectionner.</i18n></small>
+              <small class="form-text text-muted"><i18n vanilla-i18n="form.field.scripts.helper">Pour faciliter l'entrée de données, des valeurs par défaut sont sélectionnées. Cliquez dessus pour les désélectionner.</i18n></small>
             </div>
           </div>
           <div class="form-group row my-2">

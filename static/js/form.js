@@ -265,6 +265,13 @@
       return "";
     };
 
+    document.querySelectorAll(".software-key").forEach((el) => {
+      el.addEventListener("click", (event) => {
+        event.preventDefault();
+        document.querySelector("#software").value = el.innerText;
+      })
+    });
+
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       let data = Object.fromEntries(new FormData(form));
@@ -272,7 +279,7 @@
       let scripts = scriptSelect.value().join("\n  - ");
 
       let obj = {
-        "schema": "https://htr-united.github.io/schema/2021-10-15/schema.json",
+        "schema": "https://htr-united.github.io/schema/2022-04-15/schema.json",
         "title": normalize(data.repoName),
         "url": data.repoLink,
         ...getAuthors(),
@@ -280,6 +287,7 @@
         ...updateOrIgnore(data.projectName, "project-name"),
         ...updateOrIgnore(data.projectWebsite, "project-website"),
         "language": languageSelect.value(),
+        "software": data.software,
         "script": scriptSelect.value(),
         "script-type": data.scriptType,
         "time": {
