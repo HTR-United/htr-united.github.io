@@ -337,7 +337,7 @@
         ...updateOrIgnore(data.projectName, "project-name"),
         ...updateOrIgnore(data.projectWebsite, "project-website"),
         "language": languageSelect.value(),
-        "software": data.software,
+        "production-software": data.software,
         "script": getScripts(scriptSelect.value()),
         "script-type": data.scriptType,
         "time": {
