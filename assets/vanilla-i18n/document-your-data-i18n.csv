@@ -2,32 +2,20 @@ vanilla-i18n-key,English,Français
 form.desc.main,"HTR-United is a Github organization without any other form of legal personality. It aims at gathering HTR/OCR models for and transcriptions of all periods and style of writing, mostly but not exclusively in French. <br/>It was born from the mere necessity -for projects- to possess potentiel ground truth to rapidly train models on smaller corpora.","HTR-United est une organisation Github sans autre forme de personnalité juridique visant à mettre en commun des jeux de données et des modèles pour l'HTR/OCR de textes de toutes périodes et de tout style, principalement en français mais de manière non restricive.&nbsp;<br>Elle est née du simple besoin - pour des projets - d'avoir de potentiels vérités de terrain pour entraîner des modèles rapidement sur des corpus plus petits."
 form.steps.title,Steps,Étapes
 form.step1.title,Fill the form,Remplir le formulaire
-form.step1.desc,Follow the examples and note that you can always manually modify the output. This form only helps you structure the description and ensure that every item is documented.,"Suivre les examples. Si nécessaire, modifier manuellement l'output : ce formulaire aide seulement à structurer la description et à s'assurer que toutes les rubriques sont documentées."
+form.step1.desc,"Follow the instructions and examples if necessary. Some items are optional, but you should try to provide as much detail at possible. You can also contact us by <a href=""https://github.com/HTR-United/htr-united/issues/new"" target=""_blank"" class=""text-decoration-none"">opening an issue</a>.","Suivre les instructions et les exemples si nécessaire. Certaines rubriques sont optionnelles mais vous devriez essayer de donner autant de détails que possible. Vous pouvez aussi nous contacter <a href=""https://github.com/HTR-United/htr-united/issues/new"" target=""_blank"" class=""text-decoration-none"">en ouvrant une issue</a>."
 form.step2.title,"Click on ""Get formatted metadata""","Cliquer sur ""Obtenir les métadonnées formatées"
 form.step2.desc,And copy the output !,Et copier le résultat !
-form.step3.title,Add the result to the HTR-United catalog,Ajouter le résultat au catalogue d'HTR-United
-form.step3.desc,"<div class=""card card-body bg-light"">You can add the description to the catalog in different ways, depending on your knowledge of Github:
-            <ul>
-              <li>Fork the <a href=""https://github.com/HTR-United/htr-united"" target=""_blank"" class=""text-decoration-none"">htr-united project</a>, modify htr-united.yml and create a Pull Request.</li>
-              <li>Or <a href=""https://github.com/HTR-United/htr-united/issues/new"" target=""_blank"" class=""text-decoration-none"">create an issue</a> in the htr-united project so that someone can modify htr-united.yml for you.</li>
-              <!--<li>Or send us a message using our contact form.</li>-->
-          </ul>
-          </div>","<div class=""card card-body bg-light"">Il est possible de faire cela de plusieurs manières, en fonction de la maîtrise de Github : 
-            <ul>
-              <li>Forker le <a href=""https://github.com/HTR-United/htr-united"" target=""_blank"" class=""text-decoration-none"">projet htr-united</a>, modifier htr-united.yml et créer une Pull Request.</li>
-              <li>Or <a href=""https://github.com/HTR-United/htr-united/issues/new"" target=""_blank"" class=""text-decoration-none"">créer un ticket</a> au sein du projet htr-united pour que quelqu'un d'autre modifie htr-united.yml.</li>
-              <!--<li>Or send us a message using our contact form.</li>-->
-          </ul>
-          </div>"
+form.step3.title,Add the result to HTR-United's catalog,Ajouter le résultat au catalogue d'HTR-United
+form.step3.desc,"By creating a new file inside our <a href=""https://github.com/HTR-United/htr-united/tree/master/catalog"" target=""_blank"" class=""text-decoration-none"">catalog/ folder</a>, following the link provided after you generated the metadata. You can also paste the content in your own htr-united.yml file inside your repository.","En créant un nouveau fichier à l'intérieur de notre <a href=""https://github.com/HTR-United/htr-united/tree/master/catalog"" target=""_blank"" class=""text-decoration-none"">dossier catalog/</a>, en suivant le lien fourni après avoir généré les métadonnées. Vous pouvez aussi copier les métadonnées à l'intérieur de votre propre fichier htr-united.yml au sein de votre répertoire."
 form.form.head,"Fields followed by a <span class=""required"">*</span> are the only ones required.","Les champs dont le nom est suivi d'un <span class=""required"">*</span> sont obligatoires."
 form.title.ds,General information about the dataset,Informations générales sur le set de données
 form.title.project,General information about the project,Informations générales sur le projet
 form.title.data,General information about the data,Informations générales sur les données
 form.title.detail,Detailed information about the data,Informations détaillées sur les données
 form.play,Play or restart,Lancer la démo ou la redémarrer
-#
-# Project details
-#
+#,,
+# Project details,,
+#,,
 form.field.ds_title,Repository's or dataset's title,Nom du dépôt / dataset (titre)
 form.field.repolink,Link to repository,Lien vers le dépôt
 form.field.ds_desc,Short description,Courte description
@@ -44,16 +32,16 @@ form.field.std_info,This is a non-exhaustive selection of license options.,Les l
 form.input.projectname,Project's name,Nom du projet
 form.input.projectlink,Link to project's website (if applicable),Lien vers le site du projet (s'il existe)
 form.input.src,Link to the source or a catalog description,Lien vers le catalogue ou la ressource
-form.field.software,"Software use to produce the data","Logiciel(s) utilisé(s) pour produire les données"
-form.field.software_placeholder,"You can use the following buttons to populate the field.","Vous pouvez utiliser les boutons pour remplir plus rapidement le champ."
-#
-# Member field
-#
+form.field.software,Software use to produce the data,Logiciel(s) utilisé(s) pour produire les données
+form.field.software_placeholder,You can use the following buttons to populate the field.,Vous pouvez utiliser les boutons pour remplir plus rapidement le champ.
+#,,
+# Member field,,
+#,,
 form.field.authors,Authority and role(s),Acteur-rice-s du projet
-form.field.member.add,Add a member,"Ajouter une personne"
+form.field.member.add,Add a member,Ajouter une personne
 form.field.member.rm,Remove a member,Supprimer cette personne
-form.field.member.name,"Author's last name","Nom de l'auteur-rice"
-form.field.member.surname,"Author's first name","Prénom de l'auteur-rice"
+form.field.member.name,Author's last name,Nom de l'auteur-rice
+form.field.member.surname,Author's first name,Prénom de l'auteur-rice
 form.field.member.transcriber,Transcription,Transcription
 form.field.member.aligner,Alignment,Alignement
 form.field.member.mainCreator,Project Manager,Responsable du projet
@@ -64,22 +52,22 @@ form.field.member.status,This contributor is an institution,Cet auteur est une i
 #form.field.member.person,Person,Personne
 #form.field.member.institution,Institution,Institution
 form.field.member.roles,Roles,Rôles
-#
-# Year
-#
+#,,
+# Year,,
+#,,
 form.field.year.start,Source Start-Year,Année de début des sources
 form.field.year.end,Source End-Year,Année de fin des sources
 form.field.year.info,"For centuries, please prefer the use of 1200 when a dataset starts in the 13th century and 1299 when it ends in the 13th century. Dates do not need to be precise.","Préférez, pour des données au siècle près, 1200 pour un début au 13e siècle et 1299 pour une fin au 13e siècle. Les dates n'ont pas besoin d'être précises, cela reste une indication"
 form.input.datebegin,Example: 1800,Exemple: 1800
 form.input.dateend,Example: 1899,Exemple: 1899
-#
-# Language
-#
+#,,
+# Language,,
+#,,
 form.field.languages.label,Language(s),Langue(s)
 form.field.languages.helper,"To ease data entry, default values are already selected. Just click on it to deselect the one you don't want.","Pour faciliter l'entrée de données, des valeurs par défaut sont sélectionnées. Cliquez dessus pour les désélectionner."
-#
-# Scripts
-#
+#,,
+# Scripts,,
+#,,
 form.field.scripts.label,Script,Système d'écriture
 form.field.scripts.helper,"To ease data entry, default values are already selected. Just click on it to deselect the one you don't want.","Pour faciliter l'entrée de données, des valeurs par défaut sont sélectionnées. Cliquez dessus pour les désélectionner."
 form.field.script.type.label,Script type,Type d'écriture
@@ -89,9 +77,9 @@ form.field.script.type.select.only-typed,Typed only,Imprimé/dactylographié uni
 form.field.script.type.select.mainly-manuscript,Mainly manuscript,Principalement manuscrit
 form.field.script.type.select.mainly-typed,Mainly typed,Principalement imprimé/dactylographié
 form.field.script.type.select.evenly-mixed,Evenly typed and manuscript,Egale répartition manuscrit/dactylographié et imprimé
-#
-# Hands
-#
+#,,
+# Hands,,
+#,,
 form.field.hands.label,Number of hands (or fonts),Nombre de mains (ou de fontes)
 form.field.hands.select.1perfile,1 per file,1 par fichier
 form.field.hands.select.1perfolder,1 per folder,1 par dossier
@@ -101,15 +89,15 @@ form.field.hands.select.unknown,Unknown,Inconnu
 form.field.prec.label,Precision,Précision
 form.field.prec.select.exact,Exact value,Valeur exacte
 form.field.prec.select.estimated,Estimated value,Estimation
-#
-# Guidelines
-#
+#,,
+# Guidelines,,
+#,,
 form.field.guidelines.label,Transcription guidelines,Normes de transcription
 form.field.guidelines.info,"Guidelines used to transcribe the resources (normalization, resolution of abbreviation, correction of mispelling, etc.)","Normes de transcriptions utilisées (format libre). Peut concerner la résolution des abréviations, corrections de fautes d'orthographe, l'usage de caractères spéciaux, la normalisation, etc."
 form.input.guidelines,Transcription guidelines,Normes de transcription
-#
-# Quantities
-#
+#,,
+# Quantities,,
+#,,
 form.field.qual.label,Estimated quantity,Description sommaire des quantités
 form.field.qual.select.lines,Lines,Lignes
 form.field.qual.select.pages,Pages,Pages
@@ -117,15 +105,15 @@ form.field.qual.select.characters,Characters,Caractères
 form.field.qual.select.regions,Zones,Zones
 form.field.qual.select.files,XML Files,Fichiers XML
 form.input.quantity,Example: 200,Exemple: 200
-#
-# Sources
-#
+#,,
+# Sources,,
+#,,
 form.field.src,Sources,Détails des sources transcrites
 form.field.apa,"<small class=""text-muted"">We prefer APA references, which can look like the following <code>Allport, G. W. (1930–1967). Correspondence. Gordon W. Allport Papers (HUG 4118.10), Harvard University Archives, Cambridge, MA, United States.</code>, see <a href=""https://apastyle.apa.org/style-grammar-guidelines/references/archival"">APA Style</a>, but simpler formats are okay too. The link or the APA reference are sufficient but you can provide both</small>","<small class=""text-muted"">Le format APA est préféré pour les citations, ce qui peut donner des références longues comme <code>Allport, G. W. (1930–1967). Correspondence. Gordon W. Allport Papers (HUG 4118.10), Harvard University Archives, Cambridge, MA, United States.</code>, cf. <a href=""https://apastyle.apa.org/style-grammar-guidelines/references/archival"">APA Style</a>. Des formats plus courts sont autorisé. Le lien ou la référence APA peuvent suffire.</small>"
 form.input.apa,APA Reference for a source,Référence en mode APA
-#
-# Output part of the form
-#
+#,,
+# Output part of the form,,
+#,,
 form.title.generate,Generate the <code>htr-united.yml</code> file,Générer le fichier <code>htr-united.yml</code>
 form.btn.get,Get formatted metadata,Obtenir les métadonnées formatées
 form.download.dl,Download,Téléchargez
