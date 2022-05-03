@@ -133,7 +133,7 @@ class vanilla_i18n {
         if (text) {
           element.innerHTML = text;
         } 
-      } catch {
+      } catch (TypeError) {
         console.log("Not found", keys);
       }
     });
@@ -148,9 +148,13 @@ class vanilla_i18n {
         let attribute = element.getAttribute(potentialAttrib);
         if (attribute !== null) {
           var keys = attribute.split(".");
-          var text = keys.reduce((obj, i) => obj[i], translation);
-          if (text) {
-            element.setAttribute(potentialAttrib.split("-").pop(), text);
+          try {
+            var text = keys.reduce((obj, i) => obj[i], translation);
+            if (text) {
+              element.setAttribute(potentialAttrib.split("-").pop(), text);
+            }
+          } catch (TypeError) {
+            console.log("Not found", keys);
           }
         }
       });
