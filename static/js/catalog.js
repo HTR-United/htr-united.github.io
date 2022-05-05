@@ -149,7 +149,9 @@ function citationCFF(link) {
 function getAuthors(catalogEntry) {
   /** Creates a HTML paragraph with a list of authors */
   if (catalogEntry.authors) {
-    return `<p class="card-text"><b><i18n vanilla-i18n="cat.authors">Auteur.rice.s </i18n>:</b> ${catalogEntry.authors.map((val) => val.name + ', ' + val.surname).join(' and ')}</p>`;
+    return `<p class="card-text"><b><i18n vanilla-i18n="cat.authors">Auteur.rice.s </i18n>:</b> ${catalogEntry.authors.map((val) => {
+      if (val.name !== undefined) { return val.name + ', ' + val.surname; } else { return val.surname; }
+    }).join(' and ')}</p>`;
   } else {
     return "";
   }
