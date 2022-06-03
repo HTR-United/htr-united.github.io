@@ -36,7 +36,7 @@ main.btn.scenarios,Check out the scenarios,Découvrir les scénarios
 main.btn.faq,Go to FAQ,Aller à la FAQ
 main.btn.use,Use the data,Utiliser les données
 main.btn.provide,Provide data,Proposer des données
-,,
+
 cat.title,Catalog,Catalogue
 cat.nota,The languages used to introduce the datasets depend on language used by the author(s) of a descripion.,La langue utilisée pour la description des jeux de données correspond à celle employée lors du dépôt d'un signalement dans HTR-United.
 cat.resultCount,Number of results,Nombre de résultats
@@ -61,6 +61,7 @@ cat.countLine,Lines,Lignes
 cat.repository,Data repository,Dépôt de données
 cat.link,Link,Lien
 cat.citationFile,Citation File (CFF),Fichier Citation (CFF)
+
 tools.title,Tools,Outils
 tools.seeDemo,See demo,Voir une démonstration
 tools.intro,"In order to produce good data and to ensure an easy way to control or quantify the data produced, we offer a certain set of tools with tutorial (upcoming) on how to use them both in a standalone way or in a continuous integration way.","Afin de produire de bonnes données et de garantir un moyen simple de contrôler ou de quantifier les données produites, nous proposons un certain ensemble d'outils avec tutoriel (à venir) sur la manière de les utiliser de manière autonome ou de manière continue."
@@ -68,9 +69,11 @@ tools.humg,"HUMGenerator (<em>H</em>tr <em>U</em>nited <em>M</em>etadata <em>G</
 tools.htruc,"HTRUC allows for controlling that the htr-united catalog file is parsable and HTR-United compliant. HTRUC is also meant to offer the tools to parse, augment and compile statistics about catalog file(s). This allows the HTR-United central repository to build a general catalog for everyone's use, see <a href=""https://github.com/HTR-United/htr-united/blob/master/htr-united.yml"">the main catalog</a>. It can also be used with <em>HUMGenerator</em> to update a catalog file with new volumes.","HTRUC permet de contrôler que le fichier de catalogue HTR-United est parsable et conforme. HTRUC est également destiné à offrir les outils à analyser, augmenter et compiler des statistiques sur le ou les fichiers de catalogue. Cela permet au référentiel HTR-United Central de construire un catalogue général pour tout le monde, voir <a href=""https://github.com/htr-united/htr-united/blob/master/htr-united.yml> Le catalogue principal </a>. Il peut également être utilisé avec <em>HumGenerator</em> pour mettre à jour un fichier de catalogue avec de nouveaux volumes."""""
 tools.htrvx,"HTRVX focuses on controlling the quality of the XML. It provides many options in terms of quality control: schema validation (checking that your ALTO or PAGE is okay), empty line or children-less region detection, Segmonto compatibility for segmentation (see <a href=""https://segmonto.github.io/"">Segmonto's Ontology documentation</a>)","HTRVX se concentre sur le contrôle de la qualité du XML. Il fournit de nombreuses options en termes de contrôle de la qualité: la validation de schéma (vérifiant que votre alto ou votre page est correcte), la détection de la ligne vide ou la régulation sans enfants, la compatibilité Segmonto pour la segmentation (voir <a href=""https://segmonto.github.io/""> Documentation ontology de Segmonto </a>)"
 tools.chocomufin,"ChocoMufin focuses on the characters that are used in the ground truth. It can either help you have an overview of the character used, can be used to control which one are used (to avoid having two characters for the same purpose, which can be common with historical documents) or, using a conversion table, it can be used to normalize a whole set of ground-truth.","Chocomufin se concentre sur les personnages utilisés dans la vérité au sol. Il peut vous aider à avoir une vue d'ensemble du personnage utilisé, peut être utilisé pour contrôler lequel on utilise celui-ci (pour éviter d'avoir deux caractères dans le même but, qui peuvent être courants avec des documents historiques) ou, en utilisant une table de conversion, il peut être utilisé pour normaliser un ensemble complet de la vérité au sol."
+
 form.download.dl,Download,Téléchargez
 form.download.text,this file below or copy the content and upload it using this , e fichier ci-dessous et copiez son contenu au bout de ce 
 form.download.push_link,link,lien
+
 actions.introduction,"Github Actions are a way to run specific code everytime you change your data. The following form will generate a configuration file to use our <a href=""tools.html"">4 tools</a> automatically and ensure both complete compatibility with the HTR-United initiative and high quality data. Some options below will focus on controling the data, your cataloging file or simply automatically updating it with the metrics of your choice !","Les actions Github permettent d'exécuter des scripts à chaque fois que vous modifiez vos données. Le formulaire suivant va générer un fichier de configuration pour utiliser nos <a href=""tools.html"">4 outils</a> automatiquement et assurer à la fois une compatibilité complète avec l'initiative HTR-United et des données de haute qualité. Certaines options ci-dessous se concentreront sur le contrôle des données, votre fichier de catalogage ou simplement la mise à jour automatique avec les métriques de votre choix !"
 actions.generalInformations,General information on your data repository,Informations générales sur votre dépôt de données
 actions.htrUnitedFilename,Filename of your HTR-United metadata file (catalog),Nom de votre fichier HTR-United de métadonnées (catalogue)
@@ -122,7 +125,8 @@ actions.add,Add the file on ,Ajouter la configuration sur
 actions.edit,Edit the file if it exists ,Éditer la configuration si elle existe déjà sur 
 actions.addBadge,(3) Add the following text to your README.md file if you want to show your badges,(3) Ajoutez le texte suivant à votre fichier README si vous voulez afficher les badges
 actions.editReadme,Edit the README.MD on Github,Éditez le Readme.md sur Github
+
 models.title,Models,Modèles
-models.p1,"The HTR-United catalog does not directy list transcription modèles, but rather the data that were used to create such models. You can explore the repositories linked to the datasets in which you are interested in order to find out if they link to a public model.","Le catalogue d'HTR-United ne référence pas directement de modèles de transcription, mais plutôt les données ayant permis d'en produire. Vous pouvez consulter les répertoires des jeux de données qui vous intéressent pour savoir s'ils renvoient vers un modèle public."
+models.p1,"The HTR-United catalog does not directy list transcription models, but rather the data that were used to create such models. You can explore the repositories linked to the datasets in which you are interested in order to find out if they link to a public model.","Le catalogue d'HTR-United ne référence pas directement de modèles de transcription, mais plutôt les données ayant permis d'en produire. Vous pouvez consulter les répertoires des jeux de données qui vous intéressent pour savoir s'ils renvoient vers un modèle public."
 models.p2,"Several collections of public transcription models exist. You can for example browse the Zenodo community called ""OCR/HTR model repository"". It contains several transcription models freely reusable.","Il existe des collections de modèles publiques. Vous pouvez par exemple consulter le groupe nommé ""OCR/HTR model repository"" sur Zenodo qui contient de nombreux modèles de transcription librement réutilisables."
 models.btn.zenodo1,"See ""OCR/HTR model repository"" on Zenodo","Voir ""OCR/HTR model repository"" sur Zenodo"
