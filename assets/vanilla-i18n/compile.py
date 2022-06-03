@@ -33,7 +33,7 @@ def augment_dict(keys: List[str], dictionary: Dict[str, Union[Dict, str]]) -> Di
 
 # Read input
 def treat_csv(filename="htr-united_i18n.csv", dictionary=None):
-	with open(filename) as f:
+	with open(filename, encoding="utf8") as f:
 		reader = csv.reader(decomment(f))
 		for lineno, line in enumerate(reader):
 			# First line gives the languages, we register it in the Output DICT
@@ -56,5 +56,5 @@ Output = treat_csv("document-your-data-i18n.csv", dictionary=Output)
 
 # Dump output
 for lang in Output:
-	with open(f"{lang}.json", "w") as f:
+	with open(f"{lang}.json", "w", encoding="utf8") as f:
 		json.dump(Output[lang], f)
