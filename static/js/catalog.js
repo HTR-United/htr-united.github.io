@@ -1,4 +1,4 @@
-const catalogURI = "catalog.json"; //"https://htr-united.github.io/htr-united/catalog.json"; 
+const catalogURI = "https://htr-united.github.io/htr-united/catalog.json"; 
 
 const catalogDiv = document.querySelector("#card-receiver"),
   notAfterSelector = document.querySelector("#notAfter"),
