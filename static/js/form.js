@@ -163,7 +163,7 @@
     };
 
     const getAuthors = function () {
-      let out = {"authors": []},
+      let out = {"authors": [], "institutions": []},
           authors = document.querySelectorAll(".author");
 
       if (authors.length == 0) {
@@ -177,19 +177,30 @@
 
         if (name.trim() === "") { continue; }
 
-        let a = {
-          "name": name,
-          "surname": surname,
-          "type": (status===null) ? "person" : "institution"
+        let roles = [...authors[i].querySelectorAll("input.roles[type='checkbox']:checked")].map((o) => o.value);
+
+        if (status===null) { 
+          // Person
+          let a = {
+            "name": name,
+            "surname": surname
+          }
+          if (orcid.trim() !== "") {
+            a["orcid"] = orcid;
+          }
+          if (roles.length > 0) {
+            a.roles = roles;
+          }
+          out.authors.push(a);
+        } else { // Institutions
+          let a = {
+            "name": name
+          }
+          if (roles.length > 0) {
+            a.roles = roles;
+          }
+          out.institutions.push(a);
         }
-        if (orcid.trim() !== "") {
-          a["orcid"] = orcid;
-        }
-        let roles = authors[i].querySelectorAll("input.roles[type='checkbox']:checked");
-        if (roles.length > 0) {
-          a.roles = [...roles].map((o) => o.value);
-        }
-        out.authors.push(a);
         
       }
 

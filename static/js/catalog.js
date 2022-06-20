@@ -1,4 +1,4 @@
-const catalogURI = "https://htr-united.github.io/htr-united/catalog.json"; 
+const catalogURI = "catalog.json"; //"https://htr-united.github.io/htr-united/catalog.json"; 
 
 const catalogDiv = document.querySelector("#card-receiver"),
   notAfterSelector = document.querySelector("#notAfter"),
@@ -146,6 +146,12 @@ function getCharactersBadge(catalogEntry) {
   }
   return ``;
 }
+function getSoftwareBadge(catalogEntry) {
+  if (catalogEntry["production-software"] === undefined) { return ``; }
+  return `<p class="my-0">
+      <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-software rounded-start text-white border border-secondary border-end-0 py-1 px-2"><span class="fas fa-desktop"></span> <span vanilla-i18n="cat.software">Software</span></span><span class="rounded-end border border-secondary text-dark py-1 px-2">${catalogEntry['production-software']}</span></span>
+    </p>`;
+}
 
 function citationCFF(link) {
   /** Creates a citation link if the entry is given */
@@ -189,16 +195,32 @@ function getProjectName(catalogEntry, alt_value){
   return cleanUpString(catalogEntry['project-name'] || `${noProjectLabel}`);
 }
 
+function getProjectNameHTML(catalogEntry) {
+  if (catalogEntry["project-name"] !== undefined) {
+    return `<h6 class="card-subtitle text-muted">${cleanUpString(catalogEntry['project-name'])}</h6>`;
+  }
+  return ``;
+}
+
+function getYear(entryTime) {
+  if (entryTime.notBefore !== entryTime.notAfter) {
+    return `${entryTime.notBefore.split('-')[0]} - ${entryTime.notAfter.split('-')[0]}`;
+  }
+  return `${entryTime.notBefore.split('-')[0]}`;
+}
+
 function template(catalogEntry, key) {
   /** Generates the whole DIV for a specific catalog entry with `key` in the original JSON */
   return createElementFromHTML(`<div class="card catalog-card" data-key="${key}" data-project="${updateProjects(getProjectName(catalogEntry))}">
   <div class="card-header bg-secondary rounded-top">
   ${catalogEntry.title}
   </div>
-  <div class="card-body">
-    <h6 class="card-subtitle mb-2 text-muted">(Project:) ${cleanUpString(catalogEntry['project-name'] || '')}</h6>
-    <h7 class="pb-4">${catalogEntry.time.notBefore.split('-')[0]}--${catalogEntry.time.notAfter.split('-')[0]}</h7>
-    <p>
+  <div class="secondary-header">
+    ${getProjectNameHTML(catalogEntry)}
+    <h7>${getYear(catalogEntry.time)}</h7>
+  </div>
+  <div class="card-body pt-1">
+    <p class="my-0">
       <a href="${catalogEntry.url}"><span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-link rounded-start text-white border border-secondary border-end-0 py-1 px-2"><span class="fa fa-link"></span> <span vanilla-i18n="cat.link">Link</span></span><span class="rounded-end border border-secondary text-dark py-1 px-2" vanilla-i18n="cat.repository">Data repository</span></span></a>
       ${citationCFF(catalogEntry['citation-file-link'])}
     </p>
@@ -213,9 +235,7 @@ function template(catalogEntry, key) {
     <p class="my-0">
       <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-license rounded-start text-white border border-secondary border-end-0 py-1 px-2">License</span><span class="rounded-end border border-secondary text-dark py-1 px-2">${catalogEntry.license[0].name}</span></span>
     </p>
-    <p class="my-0">
-      <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-software rounded-start text-white border border-secondary border-end-0 py-1 px-2"><span class="fas fa-desktop"></span> <span vanilla-i18n="cat.software">Software</span></span><span class="rounded-end border border-secondary text-dark py-1 px-2">${catalogEntry['production-software']}</span></span>
-    </p>
+    ${getSoftwareBadge(catalogEntry)}
     <hr/>
     <p class="card-text">${nl2br(catalogEntry.description)}</p>
     ${getAuthors(catalogEntry)}
