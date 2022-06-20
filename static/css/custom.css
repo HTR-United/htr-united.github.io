@@ -145,6 +145,14 @@ header {
     width: auto;
 }
 
+@media (max-width: 1024px) {
+    .catalog-card {
+        width: 98%;
+        margin: 0 auto;
+        float: none;
+    }
+}
+
 .card .secondary-header {
     border-top: 1px solid rgba(0,0,0,.125);
     padding: .4em .2em ;

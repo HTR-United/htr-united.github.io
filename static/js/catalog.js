@@ -20,10 +20,11 @@ let msnry;
 
 
 function dispatchZotero() {
-  document.dispatchEvent(new Event('ZoteroItemUpdated', {
-      bubbles: true,
-      cancelable: true
-  }));
+  try {
+    Zotero.monitorDOMChanges(catalogDiv);
+  } catch {
+    console.log("Zotero unavailable.");
+  }
 };
 
 /**
@@ -226,7 +227,11 @@ function ifLong(isLong, value) {
 function coins(catalogEntry) {
   let search = new URLSearchParams("ctx_ver=Z39.88-2004&url_ver=Z39.88-2004");
   search.append("rft.title", catalogEntry.title.trim());
+  search.append("rft.genre", "document");
   search.append("rft.publisher", "HTR-United");
+  if(catalogEntry["project-name"]) {
+    search.append("rft.isPartOf", catalogEntry["project-name"]);
+  }
   catalogEntry.authors.forEach((value) => {
     if (value.name !== undefined) { 
       search.append("rft.aufirst", value.surname); 
@@ -236,15 +241,14 @@ function coins(catalogEntry) {
       search.append("rft.aulast", ""); 
     }
   });
-  search.append("rft.type", "dataset");
-  catalogEntry.language.forEach((value) => {
-    search.append("rft.language", value);
-  });
+  search.append("rft.type", "Document");
+  search.append("rft.language", catalogEntry.language[0]);
+  search.append("rft.subject", "Ground truth");
+  search.append("rft.subject", "HTR");
   search.append("rft.description", catalogEntry.description);
   search.append("rft.identifier", catalogEntry.url.trim());
-  //search.append("rfr_id", "https://htr-united.github.io");
-  search.append("rft_val_fmt", "info:ofi/fmt:kev:mtx:dc");
-  search.append("rft.license", catalogEntry.license[0]);
+  search.append("rft_val_fmt", "info:ofi/fmt:kev:mtx:book");
+  search.append("rft.rights", catalogEntry.license[0].name);
   return search.toString();
 }
 function template(catalogEntry, key, isLong) {
