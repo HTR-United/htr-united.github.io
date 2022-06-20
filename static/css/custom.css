@@ -138,6 +138,13 @@ header {
     }
 }
 
+#card-receiver.single .catalog-card {
+    display: block;
+    float: none;
+    margin: 0 3em;
+    width: auto;
+}
+
 .card .secondary-header {
     border-top: 1px solid rgba(0,0,0,.125);
     padding: .4em .2em ;

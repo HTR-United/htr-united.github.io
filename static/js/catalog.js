@@ -18,6 +18,14 @@ const catalogDiv = document.querySelector("#card-receiver"),
   projectObject[noProjectLabel] = 0;
 let msnry;
 
+
+function dispatchZotero() {
+  document.dispatchEvent(new Event('ZoteroItemUpdated', {
+      bubbles: true,
+      cancelable: true
+  }));
+};
+
 /**
  * 
  * DOM Generic functions
@@ -209,9 +217,40 @@ function getYear(entryTime) {
   return `${entryTime.notBefore.split('-')[0]}`;
 }
 
-function template(catalogEntry, key) {
+function ifLong(isLong, value) {
+  if (isLong) {
+    return value;
+  }else {return ""}
+}
+
+function coins(catalogEntry) {
+  let search = new URLSearchParams("ctx_ver=Z39.88-2004&url_ver=Z39.88-2004");
+  search.append("rft.title", catalogEntry.title.trim());
+  search.append("rft.publisher", "HTR-United");
+  catalogEntry.authors.forEach((value) => {
+    if (value.name !== undefined) { 
+      search.append("rft.aufirst", value.surname); 
+      search.append("rft.aulast", value.name); 
+    } else {
+      search.append("rft.aufirst", value.surname); 
+      search.append("rft.aulast", ""); 
+    }
+  });
+  search.append("rft.type", "dataset");
+  catalogEntry.language.forEach((value) => {
+    search.append("rft.language", value);
+  });
+  search.append("rft.description", catalogEntry.description);
+  search.append("rft.identifier", catalogEntry.url.trim());
+  //search.append("rfr_id", "https://htr-united.github.io");
+  search.append("rft_val_fmt", "info:ofi/fmt:kev:mtx:dc");
+  search.append("rft.license", catalogEntry.license[0]);
+  return search.toString();
+}
+function template(catalogEntry, key, isLong) {
   /** Generates the whole DIV for a specific catalog entry with `key` in the original JSON */
   return createElementFromHTML(`<div class="card catalog-card" data-key="${key}" data-project="${updateProjects(getProjectName(catalogEntry))}">
+    <span class="Z3988" title="${coins(catalogEntry)}"></span>
   <div class="card-header bg-secondary rounded-top">
   ${catalogEntry.title}
   </div>
@@ -236,7 +275,9 @@ function template(catalogEntry, key) {
       <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-license rounded-start text-white border border-secondary border-end-0 py-1 px-2">License</span><span class="rounded-end border border-secondary text-dark py-1 px-2">${catalogEntry.license[0].name}</span></span>
     </p>
     ${getSoftwareBadge(catalogEntry)}
-    <hr/>
+  </div>
+  <div class="card-body">
+    ${ifLong(isLong, "<h6>Description</h6>")}
     <p class="card-text">${nl2br(catalogEntry.description)}</p>
     ${getAuthors(catalogEntry)}
   </div>
@@ -253,6 +294,9 @@ function template(catalogEntry, key) {
   url        = {${catalogEntry.url}}
 }</pre>
 </div>
+  <div class="card-body shares">
+    <a class="btn btn-sm btn-secondary" href="share.html?uri=${catalogEntry.url}"><i class="fas fa-share"></i> <span vanilla-i18n="cat.share">Share</a></a>
+  </div>
 </div>`);
 }
 
@@ -312,7 +356,6 @@ function updateScriptSelect(entryScript, knownScripts) {
 async function showCatalog() {
   /* Insert the catalog in the HTML */
   const CATALOG = await getCatalog();
-  console.log(CATALOG);
   let minDate = +5000,
     maxDate = -5000,
     knownLangs = [],
@@ -492,7 +535,31 @@ async function showCatalog() {
    * Apply Masonry
    * 
    * */
+   dispatchZotero();
 }
-showGuidelines.addEventListener("change", toggleGuidelines);
-showCitations.addEventListener("change", toggleCitations);
-showCatalog();
+
+const currentHTML = window.location.pathname.split("/").pop();
+
+
+async function getSingleCard(catalogEntryURI) {
+  const CATALOG = await getCatalog();
+  const catalogEntry = Object.entries(CATALOG).filter(([key, value]) => value.url == catalogEntryURI).pop().pop(-1);
+  catalogEntry.script_simplified = catalogEntry.script.map(val => val.iso);
+  catalogDiv.append(template(catalogEntry, catalogEntryURI, true));
+  document.title = `${catalogEntry.title} | ${document.title}`;
+  // dispatchZotero();
+}
+if (currentHTML == "catalog.html") {
+  showGuidelines.addEventListener("change", toggleGuidelines);
+  showCitations.addEventListener("change", toggleCitations);
+  showCatalog();
+} else {
+  if (window.location.search) {
+    let params = new URLSearchParams(window.location.search),
+        catalogEntryURI = params.get("uri");
+        if (catalogEntryURI !== undefined && catalogEntryURI) {
+          getSingleCard(catalogEntryURI);
+          i18n_item.run();
+        }
+  };
+}

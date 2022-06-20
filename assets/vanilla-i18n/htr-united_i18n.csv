@@ -62,6 +62,7 @@ cat.repository,Data repository,Dépôt de données
 cat.link,Link,Lien
 cat.software,Software,Logiciel
 cat.citationFile,Citation File (CFF),Fichier Citation (CFF)
+cat.share,Share,Partager
 
 tools.title,Tools,Outils
 tools.seeDemo,See demo,Voir une démonstration
