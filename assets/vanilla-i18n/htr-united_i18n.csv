@@ -60,6 +60,7 @@ cat.countChars,Characters,Caractères
 cat.countLine,Lines,Lignes
 cat.repository,Data repository,Dépôt de données
 cat.link,Link,Lien
+cat.software,Software,Logiciel
 cat.citationFile,Citation File (CFF),Fichier Citation (CFF)
 tools.title,Tools,Outils
 tools.seeDemo,See demo,Voir une démonstration

@@ -1,4 +1,11 @@
-const catalogURI = "https://htr-united.github.io/htr-united/catalog.json";
+// DEVOnly:
+const isDev = false;
+if (isDev) {
+  const catalogURI = "catalog.json";
+} else {
+  const catalogURI = "https://htr-united.github.io/htr-united/catalog.json";  
+}
+
 const catalogDiv = document.querySelector("#card-receiver"),
   notAfterSelector = document.querySelector("#notAfter"),
   notBeforeSelector = document.querySelector("#notBefore"),
@@ -13,9 +20,8 @@ const catalogDiv = document.querySelector("#card-receiver"),
   tableChars = document.querySelector("#table [data-unit=\"characters\"]"),
   tableLines = document.querySelector("#table [data-unit=\"lines\"]"),
   noProjectLabel = "Not defined",
-  projectObject = {
-    noProjectLabel: 0
-  };
+  projectObject = {};
+  projectObject[noProjectLabel] = 0;
 let msnry;
 
 /**
@@ -135,6 +141,17 @@ function getTypeBadge(scriptType) {
         <span class="bg-script-type rounded-start text-white border border-secondary border-end-0 py-1 px-2">Script Type</span><span class="rounded-end border border-secondary text-dark py-1 px-2"><span class="fas ${badge}"></span> ${scriptType}</span>
       </span>`
 }
+function getCharactersBadge(catalogEntry) {
+  if (catalogEntry.characters !== undefined && catalogEntry.characters.members !== undefined) {
+    let normalization = "";
+    if (catalogEntry.characters.mode && catalogEntry.characters.mode != "None") {
+      normalization = ` (${catalogEntry.characters.mode})`
+    }
+    return `<span class="badge badge-sm p-0 m-1 mb-3">
+    <span class="bg-volumes rounded-start text-white border border-secondary border-end-0 py-1 px-2"><span class="fas fa-spell-check"></span> Known characters${normalization}</span><span class="rounded-end text-dark border border-secondary py-1 px-2">${catalogEntry.characters.members.length.toLocaleString()}</span></span>`;
+  }
+  return ``;
+}
 
 function citationCFF(link) {
   /** Creates a citation link if the entry is given */
@@ -175,7 +192,7 @@ function cleanUpString(string) {
 
 function getProjectName(catalogEntry, alt_value){
   if (alt_value === undefined){ alt_value = "";}
-  return cleanUpString(catalogEntry['project-name'] || noProjectLabel);
+  return cleanUpString(catalogEntry['project-name'] || `${noProjectLabel}`);
 }
 
 function template(catalogEntry, key) {
@@ -185,7 +202,7 @@ function template(catalogEntry, key) {
   ${catalogEntry.title}
   </div>
   <div class="card-body">
-    <h6 class="card-subtitle mb-2 text-muted">${cleanUpString(catalogEntry['project-name'] || '')}</h6>
+    <h6 class="card-subtitle mb-2 text-muted">(Project:) ${cleanUpString(catalogEntry['project-name'] || '')}</h6>
     <h7 class="pb-4">${catalogEntry.time.notBefore.split('-')[0]}--${catalogEntry.time.notAfter.split('-')[0]}</h7>
     <p>
       <a href="${catalogEntry.url}"><span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-link rounded-start text-white border border-secondary border-end-0 py-1 px-2"><span class="fa fa-link"></span> <span vanilla-i18n="cat.link">Link</span></span><span class="rounded-end border border-secondary text-dark py-1 px-2" vanilla-i18n="cat.repository">Data repository</span></span></a>
@@ -194,13 +211,16 @@ function template(catalogEntry, key) {
     <hr />
     <p class="my-0">
       ${getImages(catalogEntry.language, "Language", "language")}
-      ${getImages(catalogEntry.script, "Script", "script")}
+      ${getImages(catalogEntry.script_simplified, "Script", "script")}
       ${getTypeBadge(catalogEntry['script-type'])}
       <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-hands rounded-start text-white border border-secondary border-end-0 py-1 px-2">Hands</span><span class="rounded-end border border-secondary text-dark py-1 px-2">${catalogEntry.hands.count}</span></span>
     </p>
-    <p class="my-0">${getVolumes(catalogEntry.volume)}</p>
+    <p class="my-0">${getVolumes(catalogEntry.volume)} ${getCharactersBadge(catalogEntry)}</p>
     <p class="my-0">
       <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-license rounded-start text-white border border-secondary border-end-0 py-1 px-2">License</span><span class="rounded-end border border-secondary text-dark py-1 px-2">${catalogEntry.license[0].name}</span></span>
+    </p>
+    <p class="my-0">
+      <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-software rounded-start text-white border border-secondary border-end-0 py-1 px-2"><span class="fas fa-desktop"></span> <span vanilla-i18n="cat.software">Software</span></span><span class="rounded-end border border-secondary text-dark py-1 px-2">${catalogEntry['production-software']}</span></span>
     </p>
     <hr/>
     <p class="card-text">${nl2br(catalogEntry.description)}</p>
@@ -265,8 +285,8 @@ function updateLanguageSelect(entry_langs, knownLangs) {
 };
 function updateScriptSelect(entryScript, knownScripts) {
   entryScript.forEach((script) => {
-    if (!(knownScripts.includes(script))) {
-      knownScripts.push(script);
+    if (!(knownScripts.includes(script.iso))) {
+      knownScripts.push(script.iso);
     }
   }); 
 };
@@ -300,6 +320,7 @@ async function showCatalog() {
     }
 
     updateLanguageSelect(CATALOG[key].language, knownLangs);
+    CATALOG[key].script_simplified = CATALOG[key].script.map(val => val.iso);
     updateScriptSelect(CATALOG[key].script, knownScripts);
     let div = template(CATALOG[key], key);
     try {
@@ -408,14 +429,14 @@ async function showCatalog() {
       if (
         // Filter for dates
         (inRange(localMin, localMax, CATALOG[key].time.notBeforeInt, CATALOG[key].time.notAfterInt)) &&
-        // Filter for script
+        // Filter for script type
         (scriptTypeFilterFn(CATALOG[key], localScriptTypeFilter)) &&
         // Filter for project
         (projectFilterFn(CATALOG[key], localProjectSelect)) &&
-        // Filter for project
+        // Filter for language
         (languageFilterFn(CATALOG[key].language, localLanguageSelect)) &&
-        // Filter for project
-        (languageFilterFn(CATALOG[key].script, localScriptSelect))
+        // Filter for script
+        (scriptFilterFn(CATALOG[key].script_simplified, localScriptSelect))
       ) {
         let ldiv = document.querySelector(`.catalog-card[data-key="${key}"]`)
       	ldiv.style.display = "block";

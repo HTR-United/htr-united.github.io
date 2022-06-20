@@ -13,7 +13,7 @@ if [[ "$OSTYPE" == msys ]]; then
     echo 'Start local server'
     echo 'Open http://0.0.0.0:8000/ or localhost:8000/ 
             once the server has started'
-    py -m http.server
+    py dev-server.py
 
 else
     echo 'Compile language files'
@@ -23,5 +23,5 @@ else
     echo 'Start local server'
     echo 'Open http://0.0.0.0:8000/ or localhost:8000/ 
             once the server has started'
-    python3 -m http.server
+    python3 dev-server.py
 fi
