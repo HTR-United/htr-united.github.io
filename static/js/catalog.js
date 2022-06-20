@@ -1,10 +1,4 @@
-// DEVOnly:
-const isDev = false;
-if (isDev) {
-  const catalogURI = "catalog.json";
-} else {
-  const catalogURI = "https://htr-united.github.io/htr-united/catalog.json";  
-}
+const catalogURI = "https://htr-united.github.io/htr-united/catalog.json"; 
 
 const catalogDiv = document.querySelector("#card-receiver"),
   notAfterSelector = document.querySelector("#notAfter"),
@@ -250,15 +244,18 @@ function template(catalogEntry, key) {
 
 async function getCatalog() {
   /* Retrieves the catalog data */
-  try {
-    var res = await fetch(catalogURI);
-    return res.json();
-  } catch {
-    (error) => {
-      console.log(error.message);
-      return;
-    };
-  }
+  console.log(`Fetching ${catalogURI}`);
+  var res = await fetch(catalogURI).then((response) => {
+    console.log(response);
+    if (response.ok) {
+      return response.json();
+    }
+    throw new Error('Something went wrong');
+  }).catch((error) => {
+    console.log(error);
+    return;
+  });
+  return res;
 };
 
 function updateProjects(current_project) {
@@ -295,6 +292,7 @@ function updateScriptSelect(entryScript, knownScripts) {
 async function showCatalog() {
   /* Insert the catalog in the HTML */
   const CATALOG = await getCatalog();
+  console.log(CATALOG);
   let minDate = +5000,
     maxDate = -5000,
     knownLangs = [],
