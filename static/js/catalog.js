@@ -299,7 +299,8 @@ function template(catalogEntry, key, isLong) {
 }</pre>
 </div>
   <div class="card-body shares">
-    <a class="btn btn-sm btn-secondary" href="share.html?uri=${catalogEntry.url}"><i class="fas fa-share"></i> <span vanilla-i18n="cat.share">Share</a></a>
+    <a class="btn btn-sm btn-primary" href="share.html?uri=${catalogEntry.url}"><i class="fas fa-share"></i> <span vanilla-i18n="cat.full_record">Full-size record</a></a>
+    <a class="btn btn-sm btn-secondary" href="https://twitter.com/intent/tweet?text=${encodeURI(catalogEntry.title)}&url=${encodeURI('https://htr-united.github.io/share.html?uri='+catalogEntry.url)}&hashtags=HTR_United"><i class="fas fa-hashtag"></i> <span vanilla-i18n="cat.tweet">Tweet</a></a>
   </div>
 </div>`);
 }

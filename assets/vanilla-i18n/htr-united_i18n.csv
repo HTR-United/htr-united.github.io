@@ -63,6 +63,8 @@ cat.link,Link,Lien
 cat.software,Software,Logiciel
 cat.citationFile,Citation File (CFF),Fichier Citation (CFF)
 cat.share,Share,Partager
+cat.tweet,Tweet,Tweeter
+cat.full_record,Complete record,Notice complète
 
 tools.title,Tools,Outils
 tools.seeDemo,See demo,Voir une démonstration

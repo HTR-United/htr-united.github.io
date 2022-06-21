@@ -1,5 +1,6 @@
 import requests
 import markdown
+import os
 
 URI = "https://raw.githubusercontent.com/HTR-United/htr-united/master/reuse-charter.md"
 
