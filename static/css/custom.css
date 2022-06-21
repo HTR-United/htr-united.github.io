@@ -83,7 +83,7 @@ header {
 .badge-sm {
     height: .9em;
     font-weight: normal!important;
-    font-size: .6em;
+    font-size: .7em;
 }
 
 .bg-language {
@@ -178,7 +178,25 @@ header {
     display: block;
     padding-bottom: 0;
 }
+.card em, .card b {
+    color: #363a3e;
+    font-family: "Oswald";
+    font-stretch: 120%;
+    font-weight: 500;
+}
 
+.card h8 {
+    font-weight: bold;
+    color: #6c757d;
+    font-family: "Oswald";
+    font-size: .9em;
+    display: block;
+    padding-bottom: 0;
+    color: #363a3e;
+    font-family: "Oswald";
+    font-stretch: 120%;
+    font-weight: 500;
+}
 .card-header {
     background-color: #333B41!important;
     color: white;
@@ -201,9 +219,15 @@ header {
 }
 
 .citation pre {
-    padding: 0;
     height: 120px;
     overflow: scroll;
+    background-color: #ddd;
+    margin: .3em;
+    padding: .3em;
+}
+#card-receiver.single .citation pre {
+    overflow: none;
+    height: auto;
 }
 
 .citation .fa-copy {

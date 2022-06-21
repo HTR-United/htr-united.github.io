@@ -224,6 +224,24 @@ function ifLong(isLong, value) {
   }else {return ""}
 }
 
+function getCitation(catalogEntry) {
+  if(catalogEntry._bibtex === undefined) {
+    return `<pre>@misc{htr_united_${slugify(catalogEntry.url)},
+  type       = dataset,
+  author     = {${(catalogEntry.authors || []).map((val) => val.name + ', ' + val.surname).join(' and ')}},
+  title      = {${catalogEntry.title}},
+  publisher  = {HTR United},
+  editor     = {Chagué, Alix and Clérice, Thibault},
+  url        = {${catalogEntry.url}}
+}</pre>`
+  }
+  else if (catalogEntry._apa) {
+    return `<pre>${catalogEntry._bibtex}</pre><h8>APA</h8><small>${catalogEntry._apa}</small>`;
+  } else {
+    return `<pre>${catalogEntry._bibtex}</pre>`;
+  }
+}
+
 function coins(catalogEntry) {
   let search = new URLSearchParams("ctx_ver=Z39.88-2004&url_ver=Z39.88-2004");
   search.append("rft.title", catalogEntry.title.trim());
@@ -287,17 +305,10 @@ function template(catalogEntry, key, isLong) {
   </div>
   ${transcriptionRules(catalogEntry)}
   <div class="card-body citation">
-  <h6>Citation <span class="fa fa-copy citation-copy"></span></h6>
-  <pre>
-@misc{htr_united_${slugify(catalogEntry.url)},
-  type       = dataset,
-  author     = {${(catalogEntry.authors || []).map((val) => val.name + ', ' + val.surname).join(' and ')}},
-  title      = {${catalogEntry.title}},
-  publisher  = {HTR United},
-  editor     = {Chagué, Alix and Clérice, Thibault},
-  url        = {${catalogEntry.url}}
-}</pre>
-</div>
+    <h6>Citation</h6>
+    <h8>Bibtex <span class="fa fa-copy citation-copy"></span></h8>
+    ${getCitation(catalogEntry)}
+  </div>
   <div class="card-body shares">
     <a class="btn btn-sm btn-primary" href="share.html?uri=${catalogEntry.url}"><i class="fas fa-share"></i> <span vanilla-i18n="cat.full_record">Full-size record</a></a>
     <a class="btn btn-sm btn-secondary" href="https://twitter.com/intent/tweet?text=${encodeURI(catalogEntry.title)}&url=${encodeURI('https://htr-united.github.io/share.html?uri='+catalogEntry.url)}&hashtags=HTR_United"><i class="fas fa-hashtag"></i> <span vanilla-i18n="cat.tweet">Tweet</a></a>
@@ -357,6 +368,16 @@ function updateScriptSelect(entryScript, knownScripts) {
   }); 
 };
 
+function bindCitation(catalogDiv) {
+  catalogDiv.querySelectorAll(".citation").forEach((divEl) => {
+    console.log(divEl);
+    divEl.querySelector(".citation-copy").addEventListener("click", function(e) {
+      selectText(divEl.querySelector("pre"));
+      document.execCommand("copy");
+    })
+  });
+}
+
 
 async function showCatalog() {
   /* Insert the catalog in the HTML */
@@ -412,12 +433,7 @@ async function showCatalog() {
   knownScripts.sort().forEach((lang) => {
     scriptSelect.append(createElementFromHTML(`<option value="${lang}">${lang}</option>`));
   });
-  catalogDiv.querySelectorAll(".citation").forEach((divEl) => {
-    divEl.querySelector(".citation-copy").addEventListener("click", function(e) {
-      selectText(divEl.querySelector("pre"));
-      document.execCommand("copy");
-    })
-  });
+  bindCitation(catalogDiv);
   notBeforeSelector.value = minDate;
   notAfterSelector.value = maxDate;
 
@@ -551,6 +567,7 @@ async function getSingleCard(catalogEntryURI) {
   const catalogEntry = Object.entries(CATALOG).filter(([key, value]) => value.url == catalogEntryURI).pop().pop(-1);
   catalogEntry.script_simplified = catalogEntry.script.map(val => val.iso);
   catalogDiv.append(template(catalogEntry, catalogEntryURI, true));
+  bindCitation(catalogDiv);
   document.title = `${catalogEntry.title} | ${document.title}`;
 
   document.querySelector('meta[property="og:title"]').setAttribute("content", catalogEntry.title + " | HTR-United Record");
