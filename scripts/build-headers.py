@@ -30,4 +30,6 @@ for filepath in glob.glob(HTMLs):
 					data[1].append(line)
 				else:
 					data[0].append(line)
-	print("".join(data[0])+TEMPLATE+"\n"+"".join(data[1]))
+	with open(filepath, "w") as f:
+		f.write("".join(data[0])+TEMPLATE+"\n"+"".join(data[1]))
+	print(filepath + " done.")

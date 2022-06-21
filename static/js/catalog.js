@@ -551,6 +551,9 @@ async function getSingleCard(catalogEntryURI) {
   catalogEntry.script_simplified = catalogEntry.script.map(val => val.iso);
   catalogDiv.append(template(catalogEntry, catalogEntryURI, true));
   document.title = `${catalogEntry.title} | ${document.title}`;
+
+  document.querySelector('meta[property="og:title"]').setAttribute("content", catalogEntry.title + " | HTR-United Record");
+  document.querySelector('meta[name="description"]').setAttribute("content", catalogEntry.description);
   // dispatchZotero();
 }
 if (currentHTML == "catalog.html") {

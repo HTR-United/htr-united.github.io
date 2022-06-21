@@ -25,12 +25,15 @@ jobs:
     - name: Update charter 
       run: |
         python scripts/getDataReuseCharter.py
+    - name: Build HTMLs
+      run: |
+        python scripts/build-headers.py
     - name: Commit files
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add ./assets/vanilla-i18n/*.json
         git commit -m "[Automatic] Update language files" || echo "Nothing to update"
-        git add data-reuse-charter.html
-        git commit -m "[Automatic] Update the charter" || echo "Nothing to update"
+        git add ./*.html
+        git commit -m "[Automatic] Update the HTML" || echo "Nothing to update"
         git push

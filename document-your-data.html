@@ -3,11 +3,13 @@
   <head>
     <title>Creating a record for your data | HTR-United</title>
     <!-- block header -->
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="HTR-United - Home Page">
     <meta name="author" content="Alix Chagué">
     <meta name="author" content="Thibault Clérice">
+    <meta name="description" content="HTR-United is a catalog and an ecosystem for sharing and finding ground truth for optical character or handwritten text recognition (OCR/HTR)." />
+    <title>HTR-United</title>
     <meta property="og:description" 
       content="HTR-United is a catalog and an ecosystem for sharing and finding ground truth for optical character or handwritten text recognition (OCR/HTR)." />
     <meta property="og:locale" content="en_GB" />
@@ -15,6 +17,7 @@
     <meta property="og:site_name" content="HTR-United" />
     <meta property="og:image" content="https://htr-united.github.io/assets/images/logo_htr-united.png" />
     <meta property="og:type" content="website" />
+    <meta property="og:title" content="HTR-United" />
 
 
     <!-- Bootstrap core CSS -->
@@ -28,6 +31,12 @@
 
     <!-- Custom styles for this template -->
     <link href="static/css/custom.css" rel="stylesheet">
+
+    <script type="text/javascript">
+      (function() {
+        document.head.querySelector("meta[property='og:title']").setAttribute("content", window.title);
+      })();
+    </script>
 
     <!-- endblock header -->
   </head>
