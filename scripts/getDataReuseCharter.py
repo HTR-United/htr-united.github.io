@@ -11,6 +11,6 @@ text = req.text
 
 html = markdown.markdown(text)
 
-with open("data-reuse-charter.templatehtml") as f:
-	with open("data-reuse-charter.html", "w") as o:
+with open(os.path.join(os.path.dirname(__file__), "data-reuse-charter.template.html")) as f:
+	with open(os.path.join(os.path.dirname(__file__), "..", "data-reuse-charter.html"), "w") as o:
 		o.write(f.read().replace("{{data}}", html))
