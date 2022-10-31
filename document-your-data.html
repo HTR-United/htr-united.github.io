@@ -431,15 +431,29 @@
         </form>
       </div>
     </div>
-    <div class="row mb-5 d-none" id="output-container">
-      <div class="col-10 mx-auto">
-        <hr />
-        <div class="my-3 p-4 ">
-          <a id="download" href="#" vanilla-i18n="form.download.dl">Téléchargez</a> <span vanilla-i18n="form.download.text">le fichier ci-dessous et copiez son contenu au bout de ce</span> <a id="output-link" href="#" vanilla-i18n="form.download.push_link">lien</a></i18n></div>
-        <pre id="output" class="my-3 p-4 rounded output-field"></pre>
+  </div>
+  </section>
+
+  <section class="container d-none" id="output-container">
+    <div class="row">
+      <div class="col-md-4">
+        <h3 vanilla-i18n="form.finale.steps">Étapes de mise en place</h3>
+        <p vanilla-i18n="form.finale.step1">(1) Récupérez le contenu, au choix:</p>
+        <div class="btn-group btn-group-sm my-1">
+          <a id="downloadOutput" class="btn btn-sm btn-primary"><span class="fa fa-download"></span> <span vanilla-i18n="form.finale.download">Téléchargez</span></a>
+          <a id="copyOutput" class="btn btn-sm btn-success"><span class="fa fa-copy"></span>  <span vanilla-i18n="form.finale.copy">Copiez</span></a>
+        </div>
+        <p><span vanilla-i18n="form.finale.step2">(2) Puis ajoutez le au catalogue HTR-United via une cŕeation de fichier ou une issue</span></p>
+        <ul>
+          <li><a href="" id="createFileLink" target="_blank"><span class="fa fa-upload"></span> <span vanilla-i18n="form.finale.newFile">Créer le fichier</span></a></li>
+          <li><a href="" id="createIssueLink" target="_blank"><span class="fa fa-file"></span> <span vanilla-i18n="form.finale.newIssue">Ouvrir une issue</span></a></li>
+        </ul>
+        <p><span vanilla-i18n="form.finale.notWorking">Si cela ne marche pas avec les liens ci-dessus, ouvrez une issue sur le dépôt HTR-United:</span> <a href="https://github.com/HTR-United/htr-united/issues/new" id="issueLink"><em class="fa fa-wifi"></em> HTR-United</a></p>
+      </div>
+      <div class="col-md-8">
+        <pre id="output" class="my-3 p-4 rounded output-field" style="overflow-x: hidden; word-wrap: normal!important;"></pre>
       </div>
     </div>
-  </div>
   </section>
 
   <!-- Footer -->

@@ -2,7 +2,8 @@
 
     const form = document.getElementById("generate"),
         output = document.getElementById("output"),
-        link = document.getElementById("output-link"),
+        createFileLink = document.getElementById("createFileLink"),
+        createIssueLink = document.getElementById("createIssueLink"),
         outputContainer = document.getElementById("output-container"),
         authorOriginal = document.querySelector(".original-author"),
         authorContainer = authorOriginal.parent,
@@ -10,6 +11,22 @@
 
     const gif = new Image();
     gif.src = "./static/img/catalog.gif";
+
+
+    function selectText(node) {
+      /** Select the text inside `node` */
+      if (document.body.createTextRange) {
+        const range = document.body.createTextRange();
+        range.moveToElementText(node);
+        range.select();
+      } else if (window.getSelection) {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    }
 
     document.querySelector("#startButton").addEventListener("click", function(e) {
       e.preventDefault();
@@ -371,15 +388,21 @@
 
       output.innerText = jsyaml.dump(obj, {"noRef": true});
       outputContainer.classList.remove("d-none");
-      link.href = `https://github.com/HTR-United/htr-united/new/master?filename=catalog/${slugify(data.projectName || data.repoName)}/${slugify(data.repoName)}.yml`;
+
+      getOutputIssueText = function() {
+        return encodeURIComponent(`Hello ! [Complete your message here]\n\nHere is our dataset YAML file: \n \`\`\`yaml\n${output.innerText}\`\`\``);
+      }
+      //alert("HELLO");
+      createFileLink.href = `https://github.com/HTR-United/htr-united/new/master?filename=catalog/${slugify(data.projectName || data.repoName)}/${slugify(data.repoName)}.yml&body=${encodeURIComponent(output.innerText)}`;
+      createIssueLink.href = `https://github.com/HTR-United/htr-united/issues/new?title=Adding%20dataset%20${encodeURI(+data.repoName)}&body=${getOutputIssueText()}`;
 
 
       if (downloadBind === false) {
-        document.querySelector("#download").addEventListener("click", function (e) {
+        document.querySelector("#downloadOutput").addEventListener("click", function (e) {
           e.preventDefault();
           let element = document.createElement('a');
           element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(document.querySelector("#output").innerText));
-          element.setAttribute('download', "htr-united.yml");
+          element.setAttribute('download', `${slugify(data.repoName)}.yml`);
 
           element.style.display = 'none';
           document.body.appendChild(element);
@@ -387,6 +410,10 @@
           document.body.removeChild(element);
         });
         downloadBind = true;
+        document.querySelector("#copyOutput").addEventListener("click", function(e) {
+          selectText(output);
+          document.execCommand("copy");
+        });
       }
     });
 })();

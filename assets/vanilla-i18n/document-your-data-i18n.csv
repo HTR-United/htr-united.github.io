@@ -120,3 +120,11 @@ form.btn.get,Get formatted metadata,Obtenir les métadonnées formatées
 form.download.dl,Download,Téléchargez
 form.download.text,this file below or copy the content and upload it using this , e fichier ci-dessous et copiez son contenu au bout de ce 
 form.download.push_link,link,lien
+form.finale.steps,Steps to follow,Étapes de mise en place
+form.finale.step1,(1) Get the content using either method:,"(1) Récupérez le contenu, au choix:"
+form.finale.download,Download,Téléchargez
+form.finale.copy,Copy,Copiez
+form.finale.step2,"(2) Then add it to the HTR-United catalogue via a file cŕeation or an issue","(2) Puis ajoutez le au catalogue HTR-United via une cŕeation de fichier ou de ticket"
+form.finale.notWorking,"If this doesn't work with the above links, open an issue on the HTR-United repository:","Si cela ne marche pas avec les liens ci-dessus, ouvrez une issue sur le dépôt HTR-United:"
+form.finale.newFile,"Create the file","Créer le fichier"
+form.finale.newIssue,"Open an issue","Ouvrir un ticket"
