@@ -74,7 +74,7 @@ function selectText(node) {
 
 function nl2br(str) {
   /* Replace line breaks with <br/> HTML tags inside `str` */
-  return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br />$2');
+  return (str + '').replace(/(\r\n|\n\r|\r|\n)/g, '<br />');
 }
 
 function createElementFromHTML(htmlString) {
@@ -188,7 +188,7 @@ function transcriptionRules(catalogEntry) {
   if (catalogEntry['transcription-guidelines']) {
     return `<div class="card-body transcriptionRules">
     <h6 vanilla-i18n="form.field.guidelines.label">Transcriptions Guidelines</h6>
-    <p class="card-text">${catalogEntry['transcription-guidelines']}</p>
+    <p class="card-text">${nl2br(catalogEntry['transcription-guidelines'])}</p>
   </div>`;
   } else {
     return "";
