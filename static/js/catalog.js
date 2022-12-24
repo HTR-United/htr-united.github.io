@@ -310,8 +310,8 @@ function template(catalogEntry, key, isLong) {
     ${getCitation(catalogEntry)}
   </div>
   <div class="card-body shares">
-    <a class="btn btn-sm btn-primary" href="share.html?uri=${catalogEntry.url}"><i class="fas fa-share"></i> <span vanilla-i18n="cat.full_record">Full-size record</a></a>
-    <a class="btn btn-sm btn-secondary" href="https://twitter.com/intent/tweet?text=${encodeURI(catalogEntry.title)}&url=${encodeURI('https://htr-united.github.io/share.html?uri='+catalogEntry.url)}&hashtags=HTR_United"><i class="fas fa-hashtag"></i> <span vanilla-i18n="cat.tweet">Tweet</a></a>
+    <a class="btn btn-sm btn-primary" href="share.html?uri=${catalogEntry._pid}"><i class="fas fa-share"></i> <span vanilla-i18n="cat.full_record">Full-size record</a></a>
+    <a class="btn btn-sm btn-secondary" href="https://twitter.com/intent/tweet?text=${encodeURI(catalogEntry.title)}&url=${encodeURI('https://htr-united.github.io/share.html?uri='+catalogEntry._pid)}&hashtags=HTR_United"><i class="fas fa-hashtag"></i> <span vanilla-i18n="cat.tweet">Tweet</a></a>
   </div>
 </div>`);
 }
@@ -564,7 +564,11 @@ const currentHTML = window.location.pathname.split("/").pop();
 
 async function getSingleCard(catalogEntryURI) {
   const CATALOG = await getCatalog();
-  const catalogEntry = Object.entries(CATALOG).filter(([key, value]) => value.url == catalogEntryURI).pop().pop(-1);
+  if (catalogEntryURI in CATALOG) {
+    const catalogEntry = CATALOG[catalogEntryURI];
+  } else {
+    const catalogEntry = Object.entries(CATALOG).filter(([key, value]) => value.url == catalogEntryURI).pop().pop(-1);
+  }
   catalogEntry.script_simplified = catalogEntry.script.map(val => val.iso);
   catalogDiv.append(template(catalogEntry, catalogEntryURI, true));
   bindCitation(catalogDiv);
