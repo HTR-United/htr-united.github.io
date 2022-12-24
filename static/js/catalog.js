@@ -564,11 +564,10 @@ const currentHTML = window.location.pathname.split("/").pop();
 
 async function getSingleCard(catalogEntryURI) {
   const CATALOG = await getCatalog();
-  if (catalogEntryURI in CATALOG) {
-    const catalogEntry = CATALOG[catalogEntryURI];
-  } else {
-    const catalogEntry = Object.entries(CATALOG).filter(([key, value]) => value.url == catalogEntryURI).pop().pop(-1);
-  }
+  const catalogEntry = Object.entries(CATALOG).filter(
+    ([key, value]) => (value.url == catalogEntryURI) || (key == catalogEntryURI)
+  ).pop().pop(-1);
+  
   catalogEntry.script_simplified = catalogEntry.script.map(val => val.iso);
   catalogDiv.append(template(catalogEntry, catalogEntryURI, true));
   bindCitation(catalogDiv);
