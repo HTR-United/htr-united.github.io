@@ -47,6 +47,7 @@ catalog.projectName,Project,Projet
 catalog.all,All projects,Tous les projets
 catalog.script,Script,Système d'écriture
 catalog.allLanguage,All languages,Toutes les langues
+catalog.allScript,All scripts,Tous les systèmes d'écriture
 catalog.language,Language,Langue
 catalog.includeManuscript,At least half is manuscript,Au moins la moitié de manuscrit
 catalog.includePrint,At least half is printed,Au moins la moitié d'imprimé
