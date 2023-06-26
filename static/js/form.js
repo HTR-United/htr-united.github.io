@@ -357,7 +357,7 @@
       let scripts = scriptSelect.value().join("\n  - ");
 
       let obj = {
-        "schema": "https://htr-united.github.io/schema/2022-04-15/schema.json",
+        "schema": "https://htr-united.github.io/schema/2023-06-27/schema.json",
         "title": normalize(data.repoName),
         "url": data.repoLink,
         ...getAuthors(),
