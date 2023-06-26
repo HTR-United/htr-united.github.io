@@ -56,5 +56,6 @@ Output = treat_csv("document-your-data-i18n.csv", dictionary=Output)
 
 # Dump output
 for lang in Output:
+	print(lang)
 	with open(f"{lang}.json", "w", encoding="utf8") as f:
 		json.dump(Output[lang], f)

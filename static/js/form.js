@@ -366,6 +366,7 @@
         ...updateOrIgnore(data.projectWebsite, "project-website"),
         "language": languageSelect.value(),
         "production-software": data.software,
+        "automatically-aligned": (data["automatically-aligned"] !== undefined) && (data["automatically-aligned"] === "true"),
         "script": getScripts(scriptSelect.value()),
         "script-type": data.scriptType,
         "time": {

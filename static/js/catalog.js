@@ -269,6 +269,17 @@ function coins(catalogEntry) {
   search.append("rft.rights", catalogEntry.license[0].name);
   return search.toString();
 }
+function getFlags(catalogEntry) {
+  text = ""
+  if(catalogEntry["automatically-aligned"]) {
+    text += `<span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-flags rounded-start text-white border border-secondary border-end-0 py-1 px-2"><i class="fas fa-exchange-alt"></i></span><span class="rounded-end border border-secondary text-dark py-1 px-2" vanilla-i18n="form.field.flags.automaticallyAligned.label">Automatically aligned</span></span>`;
+  }
+  if (text) {
+    return "<br />" + text;
+  }
+  return text;
+}
+
 function template(catalogEntry, key, isLong) {
   /** Generates the whole DIV for a specific catalog entry with `key` in the original JSON */
   return createElementFromHTML(`<div class="card catalog-card" data-key="${key}" data-project="${updateProjects(getProjectName(catalogEntry))}">
@@ -291,7 +302,8 @@ function template(catalogEntry, key, isLong) {
       ${getImages(catalogEntry.script_simplified, "Script", "script")}
       ${getTypeBadge(catalogEntry['script-type'])}
       <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-hands rounded-start text-white border border-secondary border-end-0 py-1 px-2">Hands</span><span class="rounded-end border border-secondary text-dark py-1 px-2">${catalogEntry.hands.count}</span></span>
-    </p>
+      ${getFlags(catalogEntry)}
+      </p>
     <p class="my-0">${getVolumes(catalogEntry.volume)} ${getCharactersBadge(catalogEntry)}</p>
     <p class="my-0">
       <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-license rounded-start text-white border border-secondary border-end-0 py-1 px-2">License</span><span class="rounded-end border border-secondary text-dark py-1 px-2">${catalogEntry.license[0].name}</span></span>

@@ -23,6 +23,7 @@ form.field.cff.link,Link to a CITATION.cff file,Lien vers un fichier CITATION.cf
 form.field.cff.info,CITATION.cf files allow for generating quick APA citations or Bibtex ones on github for example. See:,Les fichiers CITATION.cff permettent de fournir un mode de citation assez simple sur github par exemple. Lien:
 form.field.license,License,Licence
 form.field.std,Format Standard,Format des données
+form.field.linepair,Image-Text line pairs,Paires de ligne Image-Texte
 form.field.project.name,Project's name (if different from the repository/dataset's one),Nom du projet (si différent du nom du dépôt)
 form.field.project.link,Link to project's website,Lien vers le site du projet
 form.input.reponame,Repository's title,Nom du dépôt
@@ -106,6 +107,11 @@ form.field.qual.select.characters,Characters,Caractères
 form.field.qual.select.regions,Zones,Zones
 form.field.qual.select.files,XML Files,Fichiers XML
 form.input.quantity,Example: 200,Exemple: 200
+#
+# Flags
+#
+form.field.flags.automaticallyAligned.label,Automatically aligned,Aligné automatiquement
+form.field.flags.automaticallyAligned.helper,This flag is applicable if you used automatically alignment and did not perform a fully manual alignment review,Ce marqueur s'applique si vous avez utilisé un alignement automatique mais n'avez pas effectué de vérification manuelle complète.
 #,,
 # Sources,,
 #,,
