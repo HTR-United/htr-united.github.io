@@ -266,7 +266,9 @@ function coins(catalogEntry) {
   search.append("rft.description", catalogEntry.description);
   search.append("rft.identifier", catalogEntry.url.trim());
   search.append("rft_val_fmt", "info:ofi/fmt:kev:mtx:book");
-  search.append("rft.rights", catalogEntry.license[0].name);
+  search.append("rft.rights", 
+    (Array.isArray(catalogEntry.license) ? catalogEntry.license[0] : catalogEntry.license).name
+  );
   return search.toString();
 }
 function getFlags(catalogEntry) {
@@ -306,7 +308,7 @@ function template(catalogEntry, key, isLong) {
       </p>
     <p class="my-0">${getVolumes(catalogEntry.volume)} ${getCharactersBadge(catalogEntry)}</p>
     <p class="my-0">
-      <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-license rounded-start text-white border border-secondary border-end-0 py-1 px-2">License</span><span class="rounded-end border border-secondary text-dark py-1 px-2">${catalogEntry.license[0].name}</span></span>
+      <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-license rounded-start text-white border border-secondary border-end-0 py-1 px-2">License</span><span class="rounded-end border border-secondary text-dark py-1 px-2">${(Array.isArray(catalogEntry.license) ? catalogEntry.license[0] : catalogEntry.license).name}</span></span>
     </p>
     ${getSoftwareBadge(catalogEntry)}
   </div>
