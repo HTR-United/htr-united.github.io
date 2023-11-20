@@ -9,7 +9,7 @@ nav.models,Models,Modèles
 nav.actions,Github Automation,Automatisation Github
 
 footer.team,Who are the people behind HTR-United?,Qui est derrière HTR-United ?
-footer.changelog,Schema Changelog,Changelog du Schéma
+footer.changelog,Schema changelog,Changelog du schéma
 footer.about,About,À propos
 
 team.title,Editors,Éditrices-eurs
@@ -141,5 +141,5 @@ models.p1,"The HTR-United catalog does not directy list transcription models, bu
 models.p2,"Several collections of public transcription models exist. You can for example browse the Zenodo community called ""OCR/HTR model repository"". It contains several transcription models freely reusable.","Il existe des collections de modèles publiques. Vous pouvez par exemple consulter le groupe nommé ""OCR/HTR model repository"" sur Zenodo qui contient de nombreux modèles de transcription librement réutilisables."
 models.btn.zenodo1,"See ""OCR/HTR model repository"" on Zenodo","Voir ""OCR/HTR model repository"" sur Zenodo"
 
-changelog.title,Schema Changelog,Changelog du Schéma
-changelog.disclaimer,,"<p>Pour des raisons de simplicité, le contenu de cette page n'est pas disponible en français.</p>"
+changelog.title,Schema changelog,Changelog du schéma
+changelog.disclaimer,"<p></p>","<p>Pour des raisons de simplicité, le contenu de cette page n'est pas disponible en français.</p>"
