@@ -1,0 +1,197 @@
+<!doctype html>
+<html prefix="og: https://ogp.me/ns#">
+  <head>
+    <title>Models | HTR-United</title>
+    <!-- block header -->
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Alix Chagué">
+    <meta name="author" content="Thibault Clérice">
+    <meta name="description" content="HTR-United is a catalog and an ecosystem for sharing and finding ground truth for optical character or handwritten text recognition (OCR/HTR)." />
+    <title>HTR-United</title>
+    <meta property="og:description" 
+      content="HTR-United is a catalog and an ecosystem for sharing and finding ground truth for optical character or handwritten text recognition (OCR/HTR)." />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:locale:alternate" content="fr_FR" />
+    <meta property="og:site_name" content="HTR-United" />
+    <meta property="og:image" content="https://htr-united.github.io/assets/images/logo_htr-united.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="HTR-United" />
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Favicons -->
+    <link rel="icon" href="assets/images/favicon.ico" />
+    
+    <!-- Icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/custom.css" rel="stylesheet">
+
+    <script type="text/javascript">
+      (function() {
+        document.head.querySelector("meta[property='og:title']").setAttribute("content", window.title);
+      })();
+    </script>
+
+    <!-- endblock header -->
+
+    <style type="text/css">
+      #footer {
+          position: fixed;
+          height: 200px;
+          bottom: 0;
+          width: 100%;
+      }
+    </style>
+  </head>
+
+  <body id="top">
+
+<!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded fixed-top d-flex flex-wrap align-items-center justify-content-center justify-content-md-between border-bottom  py-3 mb-4 px-5 shadow-lg">
+      <a class="navbar-brand" href="index.html#top">HTR-United</a>
+      <a class="navbar-brand" href="https://github.com/HTR-United"><i class="fab fa-github"></i></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_htr-united" aria-controls="navbar_htr-united" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span><!--<i class="far fa-minus-square"></i>-->
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbar_htr-united">
+        <ul class="navbar-nav my-2 my-md-0 mr-md-3 col-sm-10">
+          <li class="nav-item">
+            <span class="mx-4"></span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-nav me-2" href="index.html"><i class="fas fa-home"></i> <i18n vanilla-i18n="nav.home">Accueil</i18n></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-nav me-2" href="catalog.html"><i class="fas fa-search"></i> <i18n vanilla-i18n="nav.catalog">Explorer le catalogue</i18n></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-nav me-2" href="document-your-data.html"><i class="fas fa-edit"></i> <i18n vanilla-i18n="nav.form">Enregistrer des données</i18n></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-nav me-2" href="models.html"><i class="fas fa-brain"></i> <i18n vanilla-i18n="nav.models">Modèles</i18n></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-nav me-2" href="tools.html"><i class="fas fa-hammer"></i> <i18n vanilla-i18n="nav.tools">Les Outils</i18n></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-nav me-2" href="actions.html"><i class="fas fa-cogs"></i> <i18n vanilla-i18n="nav.actions">Automatisation Github</i18n></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-nav me-2" href="team.html"><i class="fas fa-child"></i> <i18n vanilla-i18n="nav.team">L'Équipe</i18n></a>
+          </li>
+        </ul>
+        <div class="col-sm-2 text-end">
+          <select id="vanilla-i18n-toggler">
+            <option>Français</option>
+            <option>English</option>
+          </select>
+        </div>
+      </div>
+    </nav>
+
+    
+
+<!-- Main -->
+<main>
+  <div class="px-4 py-5 my-5" id="main">
+	  <div class="container">
+	  	<h1><i18n vanilla-i18n="changelog.title">Changelog du Schéma</i18n></h1>
+        <i18n vanilla-i18n="changelog.disclaimer"><p>Pour des raisons de simplicité, le contenu de cette page n'est pas disponible en français.</p></i18n>
+        
+        <!--
+        <h2>v XX ⟹ v YY</h2>
+        <ul>
+            <li></li>
+        </ul>
+        -->
+
+        <h2>Version 2021-10-15 ⟹ Version 2022-04-15</h2>
+        <ul>
+            <li>Added free-text field <code>transcription-software</code>. Recommended values:
+                <ul>
+                    <li><code>eScriptorium + Kraken</code></li>
+                    <li><code>Transkribus</code></li>
+                    <li><code>OCR For All</code></li>
+                </ul>
+            </li>
+            <li><code>script</code> is now a list of objects.
+                <ul>
+                    <li>Basically, all script ISO values should become <code>- iso: IsoValue</code> such as <code>- lat</code> -> <code>- iso: lat</code></li>
+                    <li>Added the ability to specify a little more the script with a new free text field <code>qualify</code></li>
+                </ul>
+            </li>
+            <li>Added an <code>institutions</code> object which reuses the pattern of <code>authors</code>, except that it forces name and does not support firstname</li>
+            <li><code>orcid</code> is now available for <code>authors</code> objects</li>
+            <li>A new <code>characters</code> field is now available, it supports three sub-properties
+                <ul>
+                    <li>A unicode normalization mode called <code>mode</code>, which can be <code>None</code>, <code>NFD</code>, <code>NFKD</code>, <code>NFC</code>, <code>NFKC</code></li>
+                    <li>A <code>transliteration</code> boolean to indicated whether script is transliterated (such as hieroglyphs): Default False</li>
+                    <li>A <code>members</code> property which accepts a list of characters and represent all glyphs in the ground truth.</li>
+                </ul>
+            </li>
+        </ul>
+      
+	  </div>
+	</div>
+
+
+
+  <!-- Footer -->
+  <div class="bg-dark text-secondary px-4 py-2 text-center" id="footer">
+    <div class="py-3">
+      <div class="col-lg-6 mx-auto">
+        <p class="fs-5 mb-4"><a class="nav-link text-muted" href="data-reuse-charter.html"><i18n vanilla-i18n="nav.charter">Charte de réutilisation des données</i18n> - <i class="fas fa-external-link-alt"></i></a></p>
+      </div>
+      <div class="col-lg-6 mx-auto mb-5">
+        <p class="fs-5"><a class="btn btn-sm btn-outline-light" href="team.html" target="_blank"><i18n vanilla-i18n="footer.team">Qui est derrière HTR-United ?</i18n></a></p>
+      </div>
+      <div class="col-lg-6 mx-auto">
+        <p class="fs-5 mb-3">HTR-United | 2022</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!--<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    <!--<script src="static/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>-->
+
+    <!--<script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>-->
+
+    <!-- i18n -->
+    <script type="text/javascript" src="static/js/i18n-advanced.js"></script>
+    <script type="text/javascript" src="static/js/i18n.js"></script>
+    <!-- end of i18n -->
+      
+    <script type="text/javascript">
+      (function() {
+        document.querySelectorAll(".toggle-demo").forEach((el) => {
+          el.addEventListener("click", function(e) {
+            e.preventDefault();
+            console.log(el.getAttribute("data-target"));
+            const iFrameSrc = el.href,
+                  iFrameContainer = document.querySelector(el.getAttribute("data-target")),
+                  iFrame = iFrameContainer.querySelector("iframe");
+
+            iFrameContainer.classList.remove("d-none");
+            iFrame.src = iFrameSrc;
+          })
+        });
+      })();
+    </script>
+  </body>
+</html>
