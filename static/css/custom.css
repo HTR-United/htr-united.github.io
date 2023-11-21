@@ -15,6 +15,15 @@ header {
     background-color: #fff;
 }
 
+
+footer {
+    min-height: 150px;
+}
+
+/*main {
+    margin-bottom: 200px;
+}*/
+
 /**
  * 
  * Accueil
@@ -237,3 +246,4 @@ header {
 .citation .fa-copy {
     cursor: pointer;
 }
+

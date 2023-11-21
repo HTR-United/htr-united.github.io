@@ -1,7 +1,7 @@
 <!doctype html>
 <html prefix="og: https://ogp.me/ns#">
   <head>
-    <title>Catalog | HTR-United</title>
+    <title>Schema Changelog | HTR-United</title>
     <!-- block header -->
 
     <meta charset="utf-8">
@@ -43,7 +43,7 @@
 
   <body id="top">
 
-    <!-- navbar -->
+<!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded fixed-top d-flex flex-wrap align-items-center justify-content-center justify-content-md-between border-bottom  py-3 mb-4 px-5 shadow-lg">
       <a class="navbar-brand" href="index.html#top">HTR-United</a>
       <a class="navbar-brand" href="https://github.com/HTR-United"><i class="fab fa-github"></i></a>
@@ -87,111 +87,74 @@
       </div>
     </nav>
 
+    
+
 <!-- Main -->
 <main>
   <div class="px-4 py-5 my-5" id="main">
 	  <div class="container">
-	  	<div class="row">
-	  		<h1><i18n vanilla-i18n="cat.title">Catalogue</i18n></h1>
-        <div class="row my-2">
-            <div class="col-sm-9">
-              <p><small class="text-muted"><i18n vanilla-i18n="cat.nota">La langue utilisée pour la description des jeux de données correspond à celle employée lors du dépôt d'un signalement dans HTR-United.</i18n></small></p>
-            </div>
-        </div>
-        <div class="row">
-          <form id="card-selector" class="col-12 m-2 border p-4">
-            <h3><span  vanilla-i18n="cat.filters">Filtres</span></h3>
-            <div class="form-group row my-2">
-              <label for="dataLanguage" class="col-sm-3 col-form-label"><i18n vanilla-i18n="catalog.language">Langue</i18n></label>
-              <div class="col-sm-9">
-                <select name="dataLanguage" id="dataLanguage" class="form-control">
-                  <option value="-1" vanilla-i18n="catalog.allLanguage">Toutes les langues</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group row my-2">
-              <label for="dataScript" class="col-sm-3 col-form-label"><i18n vanilla-i18n="catalog.script">Écriture</i18n></label>
-              <div class="col-sm-9">
-                <select name="dataScript" id="dataScript" class="form-control">
-                  <option value="-1" vanilla-i18n="catalog.allScript">Tous les systèmes d'écriture</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group row my-2">
-              <label for="scriptType" class="col-sm-3 col-form-label"><i18n vanilla-i18n="form.field.script.type.label">Type d'écriture</i18n></label>
-              <div class="col-sm-9">
-                <select name="scriptType" id="scriptType" class="form-control">
-                  <option value="all" vanilla-i18n="form.field.script.type.select.all">Tout</option>
-                  <option value="only-manuscript" vanilla-i18n="form.field.script.type.select.only-manuscript">Manuscrit uniquement</option>
-                  <option value="only-typed" vanilla-i18n="form.field.script.type.select.only-typed">Imprimé/dactylographié uniquement</option>
-                  <option value="mainly-manuscript" vanilla-i18n="form.field.script.type.select.mainly-manuscript">Principalement manuscrit</option>
-                  <option value="mainly-typed" vanilla-i18n="form.field.script.type.select.mainly-typed">Principalement imprimé/dactylographié</option>
-                  <option value="evenly-mixed" vanilla-i18n="form.field.script.type.select.evenly-mixed">Egale répartition manuscrit/dactylographié et imprimé</option>
-                  <option disabled="disabled">----</option>
-                  <option value="50-mss" vanilla-i18n="catalog.includeManuscript">Au moins la moitié de manuscrit</option>
-                  <option value="50-print" vanilla-i18n="catalog.includePrint">Au moins la moitié d'imprimé</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group row my-2">
-              <label for="projectSelect" class="col-sm-3 col-form-label"><i18n vanilla-i18n="catalog.projectName">Projet</i18n></label>
-              <div class="col-sm-9">
-                <select name="projectSelect" id="projectSelect" class="form-control">
-                  <option value="-1" vanilla-i18n="catalog.all">Tous</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group row my-2">
-              <label for="scriptType" class="col-md-3 col-form-label">Dates</label>
-              <div class="col-md-6">
-                <div class="input-group">
-                  <span class="input-group-text">Not before:</span>
-                  <input type="number" id="notBefore" aria-label="First name" class="form-control">
-                  <span class="input-group-text">Not after:</span>
-                  <input type="number" id="notAfter" aria-label="Last name" class="form-control">
-                </div>
-              </div>
-            </div>
-            <hr />
-            <div class="form-group row my-2">
-              <div class="col-md-3"><span  vanilla-i18n="cat.resultCount">Nombre de résultats:</span></div>
-              <div class="col-md-9"><span id="resultCount"></span></div>
-            </div>
-            <div class="row" id="table">
-              <div class="col-md-3"><span  vanilla-i18n="cat.descCount">Description de résultats:</span></div>
-              <div class="col-md-9">
-                <table class="table table-bordered table-striped  table-hover text-end" id="table">
-                  <thead>
-                    <tr><th vanilla-i18n="cat.countUnit">Unit</th><th vanilla-i18n="cat.countAmount">Amount</th><th vanilla-i18n="cat.countProjects">Projects with this metric</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr data-unit="characters"><td vanilla-i18n="cat.countChars">Characters</td><td class="amount text-end">7</td><td class="project-count text-end">9</td></tr>
-                    <tr data-unit="lines"><td vanilla-i18n="cat.countLine">Lines</td><td class="amount text-end">7</td><td class="project-count text-end">9</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-3">Options</div>
-              <div class="col-md-9">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="affiche" id="showGuidelines">
-                  <label class="form-check-label" for="showGuidelines" vanilla-i18n="cat.showGuidelines">
-                    Show Guidelines
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="affiche" id="showCitations">
-                  <label class="form-check-label" for="showCitations" vanilla-i18n="cat.showCitations">
-                    Show Citations
-                  </label>
-                </div>
-              </div>
-            </div>
-        </form>
-        </div>
-        <div id="card-receiver" class="grid"></div>
-	  	</div>
+	  	<h1><i18n vanilla-i18n="changelog.title">Changelog du schéma</i18n></h1>
+        <i18n vanilla-i18n="changelog.disclaimer"><p>Pour des raisons de simplicité, le contenu de cette page n'est pas disponible en français.</p></i18n>
+        
+        <!-- Reuse this template for changelogs -->
+        <!--
+        <h2 class="pt-3">Version YYYY-MM-DD ⟹ Version YYYY-MM-DD</h2>
+        <ul>
+            <li></li>
+        </ul>
+        <h3>Hotfixes since release</h3>
+        <ul>
+          <li></li>
+        </ul>
+        -->
+
+        <h2 class="pt-3">Version 2022-04-15 ⟹ Version 2023-06-27</h2>
+        <ul>
+            <li><code>Image-Text-Pairs</code> is now available for <code>format</code> objects.</li>
+            <li>A new <code>automatically-aligned</code> boolean is now available to flag datasets resulting automatic alignment. Default value is <code>False</code>.</li>
+        </ul>
+        <h3>Hotfixes since release</h3>
+        <ul>
+          <li>(26/10/2023) Corrected <code>transliteration</code>'s type declaration (<code>boolean</code>, not <code>bool</code>).</li>
+          <li>(26/10/2023) Fixed syntax (missing <code>}</code>)</li>
+        </ul>
+
+
+        <h2 class="pt-3">Version 2021-10-15 ⟹ Version 2022-04-15</h2>
+        <ul>
+            <li>Added free-text field <code>transcription-software</code>. Recommended values:
+                <ul>
+                    <li><code>eScriptorium + Kraken</code></li>
+                    <li><code>Transkribus</code></li>
+                    <li><code>OCR For All</code></li>
+                </ul>
+            </li>
+            <li><code>script</code> is now a list of objects.
+                <ul>
+                    <li>Basically, all script ISO values should become <code>- iso: IsoValue</code> such as <code>- lat</code> -> <code>- iso: lat</code></li>
+                    <li>Added the ability to specify a little more the script with a new free text field <code>qualify</code></li>
+                </ul>
+            </li>
+            <li>Added an <code>institutions</code> object which reuses the pattern of <code>authors</code>, except that it forces <code>name</code> and does not support <code>firstname</code></li>
+            <li><code>orcid</code> is now available for <code>authors</code> objects</li>
+            <li>A new <code>characters</code> field is now available, it supports three sub-properties
+                <ul>
+                    <li>A unicode normalization mode called <code>mode</code>, which can be <code>None</code>, <code>NFD</code>, <code>NFKD</code>, <code>NFC</code>, <code>NFKC</code></li>
+                    <li>A <code>transliteration</code> boolean to indicated whether script is transliterated (such as hieroglyphs): Default value is <code>False</code>.</li>
+                    <li>A <code>members</code> property which accepts a list of characters and represent all glyphs in the ground truth.</li>
+                </ul>
+            </li>
+        </ul>
+        <h3>Hotfixes since release</h3>
+        <ul>
+          <li>(21/11/2023) Corrected <code>transliteration</code>'s type declaration (<code>boolean</code>, not <code>bool</code>).</li>
+          <li>(09/09/2022) In <code>volume</code>, <code>count</code>'s minimum value is <code>0</code> instead of <code>1</code>.</li>
+          <li>(05/09/2022) Fixed pattern for ORCID check.</li>
+          <li>(30/06/2022) Removed <code>required</code> status for <code>roles</code>.</li>
+          <li>(17/06/2022) Added <code>data-provider</code> as a possible value in <code>roles</code>.</li>
+          <li>(17/06/2022) Added <code>institutions</code> object as distinct from <code>authors</code> instead of its subtype.</li>
+          <li>(17/06/2022) Added <coe>characters</coe> object.</li>
+        </ul>
 	  </div>
 	</div>
 
@@ -233,8 +196,23 @@
     <!-- i18n -->
     <script type="text/javascript" src="static/js/i18n-advanced.js"></script>
     <script type="text/javascript" src="static/js/i18n.js"></script>
-    <!-- end of i18n 
-    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>-->
-    <script type="text/javascript" src="static/js/catalog.js"></script>
+    <!-- end of i18n -->
+      
+    <script type="text/javascript">
+      (function() {
+        document.querySelectorAll(".toggle-demo").forEach((el) => {
+          el.addEventListener("click", function(e) {
+            e.preventDefault();
+            console.log(el.getAttribute("data-target"));
+            const iFrameSrc = el.href,
+                  iFrameContainer = document.querySelector(el.getAttribute("data-target")),
+                  iFrame = iFrameContainer.querySelector("iframe");
+
+            iFrameContainer.classList.remove("d-none");
+            iFrame.src = iFrameSrc;
+          })
+        });
+      })();
+    </script>
   </body>
 </html>
