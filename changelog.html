@@ -39,15 +39,6 @@
     </script>
 
     <!-- endblock header -->
-
-    <style type="text/css">
-      #footer {
-          position: fixed;
-          height: 200px;
-          bottom: 0;
-          width: 100%;
-      }
-    </style>
   </head>
 
   <body id="top">
@@ -111,6 +102,10 @@
         <ul>
             <li></li>
         </ul>
+        <h3>Hotfixes since release</h3>
+        <ul>
+          <li></li>
+        </ul>
         -->
 
         <h2 class="pt-3">Version 2022-04-15 ⟹ Version 2023-06-27</h2>
@@ -118,6 +113,12 @@
             <li><code>Image-Text-Pairs</code> is now available for <code>format</code> objects.</li>
             <li>A new <code>automatically-aligned</code> boolean is now available to flag datasets resulting automatic alignment. Default value is <code>False</code>.</li>
         </ul>
+        <h3>Hotfixes since release</h3>
+        <ul>
+          <li>(26/10/2023) Corrected <code>transliteration</code>'s type declaration (<code>boolean</code>, not <code>bool</code>).</li>
+          <li>(26/10/2023) Fixed syntax (missing <code>}</code>)</li>
+        </ul>
+
 
         <h2 class="pt-3">Version 2021-10-15 ⟹ Version 2022-04-15</h2>
         <ul>
@@ -144,16 +145,27 @@
                 </ul>
             </li>
         </ul>
-      
+        <h3>Hotfixes since release</h3>
+        <ul>
+          <li>(21/11/2023) Corrected <code>transliteration</code>'s type declaration (<code>boolean</code>, not <code>bool</code>).</li>
+          <li>(09/09/2022) In <code>volume</code>, <code>count</code>'s minimum value is <code>0</code> instead of <code>1</code>.</li>
+          <li>(05/09/2022) Fixed pattern for ORCID check.</li>
+          <li>(30/06/2022) Removed <code>required</code> status for <code>roles</code>.</li>
+          <li>(17/06/2022) Added <code>data-provider</code> as a possible value in <code>roles</code>.</li>
+          <li>(17/06/2022) Added <code>institutions</code> object as distinct from <code>authors</code> instead of its subtype.</li>
+          <li>(17/06/2022) Added <coe>characters</coe> object.</li>
+        </ul>
 	  </div>
 	</div>
 
+  </main>
+
   <!-- New Footer -->
-  <footer class="footer mt-auto py-3 border-top bg-light" id="footer">
+  <footer class="footer mt-auto border-top bg-light" id="footer">
     <div class="row bg-light pb-5">
       <div class="col-1 col-md">
       </div>
-      <div class="col-12 col-md">
+      <div class="col-10 col-md">
         <h5 class="pb-2 py-4">HTR-United <small class="mb-1 text-muted">· 2020–2023</small></h5>
         <ul class="list-unstyled text-small">
           <li class="mb-1"><a class="link-secondary text-decoration-none" href="data-reuse-charter.html"><i18n vanilla-i18n="nav.charter">Charte de réutilisation des données</i18n></a></li>
@@ -168,8 +180,6 @@
       </div>
     </div>
   </footer>
-
-</main>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
