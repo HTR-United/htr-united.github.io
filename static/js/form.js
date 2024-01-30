@@ -377,9 +377,10 @@
           "count": data.hands,
           "precision": data.precision
         },
-        "license": [
-          {"name": data.license, "url": LICENSES[data.license]}
-        ],
+        "license": {
+            "name": data.license,
+            "url": LICENSES[data.license]
+        },
         "format": data.format,
         ...getSources(),
         ...getMetrics(),
