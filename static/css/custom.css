@@ -9,6 +9,7 @@
 
 body {
     background-color: #fefefe;
+    font-family: Montserrat, sans-serif;
 }
 
 header {
@@ -91,45 +92,49 @@ footer {
 
 .badge-sm {
     height: .9em;
-    font-weight: normal!important;
-    font-size: .7em;
+    font-weight: normal !important;
+    /*font-size: .7em;*/
 }
 
 .bg-language {
-    background: #9A031E;
+    background: #FFD4E5;
+    color: #7F6472;
 }
 
-.bg-script {
-    background: #E36414;
-}
-
-.bg-script-type {
-    background: #FF8500;
+.bg-script, .bg-script-type {
+    background: #FFDFBA;
+    color: #6A5D4E;
 }
 
 .bg-hands {
-    background: #7B287B;
+    background: #DBDCFF;
+    color: #575866;
 }
 
 .bg-flags {
-    background: #333333;
+    background: #F9A7A7;
+    color: white;
 }
 
 
 .bg-software {
-    background: #134213;
+    background: #C0F4B8;
+    color: #607A5C;
 }
 
 .bg-volumes {
-    background: #0D3B66;
+    background: #D5E9FF;
+    color: #638BB9;
 }
 
 .bg-license {
-    background: #000814;
+    background: #CAFEFF;
+    color: #5A8B8F;
 }
 
 .bg-link {
-    background: #3f88c5;
+    background: #78abd6;
+    color: white;
 }
 
 /**
@@ -167,25 +172,25 @@ footer {
 }
 
 .card .secondary-header {
-    border-top: 1px solid rgba(0,0,0,.125);
-    padding: .4em .2em ;
+    /*border-top: 1px solid rgba(0,0,0,.125);*/
+    padding: .8em 1rem .4em;
 }
 
 .card hr {
     margin: .5em 0;
 }
 .card h6 {
-    color: #6c757d;
-    font-family: "Oswald";
+    color: #616b39;
+    /*font-family: "Oswald";*/
     font-size: 1em;
     text-align: right;
     display: block;
     padding-bottom: 0;
 }
 .card h7 {
-    font-weight: bold;
+    /*font-weight: bold;*/
     color: #6c757d;
-    font-family: "Oswald";
+    /*font-family: "Oswald";*/
     font-size: .9em;
     text-align: right;
     display: block;
@@ -193,9 +198,9 @@ footer {
 }
 .card em, .card b {
     color: #363a3e;
-    font-family: "Oswald";
+    /*font-family: "Oswald";*/
     font-stretch: 120%;
-    font-weight: 500;
+    /*font-weight: 500;*/
 }
 
 .card h8 {
@@ -211,8 +216,9 @@ footer {
     font-weight: 500;
 }
 .card-header {
-    background-color: #333B41!important;
-    color: white;
+    background-color: #dce8ae !important;
+    color: #616b39;
+    font-weight: bold;
     /*padding: 1rem;*/
 }
 

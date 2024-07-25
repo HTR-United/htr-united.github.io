@@ -118,14 +118,14 @@ function slugify(str) {
 
 function getVolumes(listOfValue) {
   /* Produces a HTML sequence of volume badges based on a the Volume Catalog Entry list */
-  return listOfValue.map((val) => `<span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-volumes rounded-start text-white border border-secondary border-end-0 py-1 px-2"><span class="fas fa-database"></span> Volume</span><span class="rounded-end text-dark border border-secondary py-1 px-2">${val.count.toLocaleString()} ${val.metric}</span></span>`).join(" ")
+  return listOfValue.map((val) => `<span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-volumes rounded-start border border-end-0 py-1 px-2"><span class="fas fa-database"></span> Volume</span><span class="rounded-end text-dark border py-1 px-2">${val.count.toLocaleString()} ${val.metric}</span></span>`).join(" ")
 }
 
 function getImages(listOfValue, label, color) {
   /* Produces a HTML sequence of volume badges based on a list of string 
    *    (label is used as the left label, color as the css color class) 
    * */
-  return listOfValue.map((val) => `<span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-${color}  rounded-start text-white border border-secondary border-end-0 py-1 px-2">${label}</span><span class="rounded-end text-dark border border-secondary py-1 px-2">${val}</span></span>`).join(" ")
+  return listOfValue.map((val) => `<span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-${color}  rounded-start border border-end-0 py-1 px-2">${label}</span><span class="rounded-end text-dark border py-1 px-2">${val}</span></span>`).join(" ")
 }
 
 function getTypeBadge(scriptType) {
@@ -141,7 +141,7 @@ function getTypeBadge(scriptType) {
     badge = "fa-print";
   }
   return `<span class="badge badge-sm p-0 m-1 mb-3">
-        <span class="bg-script-type rounded-start text-white border border-secondary border-end-0 py-1 px-2">Script Type</span><span class="rounded-end border border-secondary text-dark py-1 px-2"><span class="fas ${badge}"></span> ${scriptType}</span>
+        <span class="bg-script-type rounded-start border border-end-0 py-1 px-2">Script Type</span><span class="rounded-end border text-dark py-1 px-2"><span class="fas ${badge}"></span> ${scriptType}</span>
       </span>`
 }
 function getCharactersBadge(catalogEntry) {
@@ -151,21 +151,21 @@ function getCharactersBadge(catalogEntry) {
       normalization = ` (${catalogEntry.characters.mode})`
     }
     return `<span class="badge badge-sm p-0 m-1 mb-3">
-    <span class="bg-volumes rounded-start text-white border border-secondary border-end-0 py-1 px-2"><span class="fas fa-spell-check"></span> Known characters${normalization}</span><span class="rounded-end text-dark border border-secondary py-1 px-2">${catalogEntry.characters.members.length.toLocaleString()}</span></span>`;
+    <span class="bg-volumes rounded-start border border-end-0 py-1 px-2"><span class="fas fa-spell-check"></span> Known characters${normalization}</span><span class="rounded-end text-dark border py-1 px-2">${catalogEntry.characters.members.length.toLocaleString()}</span></span>`;
   }
   return ``;
 }
 function getSoftwareBadge(catalogEntry) {
   if (catalogEntry["production-software"] === undefined) { return ``; }
   return `<p class="my-0">
-      <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-software rounded-start text-white border border-secondary border-end-0 py-1 px-2"><span class="fas fa-desktop"></span> <span vanilla-i18n="cat.software">Software</span></span><span class="rounded-end border border-secondary text-dark py-1 px-2">${catalogEntry['production-software']}</span></span>
+      <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-software rounded-start border border-end-0 py-1 px-2"><span class="fas fa-desktop"></span> <span vanilla-i18n="cat.software">Software</span></span><span class="rounded-end border text-dark py-1 px-2">${catalogEntry['production-software']}</span></span>
     </p>`;
 }
 
 function citationCFF(link) {
   /** Creates a citation link if the entry is given */
   if (link) {
-    return `<a href="${link}"><span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-link rounded-start text-white border border-secondary border-end-0 py-1 px-2"><span class="fa fa-link"></span> <span vanilla-i18n="cat.link">Link</span></span><span class="rounded-end border border-secondary text-dark py-1 px-2" vanilla-i18n="cat.citationFile">Citation File</span></span>
+    return `<a href="${link}"><span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-link rounded-start border border-end-0 py-1 px-2"><span class="fa fa-link"></span> <span vanilla-i18n="cat.link">Link</span></span><span class="rounded-end border text-dark py-1 px-2" vanilla-i18n="cat.citationFile">Citation File</span></span>
       </a>`;
   } else {
     return "";
@@ -274,7 +274,7 @@ function coins(catalogEntry) {
 function getFlags(catalogEntry) {
   text = ""
   if(catalogEntry["automatically-aligned"]) {
-    text += `<span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-flags rounded-start text-white border border-secondary border-end-0 py-1 px-2"><i class="fas fa-exchange-alt"></i></span><span class="rounded-end border border-secondary text-dark py-1 px-2" vanilla-i18n="form.field.flags.automaticallyAligned.label">Automatically aligned</span></span>`;
+    text += `<span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-flags rounded-start border border-end-0 py-1 px-2"><i class="fas fa-exchange-alt"></i></span><span class="rounded-end border text-dark py-1 px-2" vanilla-i18n="form.field.flags.automaticallyAligned.label">Automatically aligned</span></span>`;
   }
   if (text) {
     return "<br />" + text;
@@ -295,7 +295,7 @@ function template(catalogEntry, key, isLong) {
   </div>
   <div class="card-body pt-1">
     <p class="my-0">
-      <a href="${catalogEntry.url}"><span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-link rounded-start text-white border border-secondary border-end-0 py-1 px-2"><span class="fa fa-link"></span> <span vanilla-i18n="cat.link">Link</span></span><span class="rounded-end border border-secondary text-dark py-1 px-2" vanilla-i18n="cat.repository">Data repository</span></span></a>
+      <a href="${catalogEntry.url}"><span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-link rounded-start border border-end-0 py-1 px-2"><span class="fa fa-link"></span> <span vanilla-i18n="cat.link">Link</span></span><span class="rounded-end border text-dark py-1 px-2" vanilla-i18n="cat.repository">Data repository</span></span></a>
       ${citationCFF(catalogEntry['citation-file-link'])}
     </p>
     <hr />
@@ -303,12 +303,12 @@ function template(catalogEntry, key, isLong) {
       ${getImages(catalogEntry.language, "Language", "language")}
       ${getImages(catalogEntry.script_simplified, "Script", "script")}
       ${getTypeBadge(catalogEntry['script-type'])}
-      <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-hands rounded-start text-white border border-secondary border-end-0 py-1 px-2">Hands</span><span class="rounded-end border border-secondary text-dark py-1 px-2">${catalogEntry.hands.count}</span></span>
+      <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-hands rounded-start border border-end-0 py-1 px-2">Hands</span><span class="rounded-end border text-dark py-1 px-2">${catalogEntry.hands.count}</span></span>
       ${getFlags(catalogEntry)}
       </p>
     <p class="my-0">${getVolumes(catalogEntry.volume)} ${getCharactersBadge(catalogEntry)}</p>
     <p class="my-0">
-      <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-license rounded-start text-white border border-secondary border-end-0 py-1 px-2">License</span><span class="rounded-end border border-secondary text-dark py-1 px-2">${(Array.isArray(catalogEntry.license) ? catalogEntry.license[0] : catalogEntry.license).name}</span></span>
+      <span class="badge badge-sm p-0 m-1 mb-3"><span class="bg-license rounded-start border border-end-0 py-1 px-2">License</span><span class="rounded-end border text-dark py-1 px-2">${(Array.isArray(catalogEntry.license) ? catalogEntry.license[0] : catalogEntry.license).name}</span></span>
     </p>
     ${getSoftwareBadge(catalogEntry)}
   </div>
@@ -325,7 +325,7 @@ function template(catalogEntry, key, isLong) {
   </div>
   <div class="card-body shares">
     <a class="btn btn-sm btn-primary" href="share.html?uri=${catalogEntry._pid}"><i class="fas fa-share"></i> <span vanilla-i18n="cat.full_record">Full-size record</a></a>
-    <a class="btn btn-sm btn-secondary" href="https://twitter.com/intent/tweet?text=${encodeURI(catalogEntry.title)}&url=${encodeURI('https://htr-united.github.io/share.html?uri='+catalogEntry._pid)}&hashtags=HTR_United"><i class="fas fa-hashtag"></i> <span vanilla-i18n="cat.tweet">Tweet</a></a>
+    <a class="btn btn-sm btn-outline-info" href="https://twitter.com/intent/tweet?text=${encodeURI(catalogEntry.title)}&url=${encodeURI('https://htr-united.github.io/share.html?uri='+catalogEntry._pid)}&hashtags=HTR_United"><i class="fas fa-hashtag"></i> <span vanilla-i18n="cat.tweet">Tweet</a></a>
   </div>
 </div>`);
 }
