@@ -212,10 +212,10 @@ function getProjectNameHTML(catalogEntry) {
 }
 
 function getYear(entryTime) {
-  if (entryTime.notBefore !== entryTime.notAfter) {
-    return `${entryTime.notBefore.split('-')[0]} - ${entryTime.notAfter.split('-')[0]}`;
+  if (entryTime.notBeforeInt !== entryTime.notAfterInt) {
+    return `${entryTime.notBeforeInt} - ${entryTime.notAfterInt}`;
   }
-  return `${entryTime.notBefore.split('-')[0]}`;
+  return `${entryTime.notBeforeInt}`;
 }
 
 function ifLong(isLong, value) {
@@ -384,7 +384,6 @@ function updateScriptSelect(entryScript, knownScripts) {
 
 function bindCitation(catalogDiv) {
   catalogDiv.querySelectorAll(".citation").forEach((divEl) => {
-    console.log(divEl);
     divEl.querySelector(".citation-copy").addEventListener("click", function(e) {
       selectText(divEl.querySelector("pre"));
       document.execCommand("copy");
@@ -392,6 +391,9 @@ function bindCitation(catalogDiv) {
   });
 }
 
+function fromDateToYear(input_string) {
+  return (/^(?<year>\-?\d{1,4})(-\d{2}(-\d{2})?)?$/g).exec(input_string)[0];
+}
 
 async function showCatalog() {
   /* Insert the catalog in the HTML */
@@ -404,29 +406,18 @@ async function showCatalog() {
       "characters": 0,
       "lines": 0
     };
-
+  
   // Produce and 
   Object.keys(CATALOG).sort((key1, key2) => (CATALOG[key1].title < CATALOG[key2].title) ? -1 : 1).forEach((key) => {
-    // Quick fix to hide CREMMA repositories
+    console.log(key, CATALOG[key]);
     let counts_is_zero = false;
-    (CATALOG[key].volume || []).forEach((data) => {
-      if(data.count === 0) {
-        counts_is_zero = true;
-      } else {
-        counts_is_zero = false;
-      }
-    });
-    if (counts_is_zero) {
-      return;
-    }
 
     updateLanguageSelect(CATALOG[key].language, knownLangs);
     CATALOG[key].script_simplified = CATALOG[key].script.map(val => val.iso);
     updateScriptSelect(CATALOG[key].script, knownScripts);
-    let div = template(CATALOG[key], key);
     try {
-      CATALOG[key].time.notBeforeInt = parseInt(CATALOG[key].time.notBefore.split("-")[0]);
-      CATALOG[key].time.notAfterInt = parseInt(CATALOG[key].time.notAfter.split("-")[0]);
+      CATALOG[key].time.notBeforeInt = parseInt(fromDateToYear(CATALOG[key].time.notBefore));
+      CATALOG[key].time.notAfterInt = parseInt(fromDateToYear(CATALOG[key].time.notAfter));
       if (CATALOG[key].time.notAfterInt > maxDate) {
         maxDate = CATALOG[key].time.notAfterInt;
       }
@@ -437,6 +428,7 @@ async function showCatalog() {
       console.log("Error on parsing time for " + key);
       console.log(e);
     }
+    let div = template(CATALOG[key], key);
     catalogDiv.append(div);
   });
 
