@@ -211,8 +211,8 @@ footer {
     font-weight: 500;
 }
 .card-header {
-    background-color: #333B41!important;
-    color: white;
+    background-color: #dce8ae !important;
+    /*color: white;*/
     /*padding: 1rem;*/
 }
 
