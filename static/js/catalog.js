@@ -188,7 +188,7 @@ function transcriptionRules(catalogEntry) {
   if (catalogEntry['transcription-guidelines']) {
     return `<div class="card-body transcriptionRules">
     <h6 vanilla-i18n="form.field.guidelines.label">Transcriptions Guidelines</h6>
-    <p class="card-text">${nl2br(catalogEntry['transcription-guidelines'])}</p>
+    <p class="card-text">${snarkdown(catalogEntry['transcription-guidelines'])}</p>
   </div>`;
   } else {
     return "";
@@ -314,7 +314,7 @@ function template(catalogEntry, key, isLong) {
   </div>
   <div class="card-body">
     ${ifLong(isLong, "<h6>Description</h6>")}
-    <p class="card-text">${nl2br(catalogEntry.description)}</p>
+    <p class="card-text">${snarkdown(catalogEntry.description)}</p>
     ${getAuthors(catalogEntry)}
   </div>
   ${transcriptionRules(catalogEntry)}
@@ -409,7 +409,6 @@ async function showCatalog() {
   
   // Produce and 
   Object.keys(CATALOG).sort((key1, key2) => (CATALOG[key1].title < CATALOG[key2].title) ? -1 : 1).forEach((key) => {
-    console.log(key, CATALOG[key]);
     let counts_is_zero = false;
 
     updateLanguageSelect(CATALOG[key].language, knownLangs);
