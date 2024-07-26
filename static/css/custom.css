@@ -225,7 +225,7 @@ footer {
 .card-body:not(:first-of-type) {
     border-top: 1px solid rgba(0, 0, 0, 0.09);
 }
-.card-text {
+.card-text, .card-body > p, .card-body > ul {
     font-size: 0.9em;
 }
 
