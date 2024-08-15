@@ -89,21 +89,19 @@
 
 <!-- Main -->
 <main>
-  <div class="px-4 py-5 my-5 text-center" id="main">
-    <img src="assets/images/logo_htr-united.png" class="u-logo-image u-logo-image-1 mt-5" data-image-width="40" height="86" alt="HTR-United">
+  <div class="px-4 py-5 mt-5 text-center" id="main">
+    <img src="assets/images/logo_htr-united.png" class="u-logo-image u-logo-image-1 my-5" data-image-width="40" height="86" alt="HTR-United">
     <div class="col-lg-6 mx-auto">
       <p class="lead mb-4"><i18n vanilla-i18n="main.desc.main">HTR-United est un catalogue qui répertorie des jeux de données d'entraînement hautement documentés utilisés pour les modèles de transcription ou de segmentation automatiques. HTR-United normalise les descriptions des jeux de données à l'aide d'un schéma, propose des recommandations pour l'organisation des dépôts de données et fournit des outils pour le contrôle de la qualité et la documentation continue. C'est un écosystème ouvert et transparent hébergé sur GitHub, conçu pour faciliter sa maintenance. HTR-United a été créé pour aider les projets à accéder rapidement à diverses données de vérité terrain pour entraîner des modèles sur des petits corpus.</i18n><br></p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-5">
-        <a type="button" class="btn btn-info btn-lg px-4 me-sm-3" href="#use-data"><i class="far fa-arrow-alt-circle-down"></i> <i18n vanilla-i18n="main.btn.use">Utiliser les données</i18n></a>
-        <a type="button" class="btn btn-outline-secondary btn-lg px-4" href="#provide-data"><i class="far fa-arrow-alt-circle-up"></i> <i18n vanilla-i18n="main.btn.provide">Proposer des données</i18n></a>
-        <a type="button" class="btn btn-outline-secondary btn-lg px-4" href="catalog.html"><!--<i class="fab fa-github"></i>--><i class="fas fa-external-link-alt"></i> <i18n vanilla-i18n="main.btn.catalog">Explorer le catalogue</i18n></a>
+        <a type="button" class="btn btn-info btn-lg px-4 me-sm-3" href="catalog.html"><i class="fas fa-external-link-alt"></i> <i18n vanilla-i18n="main.btn.catalog">Explorer le catalogue</i18n></a>
       </div>
     </div>
   </div>
 
   <!-- Use data -->
-  <div class="container col-xxl-8 px-4 py-5" id="use-data">
-    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+  <div class="container col-xxl-8 px-4 py-3" id="use-data">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-3">
       <div class="col-10 col-sm-8 col-lg-6">
         <img src="assets/images/image_seg.png" class="d-block mx-lg-auto img-fluid" alt="Aperçu d'une page segmentée" width="700" height="500" loading="lazy">
       </div>
@@ -124,8 +122,8 @@
   </div>
 
     <!-- Provide Data -->
-    <div class="container col-xxl-8 px-4 py-5" id="provide-data">
-    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <div class="container col-xxl-8 px-4 py-3" id="provide-data">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-3">
       <div class="col-lg-6" >
         <h1 class="display-5 fw-bold lh-1 mb-4"><i18n vanilla-i18n="main.title.provide">Contribuer à HTR-United</i18n></h1>
         <i18n vanilla-i18n="main.desc.provide"><p class="lead">Il existe de nombreuses façons de contribuer à HTR-United, la première étant d'ajouter votre jeu de données au catalogue ! Pour cela, assurez-vous que vos données sont disponibles en ligne et consultez <a href="document-your-data.html">Enregistrer de nouvelles données</a>. Ensuite, remplissez le formulaire, générez une description et soumettez-la à notre dépôt GitHub. Vos données peuvent provenir de n'importe quel logiciel OCR/HTR, mais pour qu'elles puissent être réutilisées par d'autres, le jeu de données publié doit inclure des images, des transcriptions, une licence claire, et des métadonnées.</p>
