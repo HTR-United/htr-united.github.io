@@ -13,9 +13,9 @@ form.title.project,General information about the project,Informations générale
 form.title.data,General information about the data,Informations générales sur les données
 form.title.detail,Detailed information about the data,Informations détaillées sur les données
 form.play,Play or restart,Lancer la démo ou la redémarrer
-form.mandatory_field,
+form.mandatory_field,"Fields marked with a <span class=""required""">*</span> are required.","Les champs suivis d'un <span class=""required"">*</span> sont obligatoires."
 #,,
-# Project details,"Fields marked with a <span class=""required""">*</span> are required.","Les champs suivis d'un <span class=""required"">*</span> sont obligatoires."
+# Project details,,
 #,,
 form.field.ds_title,Repository's or dataset's title,Nom du dépôt / dataset (titre)
 form.field.repolink,Link to repository,Lien vers le dépôt
