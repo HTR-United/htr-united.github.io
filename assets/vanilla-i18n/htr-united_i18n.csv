@@ -125,10 +125,5 @@ actions.edit,Edit the file if it exists ,Éditer la configuration si elle existe
 actions.addBadge,(3) Add the following text to your README.md file if you want to show your badges,(3) Ajoutez le texte suivant à votre fichier README si vous voulez afficher les badges
 actions.editReadme,Edit the README.MD on Github,Éditez le Readme.md sur Github
 
-models.title,Models,Modèles
-models.p1,"The HTR-United catalog does not directy list transcription models, but rather the data that were used to create such models. You can explore the repositories linked to the datasets in which you are interested in order to find out if they link to a public model.","Le catalogue d'HTR-United ne référence pas directement de modèles de transcription, mais plutôt les données ayant permis d'en produire. Vous pouvez consulter les répertoires des jeux de données qui vous intéressent pour savoir s'ils renvoient vers un modèle public."
-models.p2,"Several collections of public transcription models exist. You can for example browse the Zenodo community called ""OCR/HTR model repository"". It contains several transcription models freely reusable.","Il existe des collections de modèles publiques. Vous pouvez par exemple consulter le groupe nommé ""OCR/HTR model repository"" sur Zenodo qui contient de nombreux modèles de transcription librement réutilisables."
-models.btn.zenodo1,"See ""OCR/HTR model repository"" on Zenodo","Voir ""OCR/HTR model repository"" sur Zenodo"
-
 changelog.title,Schema changelog,Changelog du schéma
 changelog.disclaimer,"<p></p>","<p>Pour des raisons de simplicité, le contenu de cette page n'est pas disponible en français.</p>"
