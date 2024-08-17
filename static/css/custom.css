@@ -27,27 +27,18 @@ footer {
 
 /**
  * 
- * Accueil
+ * Home page
  * 
  * */
 
-.block-scenario {
-    background-color: #fff;
-}
 
-/*.btn-nav:hover {
-    box-shadow: 0 0 0 .25rem #dce8ae !important;
-}
-
-.btn-nav-ext:hover {
-    box-shadow: 0 0 0 .25rem #ffc107 !important;
-}*/
 
 /**
  *
- * Boutons
+ * Buttons
  *  
  **/
+
 .btn-info {
     background-color: #dce8ae !important;
     color: #383c2c !important;
@@ -70,7 +61,7 @@ footer {
 
 /**
  * 
- * Formulaire
+ * Form
  * 
  * */
 
@@ -139,9 +130,10 @@ footer {
 
 /**
  * 
- * Catalogues
+ * Catalog
  * 
  * */
+
 .catalog-card {
     width: 45%;
     margin:1%;
@@ -252,4 +244,3 @@ footer {
 .citation .fa-copy {
     cursor: pointer;
 }
-
