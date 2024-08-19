@@ -1,11 +1,11 @@
 vanilla-i18n-key,English,Français
 form.desc.main,"HTR-United is a Github organization without any other form of legal personality. It aims at gathering HTR/OCR models for and transcriptions of all periods and style of writing, mostly but not exclusively in French. <br/>It was born from the mere necessity -for projects- to possess potentiel ground truth to rapidly train models on smaller corpora.","HTR-United est une organisation Github sans autre forme de personnalité juridique visant à mettre en commun des jeux de données et des modèles pour l'HTR/OCR de textes de toutes périodes et de tout style, principalement en français mais de manière non restricive.&nbsp;<br>Elle est née du simple besoin - pour des projets - d'avoir de potentiels vérités de terrain pour entraîner des modèles rapidement sur des corpus plus petits."
-form.steps.title,Steps,Étapes
-form.step1.title,Fill the form,Remplir le formulaire
+form.steps.title,Follow the steps!,Suivez les étapes!
+form.step1.title,1. Fill the form,1. Remplir le formulaire
 form.step1.desc,"Follow the instructions and examples if necessary. Some items are optional, but you should try to provide as much detail at possible. You can also contact us by <a href=""https://github.com/HTR-United/htr-united/issues/new"" target=""_blank"" class=""text-decoration-none"">opening an issue</a>.","Suivre les instructions et les exemples si nécessaire. Certaines rubriques sont optionnelles mais vous devriez essayer de donner autant de détails que possible. Vous pouvez aussi nous contacter <a href=""https://github.com/HTR-United/htr-united/issues/new"" target=""_blank"" class=""text-decoration-none"">en ouvrant une issue</a>."
-form.step2.title,"Click on ""Get formatted metadata""","Cliquer sur ""Obtenir les métadonnées formatées"
+form.step2.title,"2. Click on ""Get formatted metadata""","2. Cliquer sur ""Obtenir les métadonnées formatées"
 form.step2.desc,And copy the output !,Et copier le résultat !
-form.step3.title,Add the result to HTR-United's catalog,Ajouter le résultat au catalogue d'HTR-United
+form.step3.title,3. Add the result to HTR-United's catalog,3. outer le résultat au catalogue d'HTR-United
 form.step3.desc,"By creating a new file inside our <a href=""https://github.com/HTR-United/htr-united/tree/master/catalog"" target=""_blank"" class=""text-decoration-none"">catalog/ folder</a>, following the link provided after you generated the metadata. You can also paste the content in your own htr-united.yml file inside your repository.","En créant un nouveau fichier à l'intérieur de notre <a href=""https://github.com/HTR-United/htr-united/tree/master/catalog"" target=""_blank"" class=""text-decoration-none"">dossier catalog/</a>, en suivant le lien fourni après avoir généré les métadonnées. Vous pouvez aussi copier les métadonnées à l'intérieur de votre propre fichier htr-united.yml au sein de votre répertoire."
 form.form.head,"Fields followed by a <span class=""required"">*</span> are the only ones required.","Les champs dont le nom est suivi d'un <span class=""required"">*</span> sont obligatoires."
 form.title.ds,General information about the dataset,Informations générales sur le set de données
@@ -13,6 +13,7 @@ form.title.project,General information about the project,Informations générale
 form.title.data,General information about the data,Informations générales sur les données
 form.title.detail,Detailed information about the data,Informations détaillées sur les données
 form.play,Play or restart,Lancer la démo ou la redémarrer
+form.mandatory_field,"Fields marked with a <span class=""required""">*</span> are required.","Les champs suivis d'un <span class=""required"">*</span> sont obligatoires."
 #,,
 # Project details,,
 #,,
