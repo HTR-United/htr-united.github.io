@@ -168,6 +168,7 @@
             <label for="license" class="col-sm-3 col-form-label"><i18n vanilla-i18n="form.field.license">Licence</i18n><span class="required">*</span></label>
             <div class="col-sm-3">
               <select class="form-control" name="license" id="license">
+                <option value="" default>---</option>
                 <option value="CC-BY 4.0">CC-BY 4.0</option>
                 <option value="CC-BY-SA 4.0">CC-BY-SA 4.0</option>
                 <option value="Etalab OL 2.0">Etalab OL 2.0</option>
@@ -175,8 +176,9 @@
                 <!-- Ajouter d'autres options !-->
               </select>
             </div>
-            <div class="col-sm-1"></div>
-            <label for="format" class="col-sm-2 col-form-label"><i18n vanilla-i18n="form.field.std">Format des données</i18n><span class="required">*</span></label>
+          </div>
+          <div class="form-group row my-2">
+            <label for="format" class="col-sm-3 col-form-label"><i18n vanilla-i18n="form.field.std">Format des données</i18n><span class="required">*</span></label>
             <div class="col-sm-3">
               <select name="format" id="format" class="form-control" required>
                 <option value="" default>---</option>
@@ -192,9 +194,8 @@
             <div class="col-sm-9">
                 <div class="form-check">
                   <input type="checkbox" value="true" name="automatically-aligned" id="flagAutomaticallyAligned" class="flag-checkbox">
-                  <label for="flagAutomaticallyAligned" name="automatically-aligned-label" vanilla-i18n="form.field.flags.automaticallyAligned.label">Contribution d'institution</label>
+                  <label for="flagAutomaticallyAligned" name="automatically-aligned-label" vanilla-i18n="form.field.flags.automaticallyAligned.label">Automatically aligned</label>
                 </div>
-
                 <p><small class="text-muted"><i18n vanilla-i18n="form.field.flags.automaticallyAligned.helper">placeholder</i18n></small></p>
             </div>
             
@@ -202,7 +203,7 @@
           <p><small class="text-muted"><i18n vanilla-i18n="form.field.std_info">Les licenses sont ici proposées à titre indicatif.</i18n></small></p>
           <div class="form-group row my-2">
             <label for="desc" class="col-sm-3 col-form-label"><i18n vanilla-i18n="form.field.software">Name of software(s) used to create the ground truth</i18n><span class="required">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-sm-9 mb-2">
               <input type="text" name="software" class="form-control" id="software" placeholder="Description" vanilla-i18n-placeholder="form.field.software_placeholder" required="true"/>
             </div>
             <div class="offset-sm-3 col-sm-9">
