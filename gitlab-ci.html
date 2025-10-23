@@ -1,7 +1,7 @@
 <!doctype html>
 <html prefix="og: https://ogp.me/ns#">
   <head>
-    <title>Github Actions | HTR-United</title>
+    <title>GitLab CI | HTR-United</title>
     <!-- block header -->
 
     <meta charset="utf-8">
@@ -91,11 +91,11 @@
     <div>
       <img src="assets/images/logo_htr-united.png" class="u-logo-image u-logo-image-1 mt-5" data-image-width="40" height="86" alt="HTR-United">
       <div class=" mt-5" style="line-height: 100%; vertical-align: middle; display: inline-block;"><span class="fa fa-heart fa-2x" aria-label="loves"></span></div>
-      <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"  class="u-logo-image u-logo-image-1 mt-5" alt="Github" height="86">
+      <img src="https://about.gitlab.com/images/ico/favicon-192x192.png"  class="u-logo-image u-logo-image-1 mt-5" alt="GitLab" height="86">
     </div>
-    <h1 class="display-5 fw-bold my-4">HTR-United + Github Actions</h1>
+    <h1 class="display-5 fw-bold my-4">HTR-United + GitLab CI</h1>
     <div class="col-lg-6 mx-auto">
-      <p class="mb-4" vanilla-i18n="actions.introduction">Github Actions are a way to run specific code everytime you change your data. The following form will generate a configuration file to use our <a href="tools.html">4 tools</a> automatically and ensure both complete compatibility with the HTR-United initiative and high quality data. Some options below will focus on controling the data, your cataloging file or simply automatically updating it with the metrics of your choice !</p>
+      <p class="mb-4" vanilla-i18n="gitlabCI.introduction">GitLab CI is a way to run specific code everytime you change your data. The following form will generate a configuration file to use our <a href="tools.html">4 tools</a> automatically and ensure both complete compatibility with the HTR-United initiative and high quality data. Some options below will focus on controling the data, your cataloging file or simply automatically updating it with the metrics of your choice !</p>
       </div>
   </div>
 
@@ -104,34 +104,31 @@
   <form class="container col-xxl-8 px-4 py-4" id="use-data">
     <div class="row">
       <div class="col">
-        <h2 vanilla-i18n="actions.generalInformations">Informations générales sur la structure du dossier</h2>
+        <h2 vanilla-i18n="gitlabCI.generalInformations">Informations générales sur la structure du dossier</h2>
       </div>
     </div>
     <div class="form-group row my-2">
-      <label for="githubURL" vanilla-i18n="actions.githubURL" class="col-sm-3 col-form-label" vanilla-i18n="actions.githubURL">URL Github du dépôt</label>
+      <label for="gitlabURL" vanilla-i18n="gitlabCI.gitlabURL" class="col-sm-3 col-form-label" vanilla-i18n="gitlabCI.gitlabURL">URL GitLab du dépôt</label>
       <div class="col-sm-9">
-        <div class="input-group">
-          <span class="input-group-text" id="basic-addon3">https://github.com/</span>
-          <input type="text" name="githubURL" class="form-control" id="githubURL" placeholder="account/repository" required="true" aria-describedby="githubURLHelp" pattern="[^/]+/[^/]+"  title="user/repository (No github.com/)" vanilla-i18n-title="actions.formatGithubUrl">
-        </div>
-        <div id="githubURLHelp" class="form-text"><p vanilla-i18n="actions.githubURLHelp" style="text-align: justify;" vanilla-i18n="actions.githubURLHelp">This should look like https://github.com/<code>htr-united/cremma-medieval</code> or https://github.com/<code>demo-user/demo-repository</code>.</p></div>
+        <input type="text" name="gitlabURL" class="form-control" id="gitlabURL" placeholder="https://gitlab.com/account/repository" required="true" aria-describedby="gitlabURLHelp" title="https://gitlab.com/user/repository">
+        <div id="gitlabURLHelp" class="form-text"><p vanilla-i18n="gitlabCI.gitlabURLHelp" style="text-align: justify;" vanilla-i18n="gitlabCI.gitlabURLHelp">This should look like <code>https://gitlab.com/demo-user/demo-repository</code>.</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
-      <label for="htrUnitedFilename" vanilla-i18n="actions.htrUnitedFilename" class="col-sm-3 col-form-label" vanilla-i18n="actions.fileName">Nom du fichier de catalogage</label>
+      <label for="htrUnitedFilename" vanilla-i18n="gitlabCI.htrUnitedFilename" class="col-sm-3 col-form-label" vanilla-i18n="gitlabCI.fileName">Nom du fichier de catalogage</label>
       <div class="col-sm-9">
         <input type="text" name="htrUnitedFilename" class="form-control" id="htrUnitedFilename" placeholder="htr-united.yml" required="true" value="htr-united.yml" aria-describedby="htrUnitedFilenameHelp">
-        <div id="htrUnitedFilenameHelp" class="form-text"><p vanilla-i18n="actions.htrUnitedFilenameHelp" style="text-align: justify;" vanilla-i18n="actions.htrUnitedFilenameHelp">This file should have been generated with <a href="document-your-data.html">the form on this website</a>: it describes your whole repository with metadata, make sure you did that first ! This file is generally named <code>htr-united.yml</code> and should be at the root of your github repository.</p></div>
+        <div id="htrUnitedFilenameHelp" class="form-text"><p vanilla-i18n="gitlabCI.htrUnitedFilenameHelp" style="text-align: justify;" vanilla-i18n="gitlabCI.htrUnitedFilenameHelp">This file should have been generated with <a href="document-your-data.html">the form on this website</a>: it describes your whole repository with metadata, make sure you did that first ! This file is generally named <code>htr-united.yml</code> and should be at the root of your Git repository.</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
-      <label for="dataUnixPath" vanilla-i18n="actions.dataUnixPath" class="col-sm-3 col-form-label">Chemin des données (Format UNIX)</label>
+      <label for="dataUnixPath" vanilla-i18n="gitlabCI.dataUnixPath" class="col-sm-3 col-form-label">Chemin des données (Format UNIX)</label>
       <div class="col-sm-9">
         <input type="text" name="dataUnixPath" class="form-control" id="dataUnixPath" placeholder="./french/data/*.xml ./english/data/*.xml" required="true" value="" aria-describedby="dataUnixPathHelp">
         <div id="dataUnixPathHelp" class="row form-text">
           <div class="col-md-8">
-            <p vanilla-i18n="actions.dataUnixPathHelpP1" style="text-align: justify;">This path is the path on your repository. Use <code>*</code> for a filename wildcard, <code>**</code> for a folder wildcard. You can have a single path, such as <code>./data/*.xml</code> or multiple, such as <code>./french/data/*.xml ./english/data/*.xml</code>. If you have a structure such as <code>./data/a_book/some.xml</code> and <code>./data/b_book/some.xml</code>, the UNIX path is <code>./data/**/*.xml</code></p>
-            <p vanilla-i18n="actions.dataUnixPathHelpP2">In the example on the right, if <code>TNAH-2021-Project-Correspondance-Berlioz</code> is the root of your data repository, the path to get all XML would be <code>donnees/**/*.xml</code></p>
+            <p vanilla-i18n="gitlabCI.dataUnixPathHelpP1" style="text-align: justify;">This path is the path on your repository. Use <code>*</code> for a filename wildcard, <code>**</code> for a folder wildcard. You can have a single path, such as <code>./data/*.xml</code> or multiple, such as <code>./french/data/*.xml ./english/data/*.xml</code>. If you have a structure such as <code>./data/a_book/some.xml</code> and <code>./data/b_book/some.xml</code>, the UNIX path is <code>./data/**/*.xml</code></p>
+            <p vanilla-i18n="gitlabCI.dataUnixPathHelpP2">In the example on the right, if <code>TNAH-2021-Project-Correspondance-Berlioz</code> is the root of your data repository, the path to get all XML would be <code>donnees/**/*.xml</code></p>
           </div>
           <div class="col-md-4">
             <img src="static/img/folder.png" alt="folder-structure" class="img-fluid" />
@@ -150,175 +147,164 @@
       </div>
     </div>
     <div class="form-group row my-2">
-      <label for="branchName" vanilla-i18n="actions.branchName" class="col-sm-3 col-form-label">Nom de la branche principale</label>
+      <label for="branchName" vanilla-i18n="gitlabCI.branchName" class="col-sm-3 col-form-label">Nom de la branche principale</label>
       <div class="col-sm-9">
         <input type="text" name="branchName" class="form-control" id="branchName" required="true" aria-describedby="branchNameHelp">
-        <div id="branchNameHelp" class="form-text"><p vanilla-i18n="actions.branchNameHelp" style="text-align: justify;">Generaly <code>main</code> or <code>master</code>.</p></div>
+        <div id="branchNameHelp" class="form-text"><p vanilla-i18n="gitlabCI.branchNameHelp" style="text-align: justify;">Generaly <code>main</code> or <code>master</code>.</p></div>
       </div>
     </div>
     <hr />
     <div class="row">
       <div class="col">
-        <h2 vanilla-i18n="actions.testCatalog">Test du fichier de catalogage</h2>
-        <p class="form-text"><span vanilla-i18n="actions.thisUses">This uses</span> <a href="tools.html">HTRUC</a>.</p>
+        <h2 vanilla-i18n="gitlabCI.testCatalog">Test du fichier de catalogage</h2>
+        <p class="form-text"><span vanilla-i18n="gitlabCI.thisUses">This uses</span> <a href="tools.html">HTRUC</a>.</p>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label" for="activateHTRUC" vanilla-i18n="actions.activateHTRUC">
+          <label class="form-check-label" for="activateHTRUC" vanilla-i18n="gitlabCI.activateHTRUC">
             <b>Activer</b>
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activateHTRUC" name="activateHTRUC" aria-describedby="activateHTRUCHelp" checked="true">
         </div>
-        <div id="activateHTRUCHelp" class="form-text"><p vanilla-i18n="actions.activateHTRUCHelp" style="text-align: justify;">This will run a test on your <code>htr-united.yml</code> and makes sure it's compliant with the schemas. If the schema evolves, it allows you to ensure your compatibility with it.</p></div>
+        <div id="activateHTRUCHelp" class="form-text"><p vanilla-i18n="gitlabCI.activateHTRUCHelp" style="text-align: justify;">This will run a test on your <code>htr-united.yml</code> and makes sure it's compliant with the schemas. If the schema evolves, it allows you to ensure your compatibility with it.</p></div>
       </div>
     </div>
     <hr />
     <div class="row">
       <div class="col">
-        <h2 vanilla-i18n="actions.testReport">Génération de rapports</h2>
-        <p class="form-text"><span vanilla-i18n="actions.thisUses">This uses</span> <a href="tools.html">HTR United Metadata Generator</a>.</p>
+        <h2 vanilla-i18n="gitlabCI.testReport">Génération de rapports</h2>
+        <p class="form-text"><span vanilla-i18n="gitlabCI.thisUses">This uses</span> <a href="tools.html">HTR United Metadata Generator</a>.</p>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label" for="activateHUMG" vanilla-i18n="actions.activateHUMG">
+          <label class="form-check-label" for="activateHUMG" vanilla-i18n="gitlabCI.activateHUMG">
             <b>Activer</b>
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activateHUMG" name="activateHUMG" aria-describedby="activateHUMGHelp" checked="true">
         </div>
-        <div id="activateHUMGHelp" class="form-text"><p vanilla-i18n="actions.activateHUMGHelp" style="text-align: justify;">This will produces in depth overview of how many characters, zones, lines and pages you have, but also gives you the amount of zone or lines per type if you typed your zones and lines.</p></div>
+        <div id="activateHUMGHelp" class="form-text"><p vanilla-i18n="gitlabCI.activateHUMGHelp" style="text-align: justify;">This will produces in depth overview of how many characters, zones, lines and pages you have, but also gives you the amount of zone or lines per type if you typed your zones and lines.</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label"  for="updateCatalogFile" vanilla-i18n="actions.updateCatalogFile">
+          <label class="form-check-label"  for="generateCatalogFile" vanilla-i18n="gitlabCI.generateCatalogFile">
             Update the catalog file
           </label>
-          <input class="form-check-input" type="checkbox" value="yes" id="updateCatalogFile" name="updateCatalogFile" aria-describedby="updateCatalogFileHelp">
+          <input class="form-check-input" type="checkbox" value="yes" id="generateCatalogFile" name="generateCatalogFile" aria-describedby="generateCatalogFileHelp">
         </div>
-        <div id="updateCatalogFileHelp" class="form-text"><p vanilla-i18n="actions.updateCatalogFileHelp" style="text-align: justify;"><span>Using the computed metrics (line, characters, files, zones), update the <code>volume</code> information of the cataloging file automatically.</span> <br/><span class="fa fa-exclamation-triangle" aria-label="Warning"></span> <span>This automatically pushes new files to your repository. This does not damage your data.</span></p></div>
+        <div id="generateCatalogFileHelp" class="form-text"><p vanilla-i18n="gitlabCI.generateCatalogFileHelp" style="text-align: justify;">Using the computed metrics (line, characters, files, zones), generate automatically a cataloging file with updated <code>volume</code> information.</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label"  for="generateBadge" vanilla-i18n="actions.generateBadge">
+          <label class="form-check-label"  for="generateBadge" vanilla-i18n="gitlabCI.generateBadge">
             Generate badges
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="generateBadge" name="generateBadge" aria-describedby="generateBadgeHelp">
         </div>
-        <div id="generateBadgeHelp" class="form-text"><p vanilla-i18n="actions.generateBadgeHelp" style="text-align: justify;"><span>Using this, badges will be generated, such as <img src="./static/img/example_badge.svg" /> which you can include in your README file to show how cool you are.</span> <br/><span class="fa fa-exclamation-triangle" aria-label="Warning"></span> <span>This automatically pushes new files to your repository. This does not damage your data.</span></p> </div>
-      </div>
-    </div>
-    <div class="form-group row my-2">
-      <div class="col-sm-11 offset-1">
-        <div class="form-check">
-          <label class="form-check-label"  for="gitRelease" vanilla-i18n="actions.gitRelease">
-            Automatically create a release
-          </label>
-          <input class="form-check-input" type="checkbox" value="yes" id="gitRelease" name="gitRelease" aria-describedby="gitReleaseHelp">
-        </div>
-        <div id="gitReleaseHelp" class="form-text"><p vanilla-i18n="actions.gitReleaseHelp" style="text-align: justify;">Creates a Github release everytime master is changed. Coupled with <a href="https://coderefinery.github.io/github-without-command-line/doi/">Zenodo</a>, this will allow you to have long term preservation and DOI (Digital Object Identifier) for your repository !</p></div>
+        <div id="generateBadgeHelp" class="form-text"><p vanilla-i18n="gitlabCI.generateBadgeHelp" style="text-align: justify;">Using this, badges will be generated, such as <img src="./static/img/example_badge.svg" /> which you can include in your README file to show how cool you are.</p> </div>
       </div>
     </div>
     <hr />
     <div class="row">
       <div class="col">
-        <h2 vanilla-i18n="actions.testXML">Test des fichiers XML (Structure)</h2>
-        <p class="form-text"><span vanilla-i18n="actions.thisUses">This uses</span> <a href="tools.html">HTRVX</a>.</p>
+        <h2 vanilla-i18n="gitlabCI.testXML">Test des fichiers XML (Structure)</h2>
+        <p class="form-text"><span vanilla-i18n="gitlabCI.thisUses">This uses</span> <a href="tools.html">HTRVX</a>.</p>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label" for="activateHTRVX" vanilla-i18n="actions.activateHTRVX">
+          <label class="form-check-label" for="activateHTRVX" vanilla-i18n="gitlabCI.activateHTRVX">
               <b>Activer</b>
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activateHTRVX" name="activateHTRVX" aria-describedby="activateHTRVXHelp" checked="true">
         </div>
-        <div id="activateHTRVXHelp" class="form-text"><p vanilla-i18n="actions.activateHTRVXHelp" style="text-align: justify;">This will help you make sure that your XML is valid and follows some other specifications.</p></div>
+        <div id="activateHTRVXHelp" class="form-text"><p vanilla-i18n="gitlabCI.activateHTRVXHelp" style="text-align: justify;">This will help you make sure that your XML is valid and follows some other specifications.</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label"  for="activateSegmonto" vanilla-i18n="actions.activateSegmonto">
+          <label class="form-check-label"  for="activateSegmonto" vanilla-i18n="gitlabCI.activateSegmonto">
               Test your compatibility with Segmonto
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activateSegmonto" name="activateSegmonto" aria-describedby="activateSegmontoHelp">
         </div>
-        <div id="activateSegmontoHelp" class="form-text"><p vanilla-i18n="actions.activateSegmontoHelp" style="text-align: justify;">Segmonto is an ontology for typing Zones (sometimes called Regions) and Lines. This ensures you are compatible with it. <em>cf.</em> <a href="https://hal.archives-ouvertes.fr/hal-03336528">Publication</a> or <a href="https://segmonto.github.io/">Segmonto Guidelines</a>.</p></div>
+        <div id="activateSegmontoHelp" class="form-text"><p vanilla-i18n="gitlabCI.activateSegmontoHelp" style="text-align: justify;">Segmonto is an ontology for typing Zones (sometimes called Regions) and Lines. This ensures you are compatible with it. <em>cf.</em> <a href="https://hal.archives-ouvertes.fr/hal-03336528">Publication</a> or <a href="https://segmonto.github.io/">Segmonto Guidelines</a>.</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label"  for="activateEmptyLine" vanilla-i18n="actions.activateEmptyLine">
+          <label class="form-check-label"  for="activateEmptyLine" vanilla-i18n="gitlabCI.activateEmptyLine">
               Check for empty lines or childless regions
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activateEmptyLine" name="activateEmptyLine" aria-describedby="activateEmptyLineHelp" checked="true">
         </div>
-        <div id="activateEmptyLineHelp" class="form-text"><p vanilla-i18n="actions.activateEmptyLineHelp" style="text-align: justify;">This will warn you about empty lines or regions without lines, without raising an error: this won't make the test fail !</p></div>
+        <div id="activateEmptyLineHelp" class="form-text"><p vanilla-i18n="gitlabCI.activateEmptyLineHelp" style="text-align: justify;">This will warn you about empty lines or regions without lines, without raising an error: this won't make the test fail !</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label"  for="activateRaiseEmptyLine" vanilla-i18n="actions.activateRaiseEmptyLine">
+          <label class="form-check-label"  for="activateRaiseEmptyLine" vanilla-i18n="gitlabCI.activateRaiseEmptyLine">
             Raise an error when empty lines or childless regions are found
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activateRaiseEmptyLine" name="activateRaiseEmptyLine" aria-describedby="activateRaiseEmptyLineHelp">
         </div>
-        <div id="activateRaiseEmptyLineHelp" class="form-text"><p vanilla-i18n="actions.activateRaiseEmptyLineHelp" style="text-align: justify;">This is used on top of the former check. This will raise an error if a line has no text or if a region has no lines.</p></div>
+        <div id="activateRaiseEmptyLineHelp" class="form-text"><p vanilla-i18n="gitlabCI.activateRaiseEmptyLineHelp" style="text-align: justify;">This is used on top of the former check. This will raise an error if a line has no text or if a region has no lines.</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label"   for="activateXSD" vanilla-i18n="actions.activateXSD">
+          <label class="form-check-label"   for="activateXSD" vanilla-i18n="gitlabCI.activateXSD">
             Check XML Schema
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activateXSD" name="activateXSD" aria-describedby="activateXSDHelp" checked="true">
         </div>
-        <div id="activateXSDHelp" class="form-text"><p vanilla-i18n="actions.activateXSDHelp" style="text-align: justify;">This just makes sure you are compatible with the XML schema. This should always be the case if you use a Graphical User Interface such as Transkribus or eScriptorium.</p></div>
+        <div id="activateXSDHelp" class="form-text"><p vanilla-i18n="gitlabCI.activateXSDHelp" style="text-align: justify;">This just makes sure you are compatible with the XML schema. This should always be the case if you use a Graphical User Interface such as Transkribus or eScriptorium.</p></div>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <h2 vanilla-i18n="actions.testChars">Contrôle des caractères</h2>
-        <p class="form-text"><span vanilla-i18n="actions.thisUses">This uses</span> <a href="tools.html">ChocoMufin</a>.</p>
+        <h2 vanilla-i18n="gitlabCI.testChars">Contrôle des caractères</h2>
+        <p class="form-text"><span vanilla-i18n="gitlabCI.thisUses">This uses</span> <a href="tools.html">ChocoMufin</a>.</p>
       </div>
     </div>
     <div class="form-group row my-2">
       <div class="col-sm-11 offset-1">
         <div class="form-check">
-          <label class="form-check-label" for="activatechocoMufin" vanilla-i18n="actions.activatechocoMufin">
+          <label class="form-check-label" for="activatechocoMufin" vanilla-i18n="gitlabCI.activatechocoMufin">
               <b>Activer</b>
           </label>
           <input class="form-check-input" type="checkbox" value="yes" id="activatechocoMufin" name="activatechocoMufin" aria-describedby="activatechocoMufinHelp">
         </div>
-        <div id="activatechocoMufinHelp" class="form-text"><p vanilla-i18n="actions.activatechocoMufinHelp" style="text-align: justify;">This will read the text of each lines and summarize the characters found.</p></div>
+        <div id="activatechocoMufinHelp" class="form-text"><p vanilla-i18n="gitlabCI.activatechocoMufinHelp" style="text-align: justify;">This will read the text of each lines and summarize the characters found.</p></div>
       </div>
     </div>
     <div class="form-group row my-2">
-      <label for="chocoMufinMode" vanilla-i18n="actions.chocoMufinMode" class="offset-1 col-sm-2 col-form-label">Mode</label>
+      <label for="chocoMufinMode" vanilla-i18n="gitlabCI.chocoMufinMode" class="offset-1 col-sm-2 col-form-label">Mode</label>
       <div class="col-sm-9">
         <select name="chocoMufinMode" id="chocoMufinMode" class="form-control" aria-described-by="chocoMufinModeHelp">
           <option value="generate">Génération de table</option>
           <option value="control">Contrôle des caractères</option>
         </select>
-        <div id="chocoMufinModeHelp" class="form-text"><p vanilla-i18n="actions.chocoMufinModeHelp" style="text-align: justify;">In <code>Generate</code> mode, the Actions won't control your characters but will instead list all characters used. In <code>Control</code> mode, you need to provide a file named <code>table.csv</code> to help ChocoMufin control your data. See <a href="https://github.com/ponteIneptique/choco-mufin">the tutorial</a> for more details.</p></div>
+        <div id="chocoMufinModeHelp" class="form-text"><p vanilla-i18n="gitlabCI.chocoMufinModeHelp" style="text-align: justify;">In <code>Generate</code> mode, the Actions won't control your characters but will instead list all characters used. In <code>Control</code> mode, you need to provide a file named <code>table.csv</code> to help ChocoMufin control your data. See <a href="https://github.com/ponteIneptique/choco-mufin">the tutorial</a> for more details.</p></div>
       </div>
     </div>
     <hr/>
     <div class="row">
       <div class="col">
         <p class="text-center">
-          <button class="btn btn-info btn-lg mt-4 py-3" type="submit" vanilla-i18n="actions.generate">Générer le fichier Github action</button>
+          <button class="btn btn-info btn-lg mt-4 py-3" type="submit" vanilla-i18n="gitlabCI.generate">Générer le fichier GitLab CI</button>
         </p>
       </div>
     </div>
@@ -326,24 +312,23 @@
   <section class="container">
     <div class="row">
       <div class="col-md-4">
-        <h3 vanilla-i18n="actions.steps">Étapes de mise en place</h3>
-        <p vanilla-i18n="actions.step1">(1) Récupérez le contenu, au choix:</p>
+        <h3 vanilla-i18n="gitlabCI.steps">Étapes de mise en place</h3>
+        <p vanilla-i18n="gitlabCI.step1">(1) Récupérez le contenu, au choix:</p>
         <div class="btn-group btn-group-sm my-1">
-          <a id="downloadOutput" class="btn btn-sm btn-primary"><span class="fa fa-download"></span> <span vanilla-i18n="actions.download">Téléchargez</span></a>
-          <a id="copyOutput" class="btn btn-sm btn-success"><span class="fa fa-copy"></span>  <span vanilla-i18n="actions.copy">Copiez</span></a>
+          <a id="downloadOutput" class="btn btn-sm btn-primary"><span class="fa fa-download"></span> <span vanilla-i18n="gitlabCI.download">Téléchargez</span></a>
+          <a id="copyOutput" class="btn btn-sm btn-success"><span class="fa fa-copy"></span>  <span vanilla-i18n="gitlabCI.copy">Copiez</span></a>
         </div>
-        <p><span vanilla-i18n="actions.step2">(2) Ajoutez le à votre dépôt en l'ajoutant dans le dossier</span> <code>.github/workflows</code></p>
+        <p><span vanilla-i18n="gitlabCI.step2">(2) Ajoutez le à la racine de votre dépôt</p>
         <ul>
-          <li><a href="" id="goToGithub"><span class="fa fa-upload"></span> <span vanilla-i18n="actions.add">Ajouter la configuration sur</span> Github.</a></li>
-          <li><a href="" id="editGithub"><span class="fa fa-edit"></span> <span vanilla-i18n="actions.edit">Éditer la configuration</span> Github.</a></li>
+          <li><a href="" id="editGitlab"><span class="fa fa-edit"></span> <span vanilla-i18n="gitlabCI.edit">Éditer la configuration</span> GitLab.</a></li>
         </ul>
         <div id="addBadgesSection" class="d-none">
-          <p><span vanilla-i18n="actions.addBadge" id="addBadge">(3) Ajoutez les badges au fichier README.MD</span></p>
+          <p><span vanilla-i18n="gitlabCI.addBadge" id="addBadge">(3) Ajoutez les badges au fichier README.MD</span></p>
           
-          <pre class="output-field myt-1" style="overflow-y: hidden;" id="readmeBadges">![characters badge](badges/characters.svg) ![regions badge](badges/regions.svg) ![lines badge](badges/lines.svg) ![files badge](badges/files.svg) </pre>
+          <pre class="output-field myt-1" style="overflow-y: hidden;" id="readmeBadges"></pre>
           <ol>
-            <li><a id="copyReadmeOutput" class="btn btn-sm btn-secondary"><span class="fa fa-copy"></span>  <span vanilla-i18n="actions.copy">Copiez</span></a></li>
-            <li><a href="" id="editReadmeGithub"><span class="fa fa-edit"></span> <span vanilla-i18n="actions.editReadme">Éditer le readme sur Github.</span></a></li>
+            <li><a id="copyReadmeOutput" class="btn btn-sm btn-secondary"><span class="fa fa-copy"></span>  <span vanilla-i18n="gitlabCI.copy">Copiez</span></a></li>
+            <li><a href="" id="editReadmeGitlab"><span class="fa fa-edit"></span> <span vanilla-i18n="gitlabCI.editReadme">Éditer le readme sur GitLab.</span></a></li>
           </l>
         </div>
       </div>
@@ -394,7 +379,7 @@
     <script type="text/javascript" src="static/js/i18n.js"></script>
     <!-- end of i18n -->
     <script type="text/javascript" src="static/js/yaml.min.js"></script>
-    <script type="text/javascript" src="static/js/actions.js"></script>
+    <script type="text/javascript" src="static/js/gitlab-ci.js"></script>
   </body>
 </html>
 

@@ -7,6 +7,7 @@ nav.team,The Team,L'Équipe
 nav.tools,Tools,Les Outils
 nav.models,Models,Modèles
 nav.actions,Github Automation,Automatisation Github
+nav.gitlabCI,GitLab Automation,Automatisation GitLab
 
 footer.team,Who are the people behind HTR-United?,Qui est derrière HTR-United ?
 footer.changelog,Schema changelog,Changelog du schéma
@@ -124,6 +125,54 @@ actions.add,Add the file on ,Ajouter la configuration sur
 actions.edit,Edit the file if it exists ,Éditer la configuration si elle existe déjà sur 
 actions.addBadge,(3) Add the following text to your README.md file if you want to show your badges,(3) Ajoutez le texte suivant à votre fichier README si vous voulez afficher les badges
 actions.editReadme,Edit the README.MD on Github,Éditez le Readme.md sur Github
+
+gitlabCI.introduction,"GitLab CI is a way to run specific code everytime you change your data. The following form will generate a configuration file to use our <a href=""tools.html"">4 tools</a> automatically and ensure both complete compatibility with the HTR-United initiative and high quality data. Some options below will focus on controling the data, your cataloging file or simply automatically updating it with the metrics of your choice !","GitLab CI permet d'exécuter des scripts à chaque fois que vous modifiez vos données. Le formulaire suivant va générer un fichier de configuration pour utiliser nos <a href=""tools.html"">4 outils</a> automatiquement et assurer à la fois une compatibilité complète avec l'initiative HTR-United et des données de haute qualité. Certaines options ci-dessous se concentreront sur le contrôle des données, votre fichier de catalogage ou simplement la mise à jour automatique avec les métriques de votre choix !"
+gitlabCI.generalInformations,General information on your data repository,Informations générales sur votre dépôt de données
+gitlabCI.htrUnitedFilename,Filename of your HTR-United metadata file (catalog),Nom de votre fichier HTR-United de métadonnées (catalogue)
+gitlabCI.dataUnixPath,Path to your XML data (UNIX format),Chemin des données (Format UNIX)
+gitlabCI.branchName,Main branch name,Nom de la branche principale
+gitlabCI.activateHTRUC,<b>Activate</b>,<b>Activer</b>
+gitlabCI.activateHUMG,<b>Activate</b>,<b>Activer</b>
+gitlabCI.generateCatalogFile,Generate the catalog file,Générer le fichier catalogue
+gitlabCI.generateBadge,Generate badges,Générer des badges
+gitlabCI.activateHTRVX,<b>Activate</b>,<b>Activer</b>
+gitlabCI.activateSegmonto,Test your compatibility with Segmonto,Tester votre compatibilité avec Segmonto
+gitlabCI.activateEmptyLine,Check for empty lines or childless regions,Vérifier qu'il n'existe pas de lignes ou de régions vides
+gitlabCI.activateRaiseEmptyLine,Raise an error when empty lines or childless regions are found,Émettre une erreur s'il existe des lignes ou des régions vides
+gitlabCI.activateXSD,Check XML Schema,Vérifier votre schéma XML
+gitlabCI.activatechocoMufin,<b>Activate</b>,<b>Activer</b>
+gitlabCI.chocoMufinMode,Mode,Mode
+gitlabCI.htrUnitedFilenameHelp,"This file should have been generated with <a href=""document-your-data.html"">the form on this website</a>: it describes your whole repository with metadata, make sure you did that first ! This file is generally named <code>htr-united.yml</code> and should be at the root of your Git repository.","Ce fichier aurait dû être généré avec <a href=""document-your-data.html"">le formulaire sur ce site Web</a>: il décrit tout votre dépôt avec des métadonnées, assurez-vous de le faire en premier! Ce fichier est généralement nommé <code>htr-united.yml</code> et doit être à la racine de votre dépôt Git."
+gitlabCI.dataUnixPathHelpP1,"This path is the path on your repository. Use <code>*</code> for a filename wildcard, <code>**</code> for a folder wildcard. You can have a single path, such as <code>./data/*.xml</code> or multiple, such as <code>./french/data/*.xml ./english/data/*.xml</code>. If you have a structure such as <code>./data/a_book/some.xml</code> and <code>./data/b_book/some.xml</code>, the UNIX path is <code>./data/**/*.xml</code>","Ce chemin est le chemin de votre référentiel. Utilisez <code>*</code> comme joker pour un nom de fichier, <code>**</code> pour un dossier. Vous pouvez avoir un seul chemin, tel que <code>./data/*.xml</code> ou plusieurs, comme <code>./french/data/*.xml ./english/data/*.xml</code>. Si vous avez une structure telle que <code>./data/a_book/certains.xml</code> et <code>./data/b_book/some.xml</code>, le chemin UNIX est <code>./data/**/*.xml</code"
+gitlabCI.branchNameHelp,Generaly <code>main</code> or <code>master</code>.,Généralement <code>main</code> ou <code>master</code>.
+gitlabCI.dataUnixPathHelpP2,"In the example on the right, if <code>TNAH-2021-Project-Correspondance-Berlioz</code> is the root of your data repository, the path to get all XML would be <code>donnees/**/*.xml</code>","Dans l'exemple de droite, si <code>TNAH-2021-Project-Correspondance-Berlioz</code> est la racine de votre référentiel de données, le chemin d'accès pour l’ensemble des fichiers XML est <code>donnees/**/*. xml</code>."
+gitlabCI.activateHTRUCHelp,"This will run a test on your <code>htr-united.yml</code> and makes sure it's compliant with the schemas. If the schema evolves, it allows you to ensure your compatibility with it.","Cela effectuera un test sur votre <code>htr-united.yml</code> et garantit qu'il est conforme aux schémas. Si le schéma évolue, cela vous permet d'assurer votre compatibilité avec lui."
+gitlabCI.activateHUMGHelp,"This will produces in depth overview of how many characters, zones, lines and pages you have, but also gives you the amount of zone or lines per type if you typed your zones and lines.","Cela produira une vue d'ensemble de la profondeur du nombre de caractères, de zones, de lignes et de pages que vous avez, mais vous donne également la quantité de zone ou de lignes par type si vous avez saisi vos zones et vos lignes."
+gitlabCI.generateCatalogFileHelp,"Using the computed metrics (line, characters, files, zones), generate automatically a cataloging file with updated <code>volume</code> information.","Génère automatiquement un fichier de catalogage avec les informations de <code>volume</code> à jour avec de nouvelles mesures (ligne, caractères, fichiers, zones)."
+gitlabCI.generateBadgeHelp,"Using this, badges will be generated, such as <img src=""./static/img/example_badge.svg""> which you can include in your README file to show how cool you are.","En utilisant cette option, des badges seront générés, tels que <img src=""/static/img/example_badge.svg"" /> que vous pouvez inclure dans votre fichier README afin d’afficher des statistiques et parce que les badges, c’est cool."
+gitlabCI.activateHTRVXHelp,This will help you make sure that your XML is valid and follows some other specifications.,Cela vous aidera à vous assurer que votre XML est valide et suit quelques autres spécifications.
+gitlabCI.activateSegmontoHelp,"Segmonto is an ontology for typing Zones (sometimes called Regions) and Lines. This ensures you are compatible with it. <em>cf.</em> <a href=""https://hal.archives-ouvertes.fr/hal-03336528"">Publication</a> or <a href=""https://segmonto.github.io/"">Segmonto Guidelines</a>.","Segmonto est une ontologie pour le typage des zones (parfois appelées régions) et des lignes. Cela vous assure que vous êtes compatible avec cela. <em>cf.</em> <a href=""https://hal.archives-ouvertes.fr/hal-03336528"">la publication</a> ou <a href=""https://segmonto.github.io/"">le site Segmonto </a>."
+gitlabCI.activateEmptyLineHelp,"This will warn you about empty lines or regions without lines, without raising an error: this won't make the test fail !",Cela crée des avertissements si des lignes ne contiennent aucun caractère ou si des régions sont vides/ Cela ne provoque pas d’erreur!
+gitlabCI.activateRaiseEmptyLineHelp,This is used on top of the former check. This will raise an error if a line has no text or if a region has no lines.,"En complément de l’option ci-dessus, génère une erreur en cas de ligne ou de région vide."
+gitlabCI.activateXSDHelp,This just makes sure you are compatible with the XML schema. This should always be the case if you use a Graphical User Interface such as Transkribus or eScriptorium.,Cela garantit simplement que vous êtes compatible avec le schéma XML. Cela devrait toujours être le cas si vous utilisez une interface utilisateur telle que Transkribus ou eScriptorium.
+gitlabCI.activatechocoMufinHelp,This will read the text of each lines and summarize the characters found.,"Après avoir lu chaque ligne, étudie les caractères utilisés."
+gitlabCI.chocoMufinModeHelp,"In <code>Generate</code> mode, the Actions won't control your characters but will instead list all characters used. In <code>Control</code> mode, you need to provide a file named <code>table.csv</code> to help ChocoMufin control your data. See <a href=""https://github.com/ponteIneptique/choco-mufin"">the tutorial</a> for more details.","Avec le mode <code>Génération</code>, les actions ne contrôlent pas vos caractères mais listent tous les caractères utilisés. <br /> (Utilisateurs avancés) En mode <code>Contrôle</code>, vous devez fournir un fichier nommé <code>table.csv</code> pour aider Chocomufin à contrôler vos données. Voir <a href=""https://github.com/ponteineptique/choco-mufin""> le tutoriel</a> pour plus de détails."
+gitlabCI.thisUses,This uses ,Utilise 
+gitlabCI.testCatalog,Test Catalog's File,Test du fichier de catalogage
+gitlabCI.testReport,Generate reports,Génération de rapports
+gitlabCI.testXML,Test XML files (structure),Test des fichiers XML (Structure)
+gitlabCI.testChars,Control the characters you use for transcribing,Contrôle des caractères
+gitlabCI.gitlabURLHelp,This should look like <code>https://gitlab.com/demo-user/demo-repository</code>.,La réponse doit ressembler à <code>https://gitlab.com/demo-user/demo-repository</code>.
+gitlabCI.gitlabURL,GitLab repository's URL,URL GitLab du dépôt
+gitlabCI.generate,Generate the GitLab CI file,Générer le fichier GitLab CI
+gitlabCI.steps,Steps to follow,Étapes de mise en place
+gitlabCI.step1,(1) Get the content using either method:,"(1) Récupérez le contenu, au choix:"
+gitlabCI.download,Download,Téléchargez
+gitlabCI.copy,Copy,Copiez
+gitlabCI.step2,(2) Add this file in your repository's root folder,(2) Ajoutez le à la racine de votre dépôt
+gitlabCI.edit,Edit the file if it exists ,Éditer la configuration si elle existe déjà sur 
+gitlabCI.addBadge,(3) Add the following text to your README.md file if you want to show your badges,(3) Ajoutez le texte suivant à votre fichier README si vous voulez afficher les badges
+gitlabCI.editReadme,Edit the README.MD on GitLab,Éditez le Readme.md sur GitLab
 
 changelog.title,Schema changelog,Changelog du schéma
 changelog.disclaimer,"<p></p>","<p>Pour des raisons de simplicité, le contenu de cette page n'est pas disponible en français.</p>"
