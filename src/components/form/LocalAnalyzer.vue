@@ -162,7 +162,7 @@ const total        = ref(0)
 const showAllChars = ref(false)
 const applied      = ref(false)
 const pattern      = ref('*.xml')
-const normMode     = ref('NFC')
+const normMode     = ref('NFKC')
 
 /* ── normalization examples shown in the UI ── */
 const NORM_EXAMPLES = {
