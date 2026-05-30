@@ -71,7 +71,7 @@ function mergeTypeFreq(units, key) {
 }
 
 function typeList(freq) {
-  return Object.keys(freq).sort().map(t => `- \`${t}\``).join('\n')
+  return Object.entries(freq).sort(([a], [b]) => a.localeCompare(b)).map(([t, n]) => `- \`${t}\` (${n})`).join('\n')
 }
 
 export function generateReadme(state) {
