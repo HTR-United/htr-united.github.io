@@ -22,6 +22,7 @@
           class="site-footer__eu-logo"
         >
         <p class="site-footer__eu-text">
+          Funded in the context of the <strong>ATRIUM RESEARCH</strong> project.
           Funded by the European Union under Grant Agreement n.&nbsp;101132163.
           Views and opinions expressed are however those of the author(s) only
           and do not necessarily reflect those of the European Union.
