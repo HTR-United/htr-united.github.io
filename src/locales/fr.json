@@ -224,6 +224,8 @@
       "flags": "Marqueurs spécifiques",
       "autoAligned": "Aligné automatiquement",
       "autoAlignedInfo": "Ce marqueur s'applique si vous avez utilisé un alignement automatique mais n'avez pas effectué de vérification manuelle complète.",
+      "transliteration": "Encodage par translittération",
+      "transliterationInfo": "Cochez si votre vérité de terrain utilise des caractères ASCII ou d'autres caractères pour représenter des glyphes d'un autre système d'écriture — ex. Betacode pour le grec ancien (b = β) ou hiéroglyphes translittérés.",
       "sources": "Détails des sources transcrites",
       "apaInfo": "Le format APA est préféré. Le lien ou la référence APA peuvent suffire.",
       "addSource": "Ajouter une source"
@@ -261,8 +263,6 @@
     "analyzeNorm_NFD": "Décomposition canonique. Les caractères accentués sont divisés en lettre de base et marque combinante — é devient e + ́. Utile si vous souhaitez analyser séparément les lettres de base et les diacritiques.",
     "analyzeNorm_NFKC": "Décomposition de compatibilité + composition. Plus agressive que NFC : développe les ligatures (ﬁ → fi), unifie les caractères visuellement similaires, puis recompose. À utiliser si votre vérité de terrain peut mélanger des variantes de compatibilité.",
     "analyzeNorm_NFKD": "Décomposition de compatibilité sans recomposition. Comme NFKC mais laisse les marques combinantes séparées. Option de normalisation la plus agressive — à utiliser avec précaution pour les scripts historiques.",
-    "analyzeTranslit": "Encodage par translittération",
-    "analyzeTranslitDesc": "Cochez cette case si votre vérité de terrain utilise des caractères ASCII ou d'autres caractères standard pour représenter des glyphes d'un autre système d'écriture — par exemple le Betacode pour le grec ancien (b = β) ou les hiéroglyphes translittérés.",
     "analyzeTitle": "Analyser les fichiers locaux",
     "analyzeDesc": "Sélectionnez un dossier contenant des fichiers XML ALTO ou PAGE. Tout est traité localement — aucun téléversement.",
     "analyzePickFolder": "Sélectionner un dossier…",

@@ -42,15 +42,6 @@
       </div>
     </div>
 
-    <!-- Transliteration -->
-    <div class="la-translit">
-      <label class="checkbox-item">
-        <input type="checkbox" v-model="transliteration">
-        <strong>{{ $t('form.analyzeTranslit') }}</strong>
-      </label>
-      <p class="form-help" style="margin-top:4px">{{ $t('form.analyzeTranslitDesc') }}</p>
-    </div>
-
     <!-- Drop zone / file picker -->
     <div
       class="la-dropzone"
@@ -172,7 +163,6 @@ const showAllChars = ref(false)
 const applied      = ref(false)
 const pattern      = ref('*.xml')
 const normMode     = ref('NFC')
-const transliteration = ref(false)
 
 /* ── normalization examples shown in the UI ── */
 const NORM_EXAMPLES = {
@@ -263,9 +253,8 @@ function applyToForm() {
   emit('apply', {
     metrics,
     characters: {
-      mode:            normMode.value,
-      transliteration: transliteration.value,
-      members:         result.value.members,
+      mode:    normMode.value,
+      members: result.value.members,
     }
   })
   applied.value = true
@@ -320,9 +309,6 @@ function fmt(n) { return (n || 0).toLocaleString() }
 .la-norm__ex-arrow  { color: var(--ink-3); }
 .la-norm__ex-after  { color: var(--olive-deep); font-weight: 700; }
 .la-norm__ex-note   { font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); font-style: italic; }
-
-/* Transliteration */
-.la-translit { margin-bottom: 16px; }
 
 /* Drop zone */
 .la-dropzone {

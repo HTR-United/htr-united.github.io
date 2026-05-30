@@ -224,6 +224,8 @@
       "flags": "Flags",
       "autoAligned": "Automatically aligned",
       "autoAlignedInfo": "This flag is applicable if you used automatic alignment and did not perform a fully manual alignment review.",
+      "transliteration": "Transliteration encoding",
+      "transliterationInfo": "Check this if your ground truth uses ASCII or other characters to represent glyphs from another writing system — e.g. Betacode for ancient Greek (b = β), or transliterated hieroglyphs.",
       "sources": "Sources",
       "apaInfo": "We prefer APA references. The link or the APA reference are sufficient but you can provide both.",
       "addSource": "Add a source"
@@ -261,8 +263,6 @@
     "analyzeNorm_NFD": "Canonical decomposition. Accented characters are split into a base letter plus a combining mark — é becomes e + ́. Useful for scripts where you want to analyze base letters and diacritics separately.",
     "analyzeNorm_NFKC": "Compatibility decomposition + composition. More aggressive than NFC: expands ligatures (ﬁ → fi), unifies visually similar characters, then recomposes. Use if your ground truth may mix compatibility variants.",
     "analyzeNorm_NFKD": "Compatibility decomposition without recomposition. Like NFKC but keeps combining marks separate. The most aggressively-normalizing option — use with care for historical scripts.",
-    "analyzeTranslit": "Transliteration encoding",
-    "analyzeTranslitDesc": "Check this if your ground truth uses ASCII or other standard characters to represent glyphs from another writing system — for example Betacode for ancient Greek (b = β), or transliterated hieroglyphs.",
     "analyzeTitle": "Analyze local files",
     "analyzeDesc": "Select a folder containing ALTO or PAGE XML files. Everything is processed locally — no upload.",
     "analyzePickFolder": "Select folder…",
