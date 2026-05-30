@@ -78,7 +78,13 @@ function renderBlock(block) {
 export function renderMarkdown(raw) {
   if (!raw) return ''
 
-  const text = raw.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim()
+  const text = raw
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    // Inline list items: split on ". - " or "** - " (bold-close then list item).
+    // Handles "**Header:** - item1. - item2." common in HTR-United norms.
+    .replace(/([.!?:»)\*]{1,3})\s{1,8}(?=-\s)/g, '$1\n')
+    .trim()
 
   return text
     .split(/\n{2,}/)
