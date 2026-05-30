@@ -241,11 +241,16 @@
         <!-- Flags -->
         <div class="form-group">
           <label class="form-label">{{ $t('form.fields.flags') }}</label>
-          <label class="checkbox-item">
+          <label class="checkbox-item" style="margin-bottom:8px">
             <input type="checkbox" v-model="form.autoAligned">
             {{ $t('form.fields.autoAligned') }}
           </label>
-          <p class="form-help">{{ $t('form.fields.autoAlignedInfo') }}</p>
+          <p class="form-help" style="margin-bottom:12px">{{ $t('form.fields.autoAlignedInfo') }}</p>
+          <label class="checkbox-item">
+            <input type="checkbox" v-model="form.transliteration">
+            {{ $t('form.fields.transliteration') }}
+          </label>
+          <p class="form-help">{{ $t('form.fields.transliterationInfo') }}</p>
         </div>
 
         <!-- Sources -->
@@ -319,9 +324,10 @@ const form = reactive({
   handsPrecision: 'exact',
   guidelines:   '',
   metrics:      [{ type: 'lines', count: null }],
-  autoAligned:  false,
-  sources:      [],
-  characters:   null,   // populated by LocalAnalyzer: { mode, transliteration, members }
+  autoAligned:     false,
+  transliteration: false,
+  sources:         [],
+  characters:      null,  // populated by LocalAnalyzer: { mode, members }
 })
 
 /* ---- search inputs ---- */
@@ -458,7 +464,16 @@ function generate() {
       .filter(m => m.count !== null && m.count !== '')
       .map(m => ({ metric: m.type, count: String(m.count), scope: 'document' })),
     'automatically-aligned': form.autoAligned,
-    ...(form.characters?.members?.length ? { characters: form.characters } : {}),
+    ...(() => {
+      const hasMembers = form.characters?.members?.length > 0
+      if (!hasMembers && !form.transliteration) return {}
+      return {
+        characters: {
+          ...(form.characters ?? {}),
+          transliteration: form.transliteration,
+        }
+      }
+    })(),
     license: form.license
       ? [{ name: form.license, url: LICENSES[form.license] || '' }]
       : [],
