@@ -12,9 +12,11 @@ export function autoSlug(name) {
   return slugify(name).slice(0, 60)
 }
 
-export function unitDataPath(unit) {
-  const parts = [unit.prefix1, unit.prefix2, unit.slug || autoSlug(unit.name)]
-    .map(p => p?.trim()).filter(Boolean)
+export function unitDataPath(unit, orgLevels = 1) {
+  const slug  = unit.slug || autoSlug(unit.name) || 'unit'
+  const parts = orgLevels === 2 && unit.prefix?.trim()
+    ? [unit.prefix.trim(), slug]
+    : [slug]
   return 'data/' + parts.join('/') + '/'
 }
 
@@ -29,7 +31,7 @@ export async function generateZip(state) {
 
   // Data files per unit
   for (const unit of state.units) {
-    const basePath = unitDataPath(unit)
+    const basePath = unitDataPath(unit, state.orgLevels)
     for (const file of (unit.files || [])) {
       try {
         const buffer = await file.arrayBuffer()

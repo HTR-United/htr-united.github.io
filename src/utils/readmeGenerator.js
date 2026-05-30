@@ -30,8 +30,9 @@ function authorList(authors) {
     .join(', ')
 }
 
-function unitPath(unit) {
-  const parts = [unit.prefix1, unit.prefix2, unit.slug].filter(Boolean)
+function unitPath(unit, orgLevels = 1) {
+  const slug  = unit.slug || unit.name?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'unit'
+  const parts = orgLevels === 2 && unit.prefix ? [unit.prefix, slug] : [slug]
   return 'data/' + parts.join('/') + '/'
 }
 
@@ -42,11 +43,17 @@ function fmt(n) {
 
 function checkmark(b) { return b ? '✓' : '✗' }
 
+function dateRange(unit) {
+  const s = unit.dateStart, e = unit.dateEnd
+  if (s && e && s !== e) return `${s}–${e}`
+  if (s) return String(s)
+  if (e) return String(e)
+  return '—'
+}
+
 function tableRow(unit) {
-  const link = unit.link
-    ? `[**↗**](${unit.link})`
-    : ''
-  return `| ${unit.name || '—'} | ${link} | ${unit.type || '—'} | ${unit.century || '—'} | ${checkmark(unit.colorPages)} | ${fmt(unit.stats?.regions)} | ${fmt(unit.stats?.lines)} | ${fmt(unit.stats?.chars)} | ${unit.genre || '—'} |`
+  const link = unit.link ? `[**↗**](${unit.link})` : ''
+  return `| ${unit.name || '—'} | ${link} | ${dateRange(unit)} | ${checkmark(unit.colorPages)} | ${fmt(unit.stats?.regions)} | ${fmt(unit.stats?.lines)} | ${fmt(unit.stats?.chars)} |`
 }
 
 function sumStat(units, key) {
@@ -54,7 +61,7 @@ function sumStat(units, key) {
 }
 
 export function generateReadme(state) {
-  const { title, description, license, doi, funding, authors, units } = state
+  const { title, description, license, doi, funding, authors, units, orgLevels = 1 } = state
   const year = new Date().getFullYear()
 
   const totalFiles   = sumStat(units, 'files')
@@ -77,8 +84,8 @@ export function generateReadme(state) {
   lines.push('')
 
   if (units.length) {
-    lines.push('| Shelfmark | Links | Type | Century | Color Pages | Main Zones | Lines | Characters | Genre |')
-    lines.push('|-----------|-------|------|---------|-------------|------------|-------|------------|-------|')
+    lines.push('| Shelfmark | Links | Dates | Color Pages | Main Zones | Lines | Characters |')
+    lines.push('|-----------|-------|-------|-------------|------------|-------|------------|')
     units.forEach(u => lines.push(tableRow(u)))
     lines.push('')
   }
@@ -95,7 +102,7 @@ export function generateReadme(state) {
     lines.push('### File structure')
     lines.push('')
     lines.push('```')
-    units.forEach(u => lines.push(unitPath(u)))
+    units.forEach(u => lines.push(unitPath(u, state.orgLevels)))
     lines.push('```')
     lines.push('')
   } else {

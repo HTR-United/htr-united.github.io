@@ -124,20 +124,54 @@
 
       <!-- ══════════ STEP 2: Units ══════════ -->
       <template v-if="step === 2">
-        <div class="form-section" style="background:var(--surface-2);border-color:var(--line)">
-          <h2>{{ $t('zenodo.unitsTitle') }}</h2>
-          <p class="form-help">{{ $t('zenodo.unitsDesc') }}</p>
-          <div class="zw-org-example">
-            <table class="zw-org-table">
-              <thead><tr><th>{{ $t('zenodo.orgExLevels') }}</th><th>{{ $t('zenodo.orgExPath') }}</th><th>{{ $t('zenodo.orgExWhen') }}</th></tr></thead>
-              <tbody>
-                <tr><td>0 {{ $t('zenodo.orgFlat') }}</td><td><code>data/paris-bnf-it-1019/</code></td><td>{{ $t('zenodo.orgEx0') }}</td></tr>
-                <tr><td>1 {{ $t('zenodo.orgLevel') }}</td><td><code>data/fra/paris-bnf-it-1019/</code></td><td>{{ $t('zenodo.orgEx1') }}</td></tr>
-                <tr><td>2 {{ $t('zenodo.orgLevels') }}</td><td><code>data/fra/15th/paris-bnf-it-1019/</code></td><td>{{ $t('zenodo.orgEx2') }}</td></tr>
-              </tbody>
-            </table>
-            <p class="form-help" style="margin-top:8px">💡 {{ $t('zenodo.orgOneLevelNote') }}</p>
+
+        <!-- Global organisation scheme -->
+        <div class="form-section">
+          <h2>{{ $t('zenodo.orgSchemeTitle') }}</h2>
+          <p class="form-help" style="margin-bottom:14px">{{ $t('zenodo.orgSchemeDesc') }}</p>
+
+          <div class="zw-org-choice">
+            <label class="zw-org-opt" :class="{ 'zw-org-opt--on': state.orgLevels === 1 }">
+              <input type="radio" :value="1" v-model="state.orgLevels" style="display:none">
+              <div class="zw-org-opt__header">
+                <span class="zw-org-opt__pill">{{ $t('zenodo.org1Level') }}</span>
+                <code class="zw-org-opt__example">data/paris-bnf-it-1019/</code>
+              </div>
+              <p class="zw-org-opt__desc">{{ $t('zenodo.org1LevelDesc') }}</p>
+            </label>
+            <label class="zw-org-opt" :class="{ 'zw-org-opt--on': state.orgLevels === 2 }">
+              <input type="radio" :value="2" v-model="state.orgLevels" style="display:none">
+              <div class="zw-org-opt__header">
+                <span class="zw-org-opt__pill">{{ $t('zenodo.org2Levels') }}</span>
+                <code class="zw-org-opt__example">data/<em>fra</em>/paris-bnf-it-1019/</code>
+              </div>
+              <p class="zw-org-opt__desc">{{ $t('zenodo.org2LevelsDesc') }}</p>
+            </label>
           </div>
+
+          <!-- Prefix label selector (only for 2-level) -->
+          <template v-if="state.orgLevels === 2">
+            <div class="form-group" style="margin-top:16px">
+              <label class="form-label">{{ $t('zenodo.prefixRepresents') }}</label>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px">
+                <button v-for="opt in PREFIX_OPTIONS" :key="opt.value"
+                  class="tag-btn" :class="{ 'is-on': state.orgPrefixLabel === opt.value }"
+                  @click="state.orgPrefixLabel = opt.value">
+                  {{ opt.label }}
+                </button>
+              </div>
+              <div v-if="state.orgPrefixLabel === 'custom'" style="margin-top:8px">
+                <input class="form-input" style="max-width:240px"
+                  v-model="state.orgPrefixCustom"
+                  :placeholder="$t('zenodo.prefixCustomPlaceholder')">
+              </div>
+              <p class="form-help">{{ $t('zenodo.prefixNote') }}</p>
+            </div>
+          </template>
+        </div>
+
+        <div class="form-section" style="background:var(--surface-2);border-color:var(--line);padding:14px 18px">
+          <p class="form-help">{{ $t('zenodo.unitsDesc') }}</p>
         </div>
 
         <UnitCard
@@ -145,6 +179,8 @@
           :key="unit.id"
           :unit="unit"
           :index="idx"
+          :org-levels="state.orgLevels"
+          :prefix-label="activePrefixLabel"
           @update="updateUnit(idx, $event)"
           @remove="removeUnit(idx)"
         />
@@ -222,14 +258,31 @@ const zipping  = ref(false)
 const yamlInput      = ref(null)
 const importedFrom   = ref('')
 
+const PREFIX_OPTIONS = computed(() => [
+  { value: 'language',  label: t('zenodo.prefixLanguage') },
+  { value: 'century',   label: t('zenodo.prefixCentury')  },
+  { value: 'bookshelf', label: t('zenodo.prefixBookshelf')},
+  { value: 'scribe',    label: t('zenodo.prefixScribe')   },
+  { value: 'year',      label: t('zenodo.prefixYear')     },
+  { value: 'custom',    label: t('zenodo.prefixCustom')   },
+])
+
 const state = reactive({
-  title:       '',
-  description: '',
-  license:     'CC-BY 4.0',
-  doi:         '',
-  funding:     '',
-  authors:     [{ name: '', surname: '', orcid: '' }],
-  units:       [],
+  title:            '',
+  description:      '',
+  license:          'CC-BY 4.0',
+  doi:              '',
+  funding:          '',
+  authors:          [{ name: '', surname: '', orcid: '' }],
+  orgLevels:        1,
+  orgPrefixLabel:   'language',
+  orgPrefixCustom:  '',
+  units:            [],
+})
+
+const activePrefixLabel = computed(() => {
+  if (state.orgPrefixLabel === 'custom') return state.orgPrefixCustom || t('zenodo.prefixCustom')
+  return PREFIX_OPTIONS.value.find(o => o.value === state.orgPrefixLabel)?.label || state.orgPrefixLabel
 })
 
 const stepLabels = computed(() => [
@@ -276,11 +329,9 @@ function addUnit() {
     id:         Math.random().toString(36).slice(2),
     name:       '',
     slug:       '',
-    prefix1:    '',
-    prefix2:    '',
-    century:    '',
-    type:       'prose',
-    genre:      '',
+    prefix:     '',
+    dateStart:  '',
+    dateEnd:    '',
     colorPages: false,
     link:       '',
     files:      [],
@@ -356,13 +407,22 @@ async function downloadZip() {
 }
 .zw-doi-callout__icon { font-size: 24px; flex-shrink: 0; line-height: 1.4; }
 
-/* Org example table */
-.zw-org-example { margin-top: 12px; }
-.zw-org-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.zw-org-table th { text-align: left; padding: 6px 10px; background: var(--surface); font-weight: 700; color: var(--ink-2); border-bottom: 1px solid var(--line); }
-.zw-org-table td { padding: 7px 10px; border-bottom: 1px solid var(--line); color: var(--ink-2); vertical-align: top; }
-.zw-org-table td:first-child { white-space: nowrap; }
-.zw-org-table code { font-family: var(--mono); font-size: 12px; }
+/* Org choice cards */
+.zw-org-choice { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.zw-org-opt {
+  border: 2px solid var(--line-2); border-radius: var(--radius); padding: 14px 16px;
+  cursor: pointer; transition: border-color .15s, background .15s; display: block;
+}
+.zw-org-opt:hover { border-color: var(--olive-tint); background: var(--olive-tint-2); }
+.zw-org-opt--on { border-color: var(--olive); background: var(--olive-tint-2); }
+.zw-org-opt__header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.zw-org-opt__pill {
+  font-size: 12px; font-weight: 700; padding: 2px 9px;
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: 20px; color: var(--ink-2);
+}
+.zw-org-opt--on .zw-org-opt__pill { background: var(--olive); border-color: var(--olive); color: #fff; }
+.zw-org-opt__example { font-family: var(--mono); font-size: 12px; color: var(--olive-deep); }
+.zw-org-opt__desc { font-size: 12.5px; color: var(--ink-3); margin: 0; }
 
 /* README preview */
 .zw-readme-preview {
