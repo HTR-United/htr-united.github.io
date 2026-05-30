@@ -173,7 +173,10 @@ async function addFiles(list) {
   try {
     const result = await analyzeFiles(xmlFiles)
     emit('update', {
-      stats: { lines: result.lines, chars: result.chars, regions: result.regions, files: all.length }
+      stats: {
+        lines: result.lines, chars: result.chars, regions: result.regions, files: all.length,
+        regionTypes: result.regionTypes, lineTypes: result.lineTypes,
+      }
     })
   } finally {
     analyzing.value = false
