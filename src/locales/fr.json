@@ -253,6 +253,8 @@
       "regions": "Zones",
       "files": "Fichiers XML"
     },
+    "analyzePattern": "Filtre de fichiers",
+    "analyzePatternHint": "Motifs glob séparés par des virgules · ex. *.xml, GT_*.xml, *.alto",
     "analyzeTitle": "Analyser les fichiers locaux",
     "analyzeDesc": "Sélectionnez un dossier contenant des fichiers XML ALTO ou PAGE. Tout est traité localement — aucun téléversement.",
     "analyzePickFolder": "Sélectionner un dossier…",

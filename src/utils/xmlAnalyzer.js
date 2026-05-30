@@ -105,12 +105,13 @@ function mergeResults(acc, doc) {
  * Analyze a FileList (from <input webkitdirectory>) or File[].
  * @param {FileList|File[]} fileList
  * @param {(done: number, total: number) => void} onProgress
+ * @param {(filename: string) => boolean} [matcher] - filename filter, defaults to *.xml
  * @returns {Promise<{files, lines, chars, words, regions, charFreq, errors}>}
  */
-export async function analyzeFiles(fileList, onProgress) {
-  const xmlFiles = Array.from(fileList).filter(f =>
-    f.name.toLowerCase().endsWith('.xml')
-  )
+export async function analyzeFiles(fileList, onProgress, matcher) {
+  const defaultMatcher = f => f.name.toLowerCase().endsWith('.xml')
+  const keep = matcher ?? defaultMatcher
+  const xmlFiles = Array.from(fileList).filter(f => keep(f.name))
 
   const totals = { files: xmlFiles.length, lines: 0, chars: 0, words: 0, regions: 0, charFreq: {} }
   const errors = []

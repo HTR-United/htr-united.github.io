@@ -3,6 +3,19 @@
     <h2>{{ $t('form.analyzeTitle') }}</h2>
     <p class="form-help" style="margin-bottom:16px">{{ $t('form.analyzeDesc') }}</p>
 
+    <!-- Pattern filter -->
+    <div class="la-pattern">
+      <label class="la-pattern__label">{{ $t('form.analyzePattern') }}</label>
+      <input
+        v-model="pattern"
+        class="form-input la-pattern__input"
+        placeholder="*.xml"
+        spellcheck="false"
+        @keydown.enter.prevent
+      >
+      <span class="la-pattern__hint">{{ $t('form.analyzePatternHint') }}</span>
+    </div>
+
     <!-- Drop zone / file picker -->
     <div
       class="la-dropzone"
@@ -122,6 +135,20 @@ const done       = ref(0)
 const total      = ref(0)
 const showAllChars = ref(false)
 const applied    = ref(false)
+const pattern    = ref('*.xml')
+
+/** Convert a comma/space-separated glob pattern list to a matcher function. */
+function buildMatcher(raw) {
+  const globs = raw.split(/[\s,]+/).map(s => s.trim()).filter(Boolean)
+  if (!globs.length) return () => true
+  const regexes = globs.map(glob => {
+    const escaped = glob.replace(/[.+^${}()|[\]\\]/g, '\\$&') // escape regex special chars except * and ?
+      .replace(/\*/g, '.*')
+      .replace(/\?/g, '.')
+    return new RegExp('^' + escaped + '$', 'i')
+  })
+  return (filename) => regexes.some(re => re.test(filename))
+}
 
 const progressPct = computed(() => total.value ? Math.round(done.value / total.value * 100) : 0)
 
@@ -136,13 +163,14 @@ async function run(fileList) {
   applied.value = false
   analyzing.value = true
   done.value = 0
-  total.value = Array.from(fileList).filter(f => f.name.toLowerCase().endsWith('.xml')).length
+  const matcher = buildMatcher(pattern.value || '*.xml')
+  total.value = Array.from(fileList).filter(f => matcher(f.name)).length
 
   try {
     result.value = await analyzeFiles(fileList, (d, tot) => {
       done.value  = d
       total.value = tot
-    })
+    }, matcher)
   } finally {
     analyzing.value = false
   }
@@ -201,6 +229,17 @@ const charLabelFn = charLabel
 
 <style scoped>
 .la { cursor: default; }
+
+.la-pattern {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap;
+}
+.la-pattern__label {
+  font-size: 12.5px; font-weight: 700; color: var(--ink-2); white-space: nowrap;
+}
+.la-pattern__input {
+  width: 200px; font-family: var(--mono); font-size: 13px; padding: 7px 11px;
+}
+.la-pattern__hint { font-size: 12px; color: var(--ink-3); }
 
 .la-dropzone {
   border: 2px dashed var(--line-2); border-radius: var(--radius);
