@@ -112,7 +112,7 @@
 
       <!-- Footer actions -->
       <div class="card__foot">
-        <a v-if="dataset.repo" class="btn btn--primary" :href="dataset.repo" target="_blank" rel="noopener">
+        <a class="btn btn--primary" :href="'/share.html?id=' + dataset.id">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           {{ $t('catalog.viewFull') }}
         </a>
