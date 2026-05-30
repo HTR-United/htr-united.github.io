@@ -10,7 +10,6 @@ export function detectFormat(doc) {
   const root = doc.documentElement?.localName?.toLowerCase()
   if (root === 'alto') return 'alto'
   if (root === 'pcgts') return 'page'
-  // Fallback: check namespace
   const ns = doc.documentElement?.namespaceURI || ''
   if (ns.includes('alto')) return 'alto'
   if (ns.includes('PAGE') || ns.includes('page')) return 'page'
@@ -19,65 +18,67 @@ export function detectFormat(doc) {
 
 /* ── text extraction ── */
 function textFromAltoLine(lineEl) {
-  // ALTO 4: <TextEquiv><Unicode>text</Unicode></TextEquiv>
   const unicode = lineEl.querySelector('TextEquiv > Unicode')
   if (unicode) return unicode.textContent || ''
-
-  // ALTO 2/3: <String CONTENT="text"/> elements
   const strings = lineEl.querySelectorAll('String')
   if (strings.length) {
-    return Array.from(strings)
-      .map(s => s.getAttribute('CONTENT') || '')
-      .join(' ')
+    return Array.from(strings).map(s => s.getAttribute('CONTENT') || '').join(' ')
   }
   return ''
 }
 
 function textFromPageLine(lineEl) {
-  // PAGE: last <TextEquiv> child's <Unicode> (highest confidence)
   const equivs = lineEl.querySelectorAll(':scope > TextEquiv > Unicode')
   if (equivs.length) return equivs[equivs.length - 1].textContent || ''
   return ''
 }
 
+/* ── normalization ── */
+/**
+ * Apply Unicode normalization to a text string.
+ * @param {string} text
+ * @param {'None'|'NFC'|'NFD'|'NFKC'|'NFKD'} mode
+ */
+function applyNorm(text, mode) {
+  if (!mode || mode === 'None') return text
+  return text.normalize(mode)
+}
+
 /* ── single-file analysis ── */
-export function analyzeDoc(doc) {
+/**
+ * @param {Document} doc
+ * @param {'None'|'NFC'|'NFD'|'NFKC'|'NFKD'} normMode
+ */
+export function analyzeDoc(doc, normMode = 'NFC') {
   const format = detectFormat(doc)
   const result = { lines: 0, chars: 0, words: 0, regions: 0, charFreq: {} }
+
+  function countText(raw) {
+    const text = applyNorm(raw, normMode)
+    result.chars += text.length
+    result.words += text.trim() ? text.trim().split(/\s+/).length : 0
+    for (const ch of text) {
+      result.charFreq[ch] = (result.charFreq[ch] || 0) + 1
+    }
+  }
 
   if (format === 'alto') {
     result.regions = doc.querySelectorAll('TextBlock').length
     const lineEls = doc.querySelectorAll('TextLine')
     result.lines = lineEls.length
-    lineEls.forEach(el => {
-      const text = textFromAltoLine(el)
-      result.chars += text.length
-      result.words += text.trim() ? text.trim().split(/\s+/).length : 0
-      for (const ch of text) addChar(result.charFreq, ch)
-    })
+    lineEls.forEach(el => countText(textFromAltoLine(el)))
 
   } else if (format === 'page') {
     result.regions = doc.querySelectorAll('TextRegion').length
     const lineEls = doc.querySelectorAll('TextLine')
     result.lines = lineEls.length
-    lineEls.forEach(el => {
-      const text = textFromPageLine(el)
-      result.chars += text.length
-      result.words += text.trim() ? text.trim().split(/\s+/).length : 0
-      for (const ch of text) addChar(result.charFreq, ch)
-    })
+    lineEls.forEach(el => countText(textFromPageLine(el)))
 
   } else {
-    // Unknown format: just count TextLine elements generically
-    const lineEls = doc.querySelectorAll('TextLine')
-    result.lines = lineEls.length
+    result.lines = doc.querySelectorAll('TextLine').length
   }
 
   return result
-}
-
-function addChar(freq, ch) {
-  freq[ch] = (freq[ch] || 0) + 1
 }
 
 /* ── read a File as text ── */
@@ -104,12 +105,13 @@ function mergeResults(acc, doc) {
 /**
  * Analyze a FileList (from <input webkitdirectory>) or File[].
  * @param {FileList|File[]} fileList
- * @param {(done: number, total: number) => void} onProgress
+ * @param {(done: number, total: number) => void} [onProgress]
  * @param {(filename: string) => boolean} [matcher] - filename filter, defaults to *.xml
- * @returns {Promise<{files, lines, chars, words, regions, charFreq, errors}>}
+ * @param {'None'|'NFC'|'NFD'|'NFKC'|'NFKD'} [normMode]
+ * @returns {Promise<{files, lines, chars, words, regions, charFreq, members, errors}>}
  */
-export async function analyzeFiles(fileList, onProgress, matcher) {
-  const defaultMatcher = f => f.name.toLowerCase().endsWith('.xml')
+export async function analyzeFiles(fileList, onProgress, matcher, normMode = 'NFC') {
+  const defaultMatcher = f => f.toLowerCase().endsWith('.xml')
   const keep = matcher ?? defaultMatcher
   const xmlFiles = Array.from(fileList).filter(f => keep(f.name))
 
@@ -121,15 +123,17 @@ export async function analyzeFiles(fileList, onProgress, matcher) {
     try {
       const text = await readFile(file)
       const doc  = parser.parseFromString(text, 'application/xml')
-      // DOMParser sets a parseerror element on failure
       if (doc.querySelector('parseerror')) throw new Error('XML parse error')
-      mergeResults(totals, analyzeDoc(doc))
+      mergeResults(totals, analyzeDoc(doc, normMode))
     } catch (e) {
       errors.push({ name: file.name, error: e.message })
     }
     done++
     onProgress?.(done, xmlFiles.length)
   }
+
+  // Build sorted unique character list (by code point — canonical order)
+  totals.members = Object.keys(totals.charFreq).sort((a, b) => a.codePointAt(0) - b.codePointAt(0))
 
   return { ...totals, errors }
 }
@@ -147,8 +151,9 @@ export function charLabel(ch) {
 }
 
 export function sortedCharFreq(charFreq, limit = null) {
-  const entries = Object.entries(charFreq)
-    .filter(([ch]) => ch !== ' ' || true) // keep all
-    .sort((a, b) => b[1] - a[1])
+  const entries = Object.entries(charFreq).sort((a, b) => b[1] - a[1])
   return limit ? entries.slice(0, limit) : entries
 }
+
+/* ── normalization metadata ── */
+export const NORM_MODES = ['None', 'NFC', 'NFD', 'NFKC', 'NFKD']

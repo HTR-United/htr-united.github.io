@@ -321,6 +321,7 @@ const form = reactive({
   metrics:      [{ type: 'lines', count: null }],
   autoAligned:  false,
   sources:      [],
+  characters:   null,   // populated by LocalAnalyzer: { mode, transliteration, members }
 })
 
 /* ---- search inputs ---- */
@@ -411,8 +412,9 @@ function addMetric() {
 function removeMetric(idx) {
   form.metrics.splice(idx, 1)
 }
-function applyMetrics(metrics) {
+function applyMetrics({ metrics, characters }) {
   form.metrics = metrics
+  if (characters) form.characters = characters
 }
 
 /* ---- YAML generation ---- */
@@ -456,6 +458,7 @@ function generate() {
       .filter(m => m.count !== null && m.count !== '')
       .map(m => ({ metric: m.type, count: String(m.count), scope: 'document' })),
     'automatically-aligned': form.autoAligned,
+    ...(form.characters?.members?.length ? { characters: form.characters } : {}),
     license: form.license
       ? [{ name: form.license, url: LICENSES[form.license] || '' }]
       : [],

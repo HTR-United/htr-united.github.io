@@ -16,6 +16,41 @@
       <span class="la-pattern__hint">{{ $t('form.analyzePatternHint') }}</span>
     </div>
 
+    <!-- Normalization mode -->
+    <div class="la-norm">
+      <div class="la-norm__label">{{ $t('form.analyzeNormMode') }}</div>
+      <div class="la-norm__options">
+        <label
+          v-for="mode in NORM_MODES"
+          :key="mode"
+          class="la-norm__option"
+          :class="{ 'la-norm__option--on': normMode === mode }"
+        >
+          <input type="radio" :value="mode" v-model="normMode" style="display:none">
+          <span class="la-norm__pill">{{ mode }}</span>
+        </label>
+      </div>
+      <!-- Contextual explanation for selected mode -->
+      <div class="la-norm__desc">
+        <div class="la-norm__example">
+          <span class="la-norm__ex-before">{{ normExample.before }}</span>
+          <span class="la-norm__ex-arrow">→</span>
+          <span class="la-norm__ex-after">{{ normExample.after }}</span>
+          <span class="la-norm__ex-note">{{ normExample.note }}</span>
+        </div>
+        <p>{{ $t('form.analyzeNorm_' + normMode) }}</p>
+      </div>
+    </div>
+
+    <!-- Transliteration -->
+    <div class="la-translit">
+      <label class="checkbox-item">
+        <input type="checkbox" v-model="transliteration">
+        <strong>{{ $t('form.analyzeTranslit') }}</strong>
+      </label>
+      <p class="form-help" style="margin-top:4px">{{ $t('form.analyzeTranslitDesc') }}</p>
+    </div>
+
     <!-- Drop zone / file picker -->
     <div
       class="la-dropzone"
@@ -30,7 +65,6 @@
         type="file"
         webkitdirectory
         multiple
-        accept=".xml"
         style="display:none"
         @change="onPick"
       >
@@ -74,7 +108,7 @@
           <span>{{ $t('form.analyzeWords') }}</span>
         </div>
         <div class="la-metric la-metric--unique">
-          <b>{{ Object.keys(result.charFreq).length }}</b>
+          <b>{{ result.members.length }}</b>
           <span>{{ $t('form.analyzeUniqueChars') }}</span>
         </div>
       </div>
@@ -89,6 +123,7 @@
       <div class="la-chartable">
         <div class="la-chartable__head">
           <strong>{{ $t('form.analyzeCharTable') }}</strong>
+          <span class="la-chartable__norm-tag">{{ normMode }}</span>
           <button class="la-chartable__toggle" @click="showAllChars = !showAllChars">
             {{ showAllChars ? $t('form.analyzeShowLess') : $t('form.analyzeShowAll') }}
           </button>
@@ -98,7 +133,7 @@
             v-for="[ch, n] in displayedChars"
             :key="ch"
             class="la-char"
-            :title="'U+' + ch.codePointAt(0).toString(16).toUpperCase().padStart(4,'0') + ' · ' + n + ' occurrences'"
+            :title="'U+' + ch.codePointAt(0).toString(16).toUpperCase().padStart(4,'0') + ' · ' + n + ' occ.'"
           >
             <span class="la-char__glyph">{{ charLabel(ch) }}</span>
             <span class="la-char__count">{{ n }}</span>
@@ -107,7 +142,7 @@
       </div>
 
       <!-- Apply button -->
-      <div style="margin-top:20px;display:flex;gap:10px;align-items:center">
+      <div style="margin-top:20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
         <button class="btn btn--olive" @click="applyToForm">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           {{ $t('form.analyzeApply') }}
@@ -122,27 +157,40 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { analyzeFiles, charLabel, sortedCharFreq } from '../../utils/xmlAnalyzer.js'
+import { analyzeFiles, charLabel, sortedCharFreq, NORM_MODES } from '../../utils/xmlAnalyzer.js'
 
 const { t } = useI18n()
 const emit = defineEmits(['apply'])
 
-const fileInput  = ref(null)
-const dragging   = ref(false)
-const analyzing  = ref(false)
-const result     = ref(null)
-const done       = ref(0)
-const total      = ref(0)
+const fileInput    = ref(null)
+const dragging     = ref(false)
+const analyzing    = ref(false)
+const result       = ref(null)
+const done         = ref(0)
+const total        = ref(0)
 const showAllChars = ref(false)
-const applied    = ref(false)
-const pattern    = ref('*.xml')
+const applied      = ref(false)
+const pattern      = ref('*.xml')
+const normMode     = ref('NFC')
+const transliteration = ref(false)
 
-/** Convert a comma/space-separated glob pattern list to a matcher function. */
+/* ── normalization examples shown in the UI ── */
+const NORM_EXAMPLES = {
+  None:  { before: 'é (U+00E9)  fi (U+FB01)',  after: 'unchanged',                      note: '2 chars · ligature kept' },
+  NFC:   { before: 'e + ́ (2 cp)', after: 'é (1 cp)',                         note: 'precomposed' },
+  NFD:   { before: 'é (1 cp)',    after: 'e + ́ (2 cp)',                       note: 'base + combining mark' },
+  NFKC:  { before: 'ﬁ (U+FB01)', after: 'fi (2 cp)',                          note: 'ligature expanded + composed' },
+  NFKD:  { before: 'ﬁ (U+FB01)', after: 'f + i (2 cp)',                       note: 'ligature expanded + decomposed' },
+}
+const normExample = computed(() => NORM_EXAMPLES[normMode.value])
+
+/* ── glob pattern matcher ── */
 function buildMatcher(raw) {
   const globs = raw.split(/[\s,]+/).map(s => s.trim()).filter(Boolean)
   if (!globs.length) return () => true
   const regexes = globs.map(glob => {
-    const escaped = glob.replace(/[.+^${}()|[\]\\]/g, '\\$&') // escape regex special chars except * and ?
+    const escaped = glob
+      .replace(/[.+^${}()|[\]\\]/g, '\\$&')
       .replace(/\*/g, '.*')
       .replace(/\?/g, '.')
     return new RegExp('^' + escaped + '$', 'i')
@@ -150,13 +198,13 @@ function buildMatcher(raw) {
   return (filename) => regexes.some(re => re.test(filename))
 }
 
-const progressPct = computed(() => total.value ? Math.round(done.value / total.value * 100) : 0)
-
+const progressPct   = computed(() => total.value ? Math.round(done.value / total.value * 100) : 0)
 const displayedChars = computed(() => {
   if (!result.value) return []
   return sortedCharFreq(result.value.charFreq, showAllChars.value ? null : 60)
 })
 
+/* ── run analysis ── */
 async function run(fileList) {
   if (!fileList || fileList.length === 0) return
   result.value  = null
@@ -167,10 +215,12 @@ async function run(fileList) {
   total.value = Array.from(fileList).filter(f => matcher(f.name)).length
 
   try {
-    result.value = await analyzeFiles(fileList, (d, tot) => {
-      done.value  = d
-      total.value = tot
-    }, matcher)
+    result.value = await analyzeFiles(
+      fileList,
+      (d, tot) => { done.value = d; total.value = tot },
+      matcher,
+      normMode.value
+    )
   } finally {
     analyzing.value = false
   }
@@ -180,7 +230,6 @@ function onPick(e) { run(e.target.files) }
 
 function onDrop(e) {
   dragging.value = false
-  // Collect all files from dropped items (including directories)
   const files = []
   const collect = (entry) => new Promise(resolve => {
     if (entry.isFile) {
@@ -194,7 +243,6 @@ function onDrop(e) {
       readAll()
     } else resolve()
   })
-
   const items = Array.from(e.dataTransfer.items || [])
   if (items.length && items[0].webkitGetAsEntry) {
     Promise.all(items.map(i => collect(i.webkitGetAsEntry()))).then(() => run(files))
@@ -203,6 +251,7 @@ function onDrop(e) {
   }
 }
 
+/* ── apply to form ── */
 function applyToForm() {
   if (!result.value) return
   const metrics = []
@@ -210,7 +259,15 @@ function applyToForm() {
   if (result.value.lines)   metrics.push({ type: 'lines',      count: result.value.lines })
   if (result.value.chars)   metrics.push({ type: 'characters', count: result.value.chars })
   if (result.value.regions) metrics.push({ type: 'regions',    count: result.value.regions })
-  emit('apply', metrics)
+
+  emit('apply', {
+    metrics,
+    characters: {
+      mode:            normMode.value,
+      transliteration: transliteration.value,
+      members:         result.value.members,
+    }
+  })
   applied.value = true
   setTimeout(() => { applied.value = false }, 3000)
 }
@@ -222,25 +279,52 @@ function reset() {
 }
 
 function fmt(n) { return (n || 0).toLocaleString() }
-
-// re-export for template
-const charLabelFn = charLabel
 </script>
 
 <style scoped>
 .la { cursor: default; }
 
+/* Pattern row */
 .la-pattern {
   display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap;
 }
-.la-pattern__label {
-  font-size: 12.5px; font-weight: 700; color: var(--ink-2); white-space: nowrap;
-}
-.la-pattern__input {
-  width: 200px; font-family: var(--mono); font-size: 13px; padding: 7px 11px;
-}
+.la-pattern__label { font-size: 12.5px; font-weight: 700; color: var(--ink-2); white-space: nowrap; }
+.la-pattern__input { width: 200px; font-family: var(--mono); font-size: 13px; padding: 7px 11px; }
 .la-pattern__hint { font-size: 12px; color: var(--ink-3); }
 
+/* Normalization section */
+.la-norm { margin-bottom: 16px; }
+.la-norm__label { font-size: 12.5px; font-weight: 700; color: var(--ink-2); margin-bottom: 8px; }
+.la-norm__options { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.la-norm__option { cursor: pointer; }
+.la-norm__pill {
+  display: block; font-family: var(--mono); font-size: 13px; font-weight: 600;
+  padding: 5px 13px; border-radius: 6px; border: 1.5px solid var(--line-2);
+  background: var(--surface); color: var(--ink-2);
+  transition: all .12s;
+}
+.la-norm__option:hover .la-norm__pill { border-color: var(--olive-tint); background: var(--olive-tint-2); color: var(--olive-deep); }
+.la-norm__option--on .la-norm__pill { background: var(--olive); border-color: var(--olive-deep); color: #fff; }
+
+.la-norm__desc {
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 12px 14px;
+}
+.la-norm__desc p { font-size: 13px; color: var(--ink-2); margin: 6px 0 0; line-height: 1.55; }
+
+.la-norm__example {
+  display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+  font-family: var(--mono); font-size: 13px;
+}
+.la-norm__ex-before { color: var(--ink-3); }
+.la-norm__ex-arrow  { color: var(--ink-3); }
+.la-norm__ex-after  { color: var(--olive-deep); font-weight: 700; }
+.la-norm__ex-note   { font-family: var(--sans); font-size: 11.5px; color: var(--ink-3); font-style: italic; }
+
+/* Transliteration */
+.la-translit { margin-bottom: 16px; }
+
+/* Drop zone */
 .la-dropzone {
   border: 2px dashed var(--line-2); border-radius: var(--radius);
   padding: 28px 20px; display: flex; align-items: center; gap: 18px;
@@ -251,12 +335,13 @@ const charLabelFn = charLabel
 .la-dropzone--over { border-color: var(--olive); background: var(--olive-tint-2); }
 .la-dropzone--done { border-style: solid; border-color: var(--olive-tint); }
 .la-dropzone__icon { width: 36px; height: 36px; color: var(--ink-3); flex-shrink: 0; }
-.la-dropzone--over .la-dropzone__icon,
-.la-dropzone:hover .la-dropzone__icon { color: var(--olive-deep); }
+.la-dropzone:hover .la-dropzone__icon,
+.la-dropzone--over .la-dropzone__icon { color: var(--olive-deep); }
 .la-dropzone__text { display: flex; flex-direction: column; gap: 4px; }
 .la-dropzone__text strong { font-size: 14px; color: var(--ink); }
 .la-dropzone__text span { font-size: 12.5px; color: var(--ink-3); }
 
+/* Progress */
 .la-progress {
   margin-top: 14px; position: relative;
   height: 6px; background: var(--line); border-radius: 4px; overflow: hidden;
@@ -270,9 +355,8 @@ const charLabelFn = charLabel
   font-size: 12px; color: var(--ink-3);
 }
 
-.la-metrics {
-  display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px;
-}
+/* Metric cards */
+.la-metrics { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
 .la-metric {
   display: flex; flex-direction: column; gap: 2px;
   background: var(--surface); border: 1px solid var(--line);
@@ -288,15 +372,20 @@ const charLabelFn = charLabel
   background: var(--rose-bg); color: var(--rose-ink); font-size: 12.5px;
 }
 
+/* Character table */
 .la-chartable { margin-top: 20px; }
 .la-chartable__head {
-  display: flex; justify-content: space-between; align-items: baseline;
-  margin-bottom: 10px;
+  display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;
 }
 .la-chartable__head strong { font-size: 13px; color: var(--ink); }
+.la-chartable__norm-tag {
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  background: var(--olive-tint-2); color: var(--olive-deep);
+  border: 1px solid var(--olive-tint); border-radius: 4px; padding: 1px 7px;
+}
 .la-chartable__toggle {
   font-size: 12px; font-weight: 600; color: var(--accent);
-  background: none; border: none; cursor: pointer; padding: 0;
+  background: none; border: none; cursor: pointer; padding: 0; margin-left: auto;
 }
 .la-chartable__toggle:hover { text-decoration: underline; }
 
