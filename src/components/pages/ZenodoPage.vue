@@ -198,7 +198,13 @@
       <!-- ══════════ STEP 3: Preview & Export ══════════ -->
       <template v-if="step === 3">
         <div class="form-section">
-          <h2>{{ $t('zenodo.previewTitle') }}</h2>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px">
+            <h2 style="margin:0">{{ $t('zenodo.previewTitle') }}</h2>
+            <button class="btn btn--ghost" style="font-size:12.5px;white-space:nowrap" @click="copyHtml">
+              {{ copied ? $t('zenodo.copied') : $t('zenodo.copyHtml') }}
+            </button>
+          </div>
+          <p class="form-help" style="margin-bottom:10px">{{ $t('zenodo.copyHtmlHint') }}</p>
           <div class="zw-readme-preview prose" v-html="renderedReadme"></div>
         </div>
 
@@ -249,12 +255,13 @@ import AppFooter from '../AppFooter.vue'
 import UnitCard from '../zenodo/UnitCard.vue'
 import { generateReadme, generateCff } from '../../utils/readmeGenerator.js'
 import { generateZip, downloadBlob } from '../../utils/zenodoZip.js'
-import { renderMarkdown } from '../../utils/markdown.js'
+import { renderGfm } from '../../utils/markdown.js'
 
 const { t } = useI18n()
 
 const step     = ref(1)
 const zipping  = ref(false)
+const copied   = ref(false)
 const yamlInput      = ref(null)
 const importedFrom   = ref('')
 
@@ -354,7 +361,14 @@ watch(() => step.value, (s) => {
   if (s === 3) readmeText.value = generateReadme(state)
 }, { immediate: false })
 
-const renderedReadme = computed(() => renderMarkdown(readmeText.value))
+const renderedReadme = computed(() => renderGfm(readmeText.value))
+
+/* ── Copy HTML ── */
+async function copyHtml() {
+  await navigator.clipboard.writeText(renderedReadme.value)
+  copied.value = true
+  setTimeout(() => { copied.value = false }, 2000)
+}
 
 /* ── Downloads ── */
 function downloadReadme() {
