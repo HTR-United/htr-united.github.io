@@ -87,7 +87,8 @@
       "hands": "Hands",
       "size": "Corpus size",
       "software": "Software",
-      "license": "License"
+      "license": "License",
+      "project": "Project"
     },
     "chips": {
       "language": "Lang",

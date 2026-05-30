@@ -43,7 +43,7 @@ function mapHands(hands) {
 function normalizeLicense(lic) {
   if (!lic) return []
   const arr = Array.isArray(lic) ? lic : [lic]
-  return arr.map(l => (typeof l === 'string' ? l : l.name)).filter(Boolean)
+  return arr.map(l => (typeof l === 'string' ? l : l.name)?.trim()).filter(Boolean)
 }
 
 // script: always [{iso: "Latn"}, ...] in the real data
@@ -83,7 +83,7 @@ function transform(id, raw) {
   const entry = {
     id,
     name:        raw.title || id,
-    project:     raw['project-name'] || '',
+    project:     (raw['project-name'] || '').trim(),
     dateStart:   start,
     dateEnd:     end,
     era:         start === end ? String(start) : `${start}–${end}`,

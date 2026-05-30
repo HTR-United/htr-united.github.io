@@ -230,6 +230,7 @@ const FACETS = [
   { key: 'size' },
   { key: 'software' },
   { key: 'license' },
+  { key: 'project', scalar: true },
 ]
 
 const optionFacets = [
@@ -291,6 +292,8 @@ function matchFacet(d, key) {
   const sel = state.filters[key]
   if (!sel || sel.size === 0) return true
   if (key === 'size') return sel.has(d._sizeTier)
+  const facet = FACETS.find(f => f.key === key)
+  if (facet?.scalar) return sel.has(d[key] || '')
   return (d[key] || []).some(v => sel.has(v))
 }
 function matches(d, exclude = null) {
@@ -317,16 +320,17 @@ const allFacetValues = computed(() => {
     const key = facet.key
     const counts = {}
 
+    const facetDef = FACETS.find(f => f.key === key)
+    const getVals  = d => key === 'size' ? [d._sizeTier] : facetDef?.scalar ? (d[key] ? [d[key]] : []) : (d[key] || [])
+
     // Collect all possible values first (to show zero-count items)
     for (const d of datasets.value) {
-      const vals = key === 'size' ? [d._sizeTier] : (d[key] || [])
-      for (const v of vals) { if (!(v in counts)) counts[v] = 0 }
+      for (const v of getVals(d)) { if (!(v in counts)) counts[v] = 0 }
     }
     // Count matches excluding this facet
     for (const d of datasets.value) {
       if (!matches(d, key)) continue
-      const vals = key === 'size' ? [d._sizeTier] : (d[key] || [])
-      for (const v of vals) { counts[v] = (counts[v] || 0) + 1 }
+      for (const v of getVals(d)) { counts[v] = (counts[v] || 0) + 1 }
     }
 
     const items = Object.entries(counts).map(([value, n]) => ({
