@@ -10,11 +10,27 @@ function escHtml(s) {
   return s.replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]))
 }
 
-function linkify(text) {
-  return escHtml(text).replace(URL_RE, url =>
-    `<a href="${escHtml(url)}" target="_blank" rel="noopener">${escHtml(url)}</a>`
-  )
+function inline(text) {
+  return escHtml(text)
+    // Bold+italic: ***text*** or ___text___
+    .replace(/\*{3}(.+?)\*{3}/g, '<strong><em>$1</em></strong>')
+    .replace(/_{3}(.+?)_{3}/g,   '<strong><em>$1</em></strong>')
+    // Bold: **text** or __text__
+    .replace(/\*{2}(.+?)\*{2}/g, '<strong>$1</strong>')
+    .replace(/_{2}(.+?)_{2}/g,   '<strong>$1</strong>')
+    // Italic: *text* or _text_  (not adjacent to spaces on the inner side)
+    .replace(/\*([^*\s][^*]*?|[^*]*?[^*\s])\*/g, '<em>$1</em>')
+    .replace(/(?<![a-zA-Z])_([^_\s][^_]*?|[^_]*?[^_\s])_(?![a-zA-Z])/g, '<em>$1</em>')
+    // Inline code: `code`
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    // URLs
+    .replace(URL_RE, url =>
+      `<a href="${escHtml(url)}" target="_blank" rel="noopener">${escHtml(url)}</a>`
+    )
 }
+
+// kept for list items (same as inline, just an alias)
+function linkify(text) { return inline(text) }
 
 export function renderMarkdown(raw) {
   if (!raw) return ''
