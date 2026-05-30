@@ -222,6 +222,9 @@
           <p class="form-help">{{ $t('form.fields.guidelinesInfo') }}</p>
         </div>
 
+        <!-- Local file analyzer -->
+        <LocalAnalyzer @apply="applyMetrics" />
+
         <!-- Volume metrics -->
         <div class="form-group">
           <label class="form-label">{{ $t('form.fields.quantities') }}</label>
@@ -290,6 +293,7 @@ import { useI18n } from 'vue-i18n'
 import jsyaml from 'js-yaml'
 import TopBar from '../TopBar.vue'
 import AppFooter from '../AppFooter.vue'
+import LocalAnalyzer from './LocalAnalyzer.vue'
 import { languages as ALL_LANGUAGES, scripts as ALL_SCRIPTS } from '../../data/formConsts.js'
 
 const { t } = useI18n()
@@ -406,6 +410,9 @@ function addMetric() {
 }
 function removeMetric(idx) {
   form.metrics.splice(idx, 1)
+}
+function applyMetrics(metrics) {
+  form.metrics = metrics
 }
 
 /* ---- YAML generation ---- */
