@@ -49,9 +49,35 @@ function applyNorm(text, mode) {
  * @param {Document} doc
  * @param {'None'|'NFC'|'NFD'|'NFKC'|'NFKD'} normMode
  */
+/* ── type extraction helpers ── */
+
+// PAGE: custom="structure {type:MainZone;}" or type="MainZone" attribute
+function pageType(el) {
+  const direct = el.getAttribute('type') || el.getAttribute('custom')
+  if (!direct) return null
+  // Try direct type attribute first
+  if (el.hasAttribute('type')) return el.getAttribute('type')
+  // Try custom attribute: "structure {type:Foo;}" or "type:Foo;"
+  const m = direct.match(/type\s*:\s*([^;}\s]+)/)
+  return m ? m[1] : null
+}
+
+// ALTO: TYPE="MainZone" attribute on block/line element
+function altoType(el) {
+  return el.getAttribute('TYPE') || el.getAttribute('TAGREFS') || null
+}
+
+function addType(freq, type) {
+  if (!type) return
+  freq[type] = (freq[type] || 0) + 1
+}
+
 export function analyzeDoc(doc, normMode = 'NFC') {
   const format = detectFormat(doc)
-  const result = { lines: 0, chars: 0, words: 0, regions: 0, charFreq: {} }
+  const result = {
+    lines: 0, chars: 0, words: 0, regions: 0, charFreq: {},
+    regionTypes: {}, lineTypes: {},
+  }
 
   function countText(raw) {
     const text = applyNorm(raw, normMode)
@@ -63,16 +89,35 @@ export function analyzeDoc(doc, normMode = 'NFC') {
   }
 
   if (format === 'alto') {
-    result.regions = doc.querySelectorAll('TextBlock').length
+    const blockEls = doc.querySelectorAll('TextBlock')
+    result.regions = blockEls.length
+    blockEls.forEach(el => addType(result.regionTypes, altoType(el)))
+
     const lineEls = doc.querySelectorAll('TextLine')
     result.lines = lineEls.length
-    lineEls.forEach(el => countText(textFromAltoLine(el)))
+    lineEls.forEach(el => {
+      addType(result.lineTypes, altoType(el))
+      countText(textFromAltoLine(el))
+    })
 
   } else if (format === 'page') {
-    result.regions = doc.querySelectorAll('TextRegion').length
+    // All region types (TextRegion, ImageRegion, etc.)
+    const regionSelectors = ['TextRegion','ImageRegion','SeparatorRegion','MathRegion',
+      'ChemRegion','MusicRegion','AdvertRegion','NoiseRegion','TableRegion','GraphicRegion',
+      'LineDrawingRegion','ChartRegion','MapRegion','UnknownRegion']
+    regionSelectors.forEach(sel => {
+      doc.querySelectorAll(sel).forEach(el => {
+        result.regions++
+        addType(result.regionTypes, pageType(el) || sel.replace('Region',''))
+      })
+    })
+
     const lineEls = doc.querySelectorAll('TextLine')
     result.lines = lineEls.length
-    lineEls.forEach(el => countText(textFromPageLine(el)))
+    lineEls.forEach(el => {
+      addType(result.lineTypes, pageType(el))
+      countText(textFromPageLine(el))
+    })
 
   } else {
     result.lines = doc.querySelectorAll('TextLine').length
@@ -100,6 +145,12 @@ function mergeResults(acc, doc) {
   for (const [ch, n] of Object.entries(doc.charFreq)) {
     acc.charFreq[ch] = (acc.charFreq[ch] || 0) + n
   }
+  for (const [t, n] of Object.entries(doc.regionTypes || {})) {
+    acc.regionTypes[t] = (acc.regionTypes[t] || 0) + n
+  }
+  for (const [t, n] of Object.entries(doc.lineTypes || {})) {
+    acc.lineTypes[t] = (acc.lineTypes[t] || 0) + n
+  }
 }
 
 /**
@@ -115,7 +166,7 @@ export async function analyzeFiles(fileList, onProgress, matcher, normMode = 'NF
   const keep = matcher ?? defaultMatcher
   const xmlFiles = Array.from(fileList).filter(f => keep(f.name))
 
-  const totals = { files: xmlFiles.length, lines: 0, chars: 0, words: 0, regions: 0, charFreq: {} }
+  const totals = { files: xmlFiles.length, lines: 0, chars: 0, words: 0, regions: 0, charFreq: {}, regionTypes: {}, lineTypes: {} }
   const errors = []
   let done = 0
 

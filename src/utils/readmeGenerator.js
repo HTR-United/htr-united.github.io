@@ -60,6 +60,20 @@ function sumStat(units, key) {
   return units.reduce((s, u) => s + (Number(u.stats?.[key]) || 0), 0)
 }
 
+function mergeTypeFreq(units, key) {
+  const merged = {}
+  for (const u of units) {
+    for (const [t, n] of Object.entries(u.stats?.[key] || {})) {
+      merged[t] = (merged[t] || 0) + n
+    }
+  }
+  return merged
+}
+
+function typeList(freq) {
+  return Object.keys(freq).sort().map(t => `- \`${t}\``).join('\n')
+}
+
 export function generateReadme(state) {
   const { title, description, license, doi, funding, authors, units, orgLevels = 1 } = state
   const year = new Date().getFullYear()
@@ -108,6 +122,26 @@ export function generateReadme(state) {
   } else {
     lines.push('_Add an overview of your dataset here._')
     lines.push('')
+  }
+
+  const regionTypes = mergeTypeFreq(units, 'regionTypes')
+  const lineTypes   = mergeTypeFreq(units, 'lineTypes')
+  const hasTypes = Object.keys(regionTypes).length || Object.keys(lineTypes).length
+  if (hasTypes) {
+    lines.push('### Segmentation')
+    lines.push('')
+    if (Object.keys(regionTypes).length) {
+      lines.push('**Region types:**')
+      lines.push('')
+      lines.push(typeList(regionTypes))
+      lines.push('')
+    }
+    if (Object.keys(lineTypes).length) {
+      lines.push('**Line types:**')
+      lines.push('')
+      lines.push(typeList(lineTypes))
+      lines.push('')
+    }
   }
 
   lines.push('## License')
