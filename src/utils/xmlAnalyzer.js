@@ -62,9 +62,28 @@ function pageType(el) {
   return m ? m[1] : null
 }
 
-// ALTO: TYPE="MainZone" attribute on block/line element
-function altoType(el) {
-  return el.getAttribute('TYPE') || el.getAttribute('TAGREFS') || null
+// Build a map from ALTO tag ID → LABEL for resolving TAGREFS
+function buildAltoTagMap(doc) {
+  const map = {}
+  doc.querySelectorAll('Tags > LineTag, Tags > BlockTag, Tags > LayoutTag, Tags > StructureTag, Tags > OtherTag').forEach(tag => {
+    const id = tag.getAttribute('ID')
+    const label = tag.getAttribute('LABEL')
+    if (id && label) map[id] = label
+  })
+  return map
+}
+
+// ALTO: TYPE="MainZone" attribute; fall back to resolving TAGREFS via tagMap
+function altoType(el, tagMap = {}) {
+  const type = el.getAttribute('TYPE')
+  if (type) return type
+  const refs = el.getAttribute('TAGREFS')
+  if (!refs) return null
+  // TAGREFS may contain multiple IDs; use first resolvable label
+  for (const id of refs.trim().split(/\s+/)) {
+    if (tagMap[id]) return tagMap[id]
+  }
+  return refs.trim().split(/\s+/)[0] || null
 }
 
 function addType(freq, type) {
@@ -89,14 +108,15 @@ export function analyzeDoc(doc, normMode = 'NFC') {
   }
 
   if (format === 'alto') {
+    const tagMap = buildAltoTagMap(doc)
     const blockEls = doc.querySelectorAll('TextBlock')
     result.regions = blockEls.length
-    blockEls.forEach(el => addType(result.regionTypes, altoType(el)))
+    blockEls.forEach(el => addType(result.regionTypes, altoType(el, tagMap)))
 
     const lineEls = doc.querySelectorAll('TextLine')
     result.lines = lineEls.length
     lineEls.forEach(el => {
-      addType(result.lineTypes, altoType(el))
+      addType(result.lineTypes, altoType(el, tagMap))
       countText(textFromAltoLine(el))
     })
 
