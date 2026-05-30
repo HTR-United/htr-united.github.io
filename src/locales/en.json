@@ -382,6 +382,8 @@
     "clearFiles": "Clear",
     "editStats": "Edit stats manually",
     "previewTitle": "README preview",
+    "copyHtml": "Copy as HTML",
+    "copyHtmlHint": "Use \"Copy as HTML\" to paste formatted text directly into Zenodo's description field.",
     "editReadme": "Edit README (Markdown)",
     "exportTitle": "Download",
     "exportDesc": "Download the README separately, or get the full ZIP archive with all your files organised under data/, plus README, CITATION.CFF and htr-united.yml.",

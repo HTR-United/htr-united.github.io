@@ -1,3 +1,14 @@
+import { marked } from 'marked'
+
+/**
+ * Render GitHub-Flavored Markdown to HTML (for README preview).
+ * Uses `marked` with GFM enabled (default).
+ */
+export function renderGfm(raw) {
+  if (!raw) return ''
+  return marked.parse(raw, { gfm: true, breaks: false })
+}
+
 /**
  * Minimal markdown renderer for the norms/guidelines field.
  * Handles: paragraphs, `- ` / `▶ ` lists, bold, italic, inline code, URL autolinks.
