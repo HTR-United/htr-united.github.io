@@ -20,6 +20,7 @@ export default defineConfig({
         changelog: resolve(__dirname, 'src/changelog.html'),
         charter:  resolve(__dirname, 'src/data-reuse-charter.html'),
         share:    resolve(__dirname, 'src/share.html'),
+        zenodo:   resolve(__dirname, 'src/zenodo.html'),
       }
     }
   }
