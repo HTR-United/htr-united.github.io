@@ -162,10 +162,6 @@
             <select id="sort-select" class="select" :value="state.sort" @change="state.sort = $event.target.value">
               <option value="relevance">{{ $t('catalog.sortRelevance') }}</option>
               <option value="name">{{ $t('catalog.sortName') }}</option>
-              <option value="oldest">{{ $t('catalog.sortOldest') }}</option>
-              <option value="newest">{{ $t('catalog.sortNewest') }}</option>
-              <option value="largest">{{ $t('catalog.sortLargest') }}</option>
-              <option value="smallest">{{ $t('catalog.sortSmallest') }}</option>
             </select>
           </div>
 
