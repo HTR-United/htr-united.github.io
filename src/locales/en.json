@@ -8,7 +8,8 @@
     "team": "The Team",
     "charter": "Data reuse charter",
     "models": "Models",
-    "zenodo": "Prepare for Zenodo"
+    "zenodo": "Prepare for Zenodo",
+    "chocomufin": "ChocoMufin Web"
   },
   "footer": {
     "team": "Who are the people behind HTR-United?",
@@ -181,7 +182,8 @@
     "humg": "HUMGenerator (Htr United Metadata Generator) generates metadata, specifically metrics for your corpora. It's specifically being used to generate the volume key of the catalog schema. It can generate a character count table, to help users choose new kind of ground truth to cover more characters.",
     "htruc": "HTRUC allows for controlling that the htr-united catalog file is parsable and HTR-United compliant. HTRUC is also meant to offer the tools to parse, augment and compile statistics about catalog file(s). This allows the HTR-United central repository to build a general catalog for everyone's use. It can also be used with HUMGenerator to update a catalog file with new volumes.",
     "htrvx": "HTRVX focuses on controlling the quality of the XML. It provides many options in terms of quality control: schema validation (checking that your ALTO or PAGE is okay), empty line or children-less region detection, Segmonto compatibility for segmentation.",
-    "chocomufin": "ChocoMufin focuses on the characters that are used in the ground truth. It can either help you have an overview of the characters used, can be used to control which ones are used (to avoid having two characters for the same purpose, which can be common with historical documents) or, using a conversion table, it can be used to normalize a whole set of ground-truth."
+    "chocomufin": "ChocoMufin focuses on the characters that are used in the ground truth. It can either help you have an overview of the characters used, can be used to control which ones are used (to avoid having two characters for the same purpose, which can be common with historical documents) or, using a conversion table, it can be used to normalize a whole set of ground-truth.",
+    "chocomufinWeb": "Try online"
   },
   "team": {
     "title": "The Team",
