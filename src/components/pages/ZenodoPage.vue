@@ -209,6 +209,11 @@
         </div>
 
         <div class="form-section">
+          <h2>{{ $t('zenodo.chartSectionTitle') }}</h2>
+          <StatsChart :units="state.units" />
+        </div>
+
+        <div class="form-section">
           <h2>{{ $t('zenodo.editReadme') }}</h2>
           <textarea class="output-area" rows="28" v-model="readmeText"></textarea>
         </div>
@@ -256,6 +261,7 @@ import UnitCard from '../zenodo/UnitCard.vue'
 import { generateReadme, generateCff } from '../../utils/readmeGenerator.js'
 import { generateZip, downloadBlob } from '../../utils/zenodoZip.js'
 import { renderGfm } from '../../utils/markdown.js'
+import StatsChart from '../zenodo/StatsChart.vue'
 
 const { t } = useI18n()
 
