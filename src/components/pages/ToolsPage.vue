@@ -58,6 +58,7 @@
           <p>{{ $t('tools.chocomufin') }}</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
             <a class="btn btn--primary" href="https://github.com/PonteIneptique/choco-mufin" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn btn--ghost" href="/choco-mufin.js">{{ $t('tools.chocomufinWeb') }}</a>
           </div>
         </div>
       </div>

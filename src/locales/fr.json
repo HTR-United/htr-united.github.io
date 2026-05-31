@@ -8,7 +8,8 @@
     "team": "L'Équipe",
     "charter": "Charte de réutilisation des données",
     "models": "Modèles",
-    "zenodo": "Préparer pour Zenodo"
+    "zenodo": "Préparer pour Zenodo",
+    "chocomufin": "ChocoMufin Web"
   },
   "footer": {
     "team": "Qui est derrière HTR-United ?",
@@ -181,7 +182,8 @@
     "humg": "HumGenerator (Htr United Metadata Generator) génère des métadonnées, en particulier des métriques pour vos corpus. Il est spécifiquement utilisé pour générer l'entrée volume du schéma de catalogue. Il peut générer une table de comptage de caractères afin d'aider les utilisateurs à choisir un set de vérité de terrain couvrant plus de caractères.",
     "htruc": "HTRUC permet de contrôler que le fichier de catalogue HTR-United est parsable et conforme au schéma d'HTR-United. HTRUC est également destiné à offrir un outil pour analyser, augmenter et compiler des statistiques sur le ou les fichiers de catalogue. Il peut également être utilisé avec HumGenerator pour mettre à jour un fichier de catalogue avec de nouvelles valeurs.",
     "htrvx": "HTRVX se concentre sur le contrôle de la qualité des fichiers XML. Il fournit plusieurs options pour le contrôle de la qualité : validation de schéma, détection des lignes vides ou des régions vides, contrôle de la compatibilité avec Segmonto pour la segmentation.",
-    "chocomufin": "Chocomufin se concentre sur les caractères utilisés dans la vérité de terrain. Il aide à avoir une vue d'ensemble sur les caractères utilisés dans le dataset, peut être utilisé pour contrôler quel caractère doit être utilisé ou encore, en utilisant une table de conversion, il peut être utilisé pour normaliser les caractères utilisés dans un dataset entier."
+    "chocomufin": "Chocomufin se concentre sur les caractères utilisés dans la vérité de terrain. Il aide à avoir une vue d'ensemble sur les caractères utilisés dans le dataset, peut être utilisé pour contrôler quel caractère doit être utilisé ou encore, en utilisant une table de conversion, il peut être utilisé pour normaliser les caractères utilisés dans un dataset entier.",
+    "chocomufinWeb": "Essayer en ligne"
   },
   "team": {
     "title": "L'Équipe",
