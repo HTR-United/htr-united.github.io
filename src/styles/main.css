@@ -647,8 +647,33 @@ mark { background: #f3e6a8; color: inherit; border-radius: 3px; padding: 0 1px; 
   .tool-card { grid-template-columns: 1fr; }
   .tool-card__image { padding: 20px; }
 }
+/* ---- mobile menu button ---- */
+.menu-btn {
+  display: none;
+  align-items: center; justify-content: center;
+  width: 38px; height: 38px; flex-shrink: 0;
+  background: none; border: 1px solid var(--line-2);
+  border-radius: 7px; cursor: pointer; color: var(--ink-2);
+}
+.menu-btn:hover { background: var(--paper-2); color: var(--ink); }
+.menu-btn svg { width: 18px; height: 18px; }
+
 @media (max-width: 720px) {
-  .nav { display: none; }
+  .menu-btn { display: flex; }
+
+  .nav {
+    display: none;
+    position: absolute; top: 60px; left: 0; right: 0; z-index: 59;
+    flex-direction: column; gap: 2px;
+    background: rgba(255,255,255,.97);
+    backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid var(--line);
+    padding: 10px 16px 14px;
+    box-shadow: 0 8px 20px rgba(53,49,38,.1);
+  }
+  .nav--open { display: flex; }
+  .nav a { font-size: 15px; padding: 10px 12px; }
+
   .pagehead h1 { font-size: 30px; }
   .hero h1 { font-size: 34px; }
   .section-grid { grid-template-columns: 1fr; }

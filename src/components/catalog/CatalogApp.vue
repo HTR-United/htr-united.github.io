@@ -253,7 +253,9 @@ const state = reactive({
   showCite:  false,
 })
 
-const collapsed = reactive(new Set())
+const ALL_COLLAPSIBLE = [...FACETS.map(f => f.key), '_dates', '_options']
+const isMobile = () => typeof window !== 'undefined' && window.innerWidth <= 1080
+const collapsed = reactive(new Set(isMobile() ? ALL_COLLAPSIBLE : []))
 function toggleCollapse(key) { collapsed.has(key) ? collapsed.delete(key) : collapsed.add(key) }
 
 /* ── ISO labels via Intl.DisplayNames (handles FR/EN automatically) ── */
