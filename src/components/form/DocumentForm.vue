@@ -60,11 +60,9 @@
         </div>
         <div class="form-group">
           <label class="form-label">{{ $t('form.fields.format') }}</label>
-          <div class="checkbox-grid">
-            <label v-for="fmt in formats" :key="fmt" class="checkbox-item">
-              <input type="checkbox" :value="fmt" v-model="form.formats"> {{ fmt }}
-            </label>
-          </div>
+          <select multiple v-model="form.formats" class="form-input form-select" size="3">
+            <option v-for="fmt in formats" :key="fmt.value" :value="fmt.value">{{ fmt.label }}</option>
+          </select>
         </div>
       </div>
 
@@ -366,7 +364,11 @@ function scriptLabel(code) {
 }
 
 /* ---- constants ---- */
-const formats = ['ALTO-XML', 'PAGE-XML', 'ALTO-TXT', 'Text2Image']
+const formats = [
+  { value: 'Alto-XML',         label: 'ALTO XML' },
+  { value: 'Page-XML',         label: 'PAGE XML' },
+  { value: 'Image-Text-Pairs', label: t('form.fields.linepair') },
+]
 const commonSoftware = ['eScriptorium + Kraken', 'Transkribus', 'Kraken', 'Tesseract', 'OCRopy']
 
 const authorRoles = [

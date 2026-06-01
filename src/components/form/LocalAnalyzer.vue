@@ -16,6 +16,18 @@
       <span class="la-pattern__hint">{{ $t('form.analyzePatternHint') }}</span>
     </div>
 
+    <!-- Ignore pattern -->
+    <div class="la-pattern">
+      <label class="la-pattern__label">{{ $t('form.analyzeIgnore') }}</label>
+      <input
+        v-model="ignorePattern"
+        class="form-input la-pattern__input"
+        spellcheck="false"
+        @keydown.enter.prevent
+      >
+      <span class="la-pattern__hint">{{ $t('form.analyzeIgnoreHint') }}</span>
+    </div>
+
     <!-- Normalization mode -->
     <div class="la-norm">
       <div class="la-norm__label">{{ $t('form.analyzeNormMode') }}</div>
@@ -161,8 +173,9 @@ const done         = ref(0)
 const total        = ref(0)
 const showAllChars = ref(false)
 const applied      = ref(false)
-const pattern      = ref('*.xml')
-const normMode     = ref('NFKC')
+const pattern       = ref('*.xml')
+const ignorePattern = ref('.*, Thumbs.db, desktop.ini')
+const normMode      = ref('NFKC')
 
 /* ── normalization examples shown in the UI ── */
 const NORM_EXAMPLES = {
@@ -201,14 +214,16 @@ async function run(fileList) {
   applied.value = false
   analyzing.value = true
   done.value = 0
-  const matcher = buildMatcher(pattern.value || '*.xml')
-  total.value = Array.from(fileList).filter(f => matcher(f.name)).length
+  const matcher       = buildMatcher(pattern.value || '*.xml')
+  const ignoreMatcher = buildMatcher(ignorePattern.value)
+  const keep = (f) => matcher(f.name) && !ignoreMatcher(f.name)
+  total.value = Array.from(fileList).filter(keep).length
 
   try {
     result.value = await analyzeFiles(
       fileList,
       (d, tot) => { done.value = d; total.value = tot },
-      matcher,
+      keep,
       normMode.value
     )
   } finally {
