@@ -60,6 +60,17 @@
         </div>
       </div>
 
+      <!-- Ignore pattern -->
+      <div class="la-pattern" style="margin-bottom:8px">
+        <label class="la-pattern__label">{{ $t('zenodo.ignorePattern') }}</label>
+        <input
+          v-model="ignorePattern"
+          class="form-input la-pattern__input"
+          spellcheck="false"
+        >
+        <span class="la-pattern__hint">{{ $t('zenodo.ignorePatternHint') }}</span>
+      </div>
+
       <!-- File drop zone -->
       <div
         class="la-dropzone unit-drop"
@@ -140,9 +151,20 @@ const props = defineProps({
 })
 const emit = defineEmits(['update', 'remove'])
 
-const fileInput = ref(null)
-const dragging  = ref(false)
-const analyzing = ref(false)
+const fileInput     = ref(null)
+const dragging      = ref(false)
+const analyzing     = ref(false)
+const ignorePattern = ref('.*, Thumbs.db, desktop.ini')
+
+function buildIgnoreMatcher(raw) {
+  const globs = raw.split(/[\s,]+/).map(s => s.trim()).filter(Boolean)
+  if (!globs.length) return () => false
+  const regexes = globs.map(glob => {
+    const escaped = glob.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*').replace(/\?/g, '.')
+    return new RegExp('^' + escaped + '$', 'i')
+  })
+  return (filename) => regexes.some(re => re.test(filename))
+}
 
 function slugifyInput(s) {
   return s.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/--+/g, '-')
@@ -165,7 +187,9 @@ const xmlCount = computed(() =>
 )
 
 async function addFiles(list) {
-  const all = [...(props.unit.files || []), ...Array.from(list)]
+  const ignoreMatcher = buildIgnoreMatcher(ignorePattern.value)
+  const incoming = Array.from(list).filter(f => !ignoreMatcher(f.name))
+  const all = [...(props.unit.files || []), ...incoming]
   emit('update', { files: all })
   const xmlFiles = all.filter(f => f.name.toLowerCase().endsWith('.xml'))
   if (!xmlFiles.length) return
@@ -196,6 +220,11 @@ function fmt(n) { return (n || 0).toLocaleString() }
 </script>
 
 <style scoped>
+.la-pattern { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.la-pattern__label { font-size: 12.5px; font-weight: 700; color: var(--ink-2); white-space: nowrap; }
+.la-pattern__input { width: 200px; font-family: var(--mono); font-size: 13px; padding: 7px 11px; }
+.la-pattern__hint { font-size: 12px; color: var(--ink-3); }
+
 .unit-card {
   border: 1px solid var(--line); border-radius: var(--radius);
   background: var(--surface); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 20px;
