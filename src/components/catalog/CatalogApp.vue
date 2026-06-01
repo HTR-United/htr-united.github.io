@@ -42,51 +42,52 @@
           </div>
 
           <!-- Dynamic facets — values come from a single computed, no per-render work -->
-          <div v-for="facet in visibleFacets" :key="facet.key"
-               class="facet" :class="{ collapsed: collapsed.has(facet.key) }">
-            <button class="facet__head" @click="toggleCollapse(facet.key)">
-              <span>{{ $t('catalog.facets.' + facet.key) }}</span>
-              <span v-if="state.filters[facet.key]?.size" class="facet__count">{{ state.filters[facet.key].size }}</span>
-              <svg class="facet__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="facet__body">
-              <div
-                v-for="item in allFacetValues[facet.key]"
-                :key="item.value"
-                class="opt"
-                :class="{
-                  'is-on':   state.filters[facet.key]?.has(item.value),
-                  'is-zero': item.n === 0 && !state.filters[facet.key]?.has(item.value)
-                }"
-                @click="item.n > 0 || state.filters[facet.key]?.has(item.value) ? toggleFilter(facet.key, item.value) : null"
-              >
-                <span class="opt__box"></span>
-                <span class="opt__label">{{ item.label }}</span>
-                <span class="opt__n">{{ item.n }}</span>
+          <template v-for="facet in visibleFacets" :key="facet.key">
+            <div class="facet" :class="{ collapsed: collapsed.has(facet.key) }">
+              <button class="facet__head" @click="toggleCollapse(facet.key)">
+                <span>{{ $t('catalog.facets.' + facet.key) }}</span>
+                <span v-if="state.filters[facet.key]?.size" class="facet__count">{{ state.filters[facet.key].size }}</span>
+                <svg class="facet__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="facet__body">
+                <div
+                  v-for="item in allFacetValues[facet.key]"
+                  :key="item.value"
+                  class="opt"
+                  :class="{
+                    'is-on':   state.filters[facet.key]?.has(item.value),
+                    'is-zero': item.n === 0 && !state.filters[facet.key]?.has(item.value)
+                  }"
+                  @click="item.n > 0 || state.filters[facet.key]?.has(item.value) ? toggleFilter(facet.key, item.value) : null"
+                >
+                  <span class="opt__box"></span>
+                  <span class="opt__label">{{ item.label }}</span>
+                  <span class="opt__n">{{ item.n }}</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- Date range -->
-          <div class="facet" :class="{ collapsed: collapsed.has('_dates') }">
-            <button class="facet__head" @click="toggleCollapse('_dates')">
-              <span>{{ $t('catalog.dates') }}</span>
-              <svg class="facet__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="daterange">
-              <div class="daterange__row">
-                <div class="daterange__field">
-                  <label>{{ $t('catalog.dateMin') }}</label>
-                  <input type="number" step="10" :value="state.dateMin" @change="state.dateMin = +$event.target.value || DATE_FLOOR">
+            <!-- Date range injected after the Period facet -->
+            <div v-if="facet.key === 'period'" class="facet" :class="{ collapsed: collapsed.has('_dates') }">
+              <button class="facet__head" @click="toggleCollapse('_dates')">
+                <span>{{ $t('catalog.dates') }}</span>
+                <svg class="facet__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="daterange">
+                <div class="daterange__row">
+                  <div class="daterange__field">
+                    <label>{{ $t('catalog.dateMin') }}</label>
+                    <input type="number" step="10" :value="state.dateMin" @change="state.dateMin = +$event.target.value || DATE_FLOOR">
+                  </div>
+                  <div class="daterange__field">
+                    <label>{{ $t('catalog.dateMax') }}</label>
+                    <input type="number" step="10" :value="state.dateMax" @change="state.dateMax = +$event.target.value || DATE_CEIL">
+                  </div>
                 </div>
-                <div class="daterange__field">
-                  <label>{{ $t('catalog.dateMax') }}</label>
-                  <input type="number" step="10" :value="state.dateMax" @change="state.dateMax = +$event.target.value || DATE_CEIL">
-                </div>
+                <div class="daterange__hint">{{ $t('catalog.dateHint') }}</div>
               </div>
-              <div class="daterange__hint">{{ $t('catalog.dateHint') }}</div>
             </div>
-          </div>
+          </template>
 
           <!-- Options -->
           <div class="facet" :class="{ collapsed: collapsed.has('_options') }">
@@ -160,8 +161,10 @@
           <div class="toolbar__ctrl">
             <label for="sort-select">{{ $t('catalog.sortLabel') }}</label>
             <select id="sort-select" class="select" :value="state.sort" @change="state.sort = $event.target.value">
-              <option value="relevance">{{ $t('catalog.sortRelevance') }}</option>
-              <option value="name">{{ $t('catalog.sortName') }}</option>
+              <option value="name-asc">{{ $t('catalog.sortNameAsc') }}</option>
+              <option value="name-desc">{{ $t('catalog.sortNameDesc') }}</option>
+              <option value="date-asc">{{ $t('catalog.sortDateAsc') }}</option>
+              <option value="date-desc">{{ $t('catalog.sortDateDesc') }}</option>
             </select>
           </div>
 
@@ -244,7 +247,7 @@ const state = reactive({
   options:   new Set(),
   dateMin:   DATE_FLOOR,
   dateMax:   DATE_CEIL,
-  sort:      'relevance',
+  sort:      'date-asc',
   view:      'detailed',
   showNorms: false,
   showCite:  false,
@@ -291,7 +294,7 @@ function matchOptions(d) { for (const o of state.options) { if (!d[o]) return fa
 function matchFacet(d, key) {
   const sel = state.filters[key]
   if (!sel || sel.size === 0) return true
-  if (key === 'size') return sel.has(d._sizeTier)
+  if (key === 'size') return sel.has(String(d._sizeTier))
   const facet = FACETS.find(f => f.key === key)
   if (facet?.scalar) return sel.has(d[key] || '')
   return (d[key] || []).some(v => sel.has(v))
@@ -372,11 +375,10 @@ const filtered = computed(() => datasets.value.filter(d => matches(d)))
 const sorted = computed(() => {
   const arr = filtered.value.slice()
   switch (state.sort) {
-    case 'name':     arr.sort((a, b) => a.name.localeCompare(b.name))     ; break
-    case 'oldest':   arr.sort((a, b) => a.dateStart - b.dateStart)        ; break
-    case 'newest':   arr.sort((a, b) => b.dateEnd   - a.dateEnd)          ; break
-    case 'largest':  arr.sort((a, b) => (b.lines||0) - (a.lines||0))     ; break
-    case 'smallest': arr.sort((a, b) => (a.lines||0) - (b.lines||0))     ; break
+    case 'name-asc':  arr.sort((a, b) => a.name.localeCompare(b.name))  ; break
+    case 'name-desc': arr.sort((a, b) => b.name.localeCompare(a.name))  ; break
+    case 'date-asc':  arr.sort((a, b) => a.dateStart - b.dateStart)     ; break
+    case 'date-desc': arr.sort((a, b) => b.dateEnd   - a.dateEnd)       ; break
     default: break
   }
   return arr
