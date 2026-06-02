@@ -6,6 +6,7 @@
         <ul>
           <li><a href="/data-reuse-charter.html">{{ $t('nav.charter') }}</a></li>
           <li><a href="/changelog.html">{{ $t('footer.changelog') }}</a></li>
+          <li><a href="/cite.html">{{ $t('cite.title') }}</a></li>
         </ul>
       </div>
       <div>

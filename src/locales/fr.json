@@ -1,9 +1,12 @@
 {
   "nav": {
     "home": "Accueil",
+    "browse": "Explorer",
+    "share": "Archiver",
+    "record": "Cataloguer",
+    "tools": "Outils",
     "catalog": "Explorer le catalogue",
     "form": "Enregistrer des données",
-    "tools": "Les Outils",
     "actions": "Automatisation Github",
     "team": "L'Équipe",
     "charter": "Charte de réutilisation des données",
@@ -185,7 +188,19 @@
     "htruc": "HTRUC permet de contrôler que le fichier de catalogue HTR-United est parsable et conforme au schéma d'HTR-United. HTRUC est également destiné à offrir un outil pour analyser, augmenter et compiler des statistiques sur le ou les fichiers de catalogue. Il peut également être utilisé avec HumGenerator pour mettre à jour un fichier de catalogue avec de nouvelles valeurs.",
     "htrvx": "HTRVX se concentre sur le contrôle de la qualité des fichiers XML. Il fournit plusieurs options pour le contrôle de la qualité : validation de schéma, détection des lignes vides ou des régions vides, contrôle de la compatibilité avec Segmonto pour la segmentation.",
     "chocomufin": "Chocomufin se concentre sur les caractères utilisés dans la vérité de terrain. Il aide à avoir une vue d'ensemble sur les caractères utilisés dans le dataset, peut être utilisé pour contrôler quel caractère doit être utilisé ou encore, en utilisant une table de conversion, il peut être utilisé pour normaliser les caractères utilisés dans un dataset entier.",
-    "chocomufinWeb": "Essayer en ligne"
+    "chocomufinWeb": "Essayer en ligne",
+    "chocomufinWebDesc": "ChocoMufin est également disponible en tant qu'application web dans le navigateur. Analysez les tables de caractères, inspectez les problèmes de normalisation et générez des tables de conversion — sans installation.",
+    "actionsDesc": "Lancez automatiquement HUMGenerator, HTRUC, HTRVX et ChocoMufin à chaque push. Générez un fichier de workflow GitHub Actions prêt à l'emploi pour votre dépôt."
+  },
+  "cite": {
+    "title": "Comment citer",
+    "intro": "Si vous utilisez les données ou l'infrastructure HTR-United dans vos recherches, veuillez citer le projet comme suit.",
+    "bibtexTitle": "BibTeX",
+    "apaTitle": "APA",
+    "datasetTitle": "Citer un jeu de données spécifique",
+    "datasetDesc": "Chaque fiche de jeu de données dans le catalogue dispose d'une citation BibTeX complète. Ouvrez n'importe quelle fiche et cliquez sur le bouton Citer pour la copier.",
+    "copy": "Copier",
+    "copied": "Copié !"
   },
   "team": {
     "title": "L'Équipe",
@@ -316,8 +331,9 @@
     "copyBtn": "Copiez",
     "copied": "Copié !",
     "outputSteps": "Étapes de mise en place",
-    "outputStep1": "(1) Récupérez le contenu, au choix :",
-    "outputStep2": "(2) Puis ajoutez-le au catalogue HTR-United via une création de fichier ou de ticket",
+    "outputStep1": "(2) Récupérez le contenu, au choix :",
+    "outputStep2": "(3) Puis ajoutez-le au catalogue HTR-United via une création de fichier ou de ticket",
+    "step3Locked": "Remplissez le formulaire et générez le fichier pour activer cette section.",
     "notWorking": "Si cela ne marche pas avec les liens ci-dessus, ouvrez une issue sur le dépôt HTR-United :",
     "newFile": "Créer le fichier",
     "newIssue": "Ouvrir un ticket"
@@ -434,7 +450,12 @@
     "chartLines": "Lignes",
     "chartChars": "Caractères",
     "chartFiles": "Fichiers",
-    "chartNeedsDate": "Ajoutez une date à chaque document pour afficher le graphique de statistiques cumulées."
+    "chartNeedsDate": "Ajoutez une date à chaque document pour afficher le graphique de statistiques cumulées.",
+    "badgesTitle": "Badges de dépôt",
+    "badgesDesc": "Collez le code Markdown dans votre README pour afficher des badges de métriques.",
+    "badgeCopy": "Copier Markdown",
+    "badgeCopied": "Copié !",
+    "badgeMarkdown": "Markdown"
   },
   "changelog": {
     "title": "Changelog du schéma",

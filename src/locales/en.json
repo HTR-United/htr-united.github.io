@@ -1,9 +1,12 @@
 {
   "nav": {
     "home": "Home",
+    "browse": "Browse",
+    "share": "Archive",
+    "record": "Record",
+    "tools": "Tools",
     "catalog": "Browse the Catalog",
     "form": "Record New Data",
-    "tools": "Tools",
     "actions": "Github Automation",
     "team": "The Team",
     "charter": "Data reuse charter",
@@ -185,7 +188,19 @@
     "htruc": "HTRUC allows for controlling that the htr-united catalog file is parsable and HTR-United compliant. HTRUC is also meant to offer the tools to parse, augment and compile statistics about catalog file(s). This allows the HTR-United central repository to build a general catalog for everyone's use. It can also be used with HUMGenerator to update a catalog file with new volumes.",
     "htrvx": "HTRVX focuses on controlling the quality of the XML. It provides many options in terms of quality control: schema validation (checking that your ALTO or PAGE is okay), empty line or children-less region detection, Segmonto compatibility for segmentation.",
     "chocomufin": "ChocoMufin focuses on the characters that are used in the ground truth. It can either help you have an overview of the characters used, can be used to control which ones are used (to avoid having two characters for the same purpose, which can be common with historical documents) or, using a conversion table, it can be used to normalize a whole set of ground-truth.",
-    "chocomufinWeb": "Try online"
+    "chocomufinWeb": "Try online",
+    "chocomufinWebDesc": "ChocoMufin is also available as an in-browser web app. Analyse character tables, inspect normalisation issues, and generate conversion tables — no installation required.",
+    "actionsDesc": "Automatically run HUMGenerator, HTRUC, HTRVX and ChocoMufin on every push. Generate a ready-to-use GitHub Actions workflow file for your repository."
+  },
+  "cite": {
+    "title": "How to Cite",
+    "intro": "If you use HTR-United data or infrastructure in your research, please cite the project as follows.",
+    "bibtexTitle": "BibTeX",
+    "apaTitle": "APA",
+    "datasetTitle": "Citing a specific dataset",
+    "datasetDesc": "Each dataset record in the catalog has a full BibTeX citation. Open any record and click the Cite button to copy it.",
+    "copy": "Copy",
+    "copied": "Copied!"
   },
   "team": {
     "title": "The Team",
@@ -316,8 +331,9 @@
     "copyBtn": "Copy",
     "copied": "Copied!",
     "outputSteps": "Steps to follow",
-    "outputStep1": "(1) Get the content using either method:",
-    "outputStep2": "(2) Then add it to the HTR-United catalogue via a file creation or an issue",
+    "outputStep1": "(2) Get the content using either method:",
+    "outputStep2": "(3) Then add it to the HTR-United catalogue via a file creation or an issue",
+    "step3Locked": "Fill the form and generate the file to activate this section.",
     "notWorking": "If this doesn't work with the above links, open an issue on the HTR-United repository:",
     "newFile": "Create the file",
     "newIssue": "Open an issue"
@@ -434,7 +450,12 @@
     "chartLines": "Lines",
     "chartChars": "Characters",
     "chartFiles": "Files",
-    "chartNeedsDate": "Add a date to every document to display the cumulative statistics chart."
+    "chartNeedsDate": "Add a date to every document to display the cumulative statistics chart.",
+    "badgesTitle": "Repository badges",
+    "badgesDesc": "Paste the Markdown snippet into your README to display live-looking metric badges.",
+    "badgeCopy": "Copy Markdown",
+    "badgeCopied": "Copied!",
+    "badgeMarkdown": "Markdown"
   },
   "changelog": {
     "title": "Schema changelog",

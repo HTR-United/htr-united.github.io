@@ -21,6 +21,7 @@
 
       <!-- ══════════ STEP 1: Project Info ══════════ -->
       <template v-if="step === 1">
+        <p class="step-heading"><span class="step-badge">1</span>{{ stepLabels[0] }}</p>
 
         <!-- YAML import -->
         <div class="form-section" style="background:var(--olive-tint-2);border-color:var(--olive-tint)">
@@ -69,20 +70,18 @@
             <label class="form-label">{{ $t('zenodo.projectDesc') }}</label>
             <textarea class="form-input" rows="4" v-model="state.description"></textarea>
           </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">{{ $t('zenodo.license') }}</label>
-              <select class="form-input form-select" v-model="state.license">
-                <option value="CC-BY 4.0">CC-BY 4.0</option>
-                <option value="CC-BY-SA 4.0">CC-BY-SA 4.0</option>
-                <option value="Etalab OL 2.0">Etalab OL 2.0</option>
-                <option value="ODbL 1.0">ODbL 1.0</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">{{ $t('zenodo.funding') }}</label>
-              <input class="form-input" v-model="state.funding" :placeholder="$t('zenodo.fundingPlaceholder')">
-            </div>
+          <div class="form-group">
+            <label class="form-label">{{ $t('zenodo.license') }}</label>
+            <select class="form-input form-select" v-model="state.license" style="max-width:280px">
+              <option value="CC-BY 4.0">CC-BY 4.0</option>
+              <option value="CC-BY-SA 4.0">CC-BY-SA 4.0</option>
+              <option value="Etalab OL 2.0">Etalab OL 2.0</option>
+              <option value="ODbL 1.0">ODbL 1.0</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">{{ $t('zenodo.funding') }}</label>
+            <textarea class="form-input" rows="3" v-model="state.funding" :placeholder="$t('zenodo.fundingPlaceholder')"></textarea>
           </div>
 
           <!-- Authors -->
@@ -124,6 +123,7 @@
 
       <!-- ══════════ STEP 2: Units ══════════ -->
       <template v-if="step === 2">
+        <p class="step-heading"><span class="step-badge">2</span>{{ stepLabels[1] }}</p>
 
         <!-- Global organisation scheme -->
         <div class="form-section">
@@ -197,6 +197,7 @@
 
       <!-- ══════════ STEP 3: Preview & Export ══════════ -->
       <template v-if="step === 3">
+        <p class="step-heading"><span class="step-badge">3</span>{{ stepLabels[2] }}</p>
         <div class="form-section">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px">
             <h2 style="margin:0">{{ $t('zenodo.previewTitle') }}</h2>
@@ -206,6 +207,23 @@
           </div>
           <p class="form-help" style="margin-bottom:10px">{{ $t('zenodo.copyHtmlHint') }}</p>
           <div class="zw-readme-preview prose" v-html="renderedReadme"></div>
+        </div>
+
+        <!-- Badges -->
+        <div class="form-section">
+          <h2>{{ $t('zenodo.badgesTitle') }}</h2>
+          <p class="form-help" style="margin-bottom:16px">{{ $t('zenodo.badgesDesc') }}</p>
+          <div class="zw-badges">
+            <div v-for="badge in badgeList" :key="badge.key" class="zw-badge-row">
+              <div v-html="badge.svg" class="zw-badge-preview"></div>
+              <div class="zw-badge-md">
+                <input class="form-input" readonly :value="badge.markdown" style="font-family:var(--mono);font-size:12px">
+                <button class="btn btn--ghost" style="white-space:nowrap" @click="copyBadge(badge)">
+                  {{ badge.copied ? $t('zenodo.badgeCopied') : $t('zenodo.badgeCopy') }}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="form-section">
@@ -361,19 +379,111 @@ function removeUnit(idx) {
 }
 
 /* ── README ── */
-const readmeText = ref('')
+const readmeText    = ref('')
+const badgeDataUrls = ref({})
 
-watch(() => step.value, (s) => {
-  if (s === 3) readmeText.value = generateReadme(state)
+watch(() => step.value, async (s) => {
+  if (s !== 3) return
+  readmeText.value = generateReadme(state)
+  const entries = await Promise.all(
+    BADGE_DEFS.map(async d => [d.file, await svgToDataUrl(makeBadgeSvg(d.label, badgeTotals.value[d.key] ?? 0))])
+  )
+  badgeDataUrls.value = Object.fromEntries(entries)
 }, { immediate: false })
 
-const renderedReadme = computed(() => renderGfm(readmeText.value))
+function injectDataUrls(html) {
+  return html.replace(/src="(badges\/[^"]+\.png)"/g, (_, path) => {
+    const dataUrl = badgeDataUrls.value[path]
+    return dataUrl ? `src="${dataUrl}"` : `src="${path}"`
+  })
+}
+
+const renderedReadme = computed(() => injectDataUrls(renderGfm(readmeText.value)))
 
 /* ── Copy HTML ── */
 async function copyHtml() {
   await navigator.clipboard.writeText(renderedReadme.value)
   copied.value = true
   setTimeout(() => { copied.value = false }, 2000)
+}
+
+/* ── Badges ── */
+function makeBadgeSvg(label, value) {
+  const charW = 6.5
+  const pad = 10
+  const labelW = Math.round(label.length * charW + pad * 2)
+  const valueStr = String(value)
+  const valueW = Math.round(valueStr.length * charW + pad * 2)
+  const total = labelW + valueW
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${total}" height="20" role="img" aria-label="${label}: ${valueStr}">
+  <title>${label}: ${valueStr}</title>
+  <mask id="m_${label}"><rect width="${total}" height="20" rx="3" fill="#fff"/></mask>
+  <g mask="url(#m_${label})">
+    <rect width="${labelW}" height="20" fill="#333"/>
+    <rect x="${labelW}" width="${valueW}" height="20" fill="#007ec6"/>
+  </g>
+  <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
+    <text x="${labelW / 2}" y="14">${label}</text>
+    <text x="${labelW + valueW / 2}" y="14">${valueStr}</text>
+  </g>
+</svg>`
+}
+
+const badgeTotals = computed(() => ({
+  characters: state.units.reduce((s, u) => s + (u.stats.chars   || 0), 0),
+  lines:      state.units.reduce((s, u) => s + (u.stats.lines   || 0), 0),
+  regions:    state.units.reduce((s, u) => s + (u.stats.regions || 0), 0),
+  files:      state.units.reduce((s, u) => s + (u.stats.files   || 0), 0),
+}))
+
+const BADGE_DEFS = [
+  { key: 'characters', label: 'Characters', file: 'badges/characters.png' },
+  { key: 'lines',      label: 'Lines',       file: 'badges/lines.png'      },
+  { key: 'regions',    label: 'Regions',     file: 'badges/regions.png'    },
+  { key: 'files',      label: 'XML Files',   file: 'badges/files.png'      },
+]
+
+function svgToCanvas(svgString) {
+  return new Promise((resolve, reject) => {
+    const blob = new Blob([svgString], { type: 'image/svg+xml' })
+    const url  = URL.createObjectURL(blob)
+    const img  = new Image()
+    img.onload = () => {
+      const canvas = document.createElement('canvas')
+      canvas.width  = img.naturalWidth  || img.width
+      canvas.height = img.naturalHeight || img.height
+      canvas.getContext('2d').drawImage(img, 0, 0)
+      URL.revokeObjectURL(url)
+      resolve(canvas)
+    }
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('SVG load failed')) }
+    img.src = url
+  })
+}
+
+function svgToPng(svgString) {
+  return svgToCanvas(svgString).then(canvas => new Promise(res => canvas.toBlob(res, 'image/png')))
+}
+
+function svgToDataUrl(svgString) {
+  return svgToCanvas(svgString).then(canvas => canvas.toDataURL('image/png'))
+}
+const badgeCopied = ref({})
+
+const badgeList = computed(() =>
+  BADGE_DEFS.map(d => ({
+    ...d,
+    value:    badgeTotals.value[d.key] ?? 0,
+    svg:      makeBadgeSvg(d.label, badgeTotals.value[d.key] ?? 0),
+    markdown: `![${d.label}](${d.file})`,
+    copied:   !!badgeCopied.value[d.key],
+  }))
+)
+
+async function copyBadge(badge) {
+  await navigator.clipboard.writeText(badge.markdown)
+  badgeCopied.value = { ...badgeCopied.value, [badge.key]: true }
+  setTimeout(() => { badgeCopied.value = { ...badgeCopied.value, [badge.key]: false } }, 2000)
 }
 
 /* ── Downloads ── */
@@ -385,9 +495,14 @@ function downloadReadme() {
 async function downloadZip() {
   zipping.value = true
   try {
-    // Inject the possibly-edited README text
     const stateWithReadme = { ...state, _readmeOverride: readmeText.value }
-    const { blob, filename } = await generateZip(stateWithReadme)
+    const badgeBlobs = await Promise.all(
+      BADGE_DEFS.map(async d => ({
+        filename: d.file,
+        blob: await svgToPng(makeBadgeSvg(d.label, badgeTotals.value[d.key] ?? 0)),
+      }))
+    )
+    const { blob, filename } = await generateZip(stateWithReadme, badgeBlobs)
     downloadBlob(blob, filename)
   } finally {
     zipping.value = false
@@ -450,6 +565,13 @@ async function downloadZip() {
   padding: 20px; background: var(--surface-2);
   border: 1px solid var(--line); border-radius: var(--radius-sm);
 }
+
+/* Badge list */
+.zw-badges { display: flex; flex-direction: column; gap: 12px; }
+.zw-badge-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.zw-badge-preview { flex-shrink: 0; line-height: 0; }
+.zw-badge-md { display: flex; gap: 8px; flex: 1; min-width: 220px; }
+.zw-badge-md .form-input { flex: 1; }
 
 /* Zenodo link */
 .zw-zenodo-link {

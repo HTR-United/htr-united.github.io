@@ -1,3 +1,6 @@
 env
-catalog.jsonnode_modules/
+catalog.json
+node_modules/
 dist/
+.vite/
+

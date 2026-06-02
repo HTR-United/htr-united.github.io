@@ -21,6 +21,7 @@ export default defineConfig({
         charter:  resolve(__dirname, 'src/data-reuse-charter.html'),
         share:    resolve(__dirname, 'src/share.html'),
         zenodo:   resolve(__dirname, 'src/zenodo.html'),
+        cite:     resolve(__dirname, 'src/cite.html'),
       }
     }
   }

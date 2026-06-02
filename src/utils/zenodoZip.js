@@ -20,7 +20,7 @@ export function unitDataPath(unit, orgLevels = 1) {
   return 'data/' + parts.join('/') + '/'
 }
 
-export async function generateZip(state) {
+export async function generateZip(state, badgeBlobs = []) {
   const zip = new JSZip()
   const projectSlug = slugify(state.title || 'dataset') || 'dataset'
 
@@ -28,6 +28,11 @@ export async function generateZip(state) {
   zip.file('README.md',       state._readmeOverride ?? generateReadme(state))
   zip.file('CITATION.CFF',    generateCff(state))
   zip.file('htr-united.yml',  generateHtrUnitedYml(state))
+
+  // Badge PNGs
+  for (const { filename, blob } of badgeBlobs) {
+    zip.file(filename, blob)
+  }
 
   // Data files per unit
   for (const unit of state.units) {

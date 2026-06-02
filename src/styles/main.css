@@ -507,6 +507,31 @@ mark { background: #f3e6a8; color: inherit; border-radius: 3px; padding: 0 1px; 
 }
 .tool-card__body p { font-size: 14.5px; line-height: 1.65; color: var(--ink-2); margin: 0 0 14px; }
 .tool-card__body a:not(.btn) { color: var(--accent); }
+.tool-card--featured {
+  border-color: var(--olive); background: var(--olive-tint-2);
+}
+.tool-card--featured .tool-card__image { background: var(--olive-tint); }
+
+/* ---- form step 3 locked state ---- */
+.step3-locked { opacity: 0.45; pointer-events: none; user-select: none; }
+.step3-hint {
+  font-size: 13px; color: var(--ink-3);
+  font-style: italic; margin: 0 0 8px;
+}
+
+/* ---- step badge ---- */
+.step-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--olive); color: #fff;
+  font-size: 12px; font-weight: 700; font-family: var(--sans);
+  flex-shrink: 0; margin-right: 10px; vertical-align: middle;
+}
+.step-heading {
+  display: flex; align-items: center;
+  margin: 0 0 16px;
+  font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--ink);
+}
 
 /* ---- team page ---- */
 .team-grid {

@@ -90,7 +90,13 @@ export function generateReadme(state) {
 
   lines.push(`# ${title || 'Dataset Title'}`)
   lines.push('')
-  lines.push(licenseBadge(license || 'CC-BY 4.0'))
+  const metricBadges = [
+    `![Characters](badges/characters.png)`,
+    `![Lines](badges/lines.png)`,
+    `![Regions](badges/regions.png)`,
+    `![XML Files](badges/files.png)`,
+  ]
+  lines.push([licenseBadge(license || 'CC-BY 4.0'), ...metricBadges].join(' '))
   lines.push('')
   lines.push('## Introduction')
   lines.push('')

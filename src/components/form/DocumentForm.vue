@@ -28,6 +28,9 @@
         <p style="font-size:12.5px;color:var(--ink-3);margin:16px 0 0">{{ $t('form.mandatory') }}</p>
       </div>
 
+      <!-- Step 1 marker -->
+      <p class="step-heading"><span class="step-badge">1</span>{{ $t('form.step1Title').replace(/^1\.\s*/, '') }}</p>
+
       <!-- Dataset info -->
       <div class="form-section">
         <h2>{{ $t('form.sectionDs') }}</h2>
@@ -95,7 +98,7 @@
                 {{ $t('form.fields.removeAuthor') }}
               </button>
             </div>
-            <div class="form-row">
+            <div class="form-row" style="grid-template-columns:1fr 1fr 1fr">
               <div class="form-group" style="margin-bottom:0">
                 <label class="form-label">{{ $t('form.fields.authorName') }}</label>
                 <input class="form-input" v-model="author.name">
@@ -103,6 +106,10 @@
               <div class="form-group" style="margin-bottom:0">
                 <label class="form-label">{{ $t('form.fields.authorSurname') }}</label>
                 <input class="form-input" v-model="author.surname">
+              </div>
+              <div class="form-group" style="margin-bottom:0">
+                <label class="form-label">ORCID</label>
+                <input class="form-input" v-model="author.orcid" placeholder="0000-0000-0000-0000" style="font-family:var(--mono);font-size:13px">
               </div>
             </div>
             <div class="form-group" style="margin-top:12px;margin-bottom:0">
@@ -265,23 +272,38 @@
 
       <!-- Output -->
       <div class="output-section">
-        <h2>{{ $t('form.sectionGenerate') }}</h2>
+        <p class="step-heading"><span class="step-badge">2</span>{{ $t('form.sectionGenerate') }}</p>
         <button class="btn btn--olive btn--lg" @click="generate" style="margin-bottom:16px">
           {{ $t('form.generateBtn') }}
         </button>
 
         <textarea class="output-area" readonly :value="output" rows="24"></textarea>
 
-        <div class="output-actions" v-if="output">
-          <button class="btn btn--ghost" @click="copyOutput">
-            {{ copied ? $t('form.copied') : $t('form.copyBtn') }}
-          </button>
-          <a class="btn btn--ghost" :href="downloadHref" :download="downloadFilename">
-            {{ $t('form.downloadBtn') }}
-          </a>
-          <a v-if="createFileUrl" class="btn btn--primary" :href="createFileUrl" target="_blank" rel="noopener">
-            {{ $t('form.newFile') }}
-          </a>
+        <div :class="{ 'step3-locked': !output }" style="margin-top:20px">
+          <p class="step-heading"><span class="step-badge">3</span>{{ $t('form.outputSteps') }}</p>
+          <template v-if="!output">
+            <p class="step3-hint">{{ $t('form.step3Locked') }}</p>
+          </template>
+          <template v-else>
+            <p style="font-size:13.5px;color:var(--ink-2);margin:0 0 10px">{{ $t('form.outputStep1') }}</p>
+            <div class="output-actions">
+              <button class="btn btn--ghost" @click="copyOutput">
+                {{ copied ? $t('form.copied') : $t('form.copyBtn') }}
+              </button>
+              <a class="btn btn--ghost" :href="downloadHref" :download="downloadFilename">
+                {{ $t('form.downloadBtn') }}
+              </a>
+            </div>
+            <p style="font-size:13.5px;color:var(--ink-2);margin:16px 0 10px">{{ $t('form.outputStep2') }}</p>
+            <div class="output-actions">
+              <a v-if="createFileUrl" class="btn btn--primary" :href="createFileUrl" target="_blank" rel="noopener">
+                {{ $t('form.newFile') }}
+              </a>
+              <a class="btn btn--ghost" href="https://github.com/HTR-United/htr-united/issues/new" target="_blank" rel="noopener">
+                {{ $t('form.newIssue') }}
+              </a>
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -312,7 +334,7 @@ const form = reactive({
   projectName:  '',
   projectLink:  '',
   software:     '',
-  authors: [{ name: '', surname: '', roles: [], isInstitution: false }],
+  authors: [{ name: '', surname: '', orcid: '', roles: [], isInstitution: false }],
   dateStart:    null,
   dateEnd:      null,
   languages:    [],
@@ -407,7 +429,7 @@ const metricOptions = computed(() => ({
 
 /* ---- authors ---- */
 function addAuthor() {
-  form.authors.push({ name: '', surname: '', roles: [], isInstitution: false })
+  form.authors.push({ name: '', surname: '', orcid: '', roles: [], isInstitution: false })
 }
 function removeAuthor(idx) {
   form.authors.splice(idx, 1)
@@ -446,6 +468,7 @@ function generate() {
       .map(a => ({
         ...(a.isInstitution ? { name: a.name || a.surname } : { name: a.name, surname: a.surname }),
         roles: a.roles,
+        ...(a.orcid ? { orcid: a.orcid } : {}),
         ...(a.isInstitution ? { isni: '' } : {}),
       })),
     institutions: [],
