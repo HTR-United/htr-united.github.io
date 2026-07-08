@@ -227,6 +227,22 @@
     "step3Title": "3. Ajouter au catalogue HTR-United",
     "step3Desc": "En créant un nouveau fichier à l'intérieur de notre dossier catalog/, en suivant le lien fourni après avoir généré les métadonnées.",
     "mandatory": "Les champs suivis d'un * sont obligatoires.",
+    "validation": {
+      "heading": "Merci de corriger les points suivants avant de générer :",
+      "title": "Le titre est obligatoire.",
+      "url": "Le lien vers le dépôt est obligatoire.",
+      "description": "La description est obligatoire.",
+      "license": "La licence est obligatoire.",
+      "languages": "Au moins une langue est obligatoire.",
+      "scripts": "Au moins un système d'écriture est obligatoire.",
+      "format": "Au moins un format de données est obligatoire.",
+      "software": "Le logiciel utilisé pour produire les données est obligatoire.",
+      "dates": "L'année de début et l'année de fin des sources sont obligatoires.",
+      "volume": "Au moins une métrique de quantité renseignée est obligatoire.",
+      "authorSurname": "Au moins un-e contributeur-rice avec un nom de famille est obligatoire.",
+      "authorRoles": "Au moins un rôle de contributeur-rice est obligatoire.",
+      "orcidFormat": "L'ORCID de {name} n'est pas correctement formaté (attendu : 0000-0000-0000-0000)."
+    },
     "sectionDs": "Informations générales sur le set de données",
     "sectionProject": "Informations générales sur le projet",
     "sectionData": "Informations générales sur les données",
@@ -257,6 +273,7 @@
       "roleQualityControl": "Contrôle Qualité",
       "roleDigitizer": "Numérisation",
       "roleSupport": "Assistance",
+      "roleDataProvider": "Fournisseur de données",
       "yearStart": "Année de début des sources",
       "yearEnd": "Année de fin des sources",
       "yearInfo": "Préférez, pour des données au siècle près, 1200 pour un début au 13e siècle et 1299 pour une fin au 13e siècle. Les dates n'ont pas besoin d'être précises.",
@@ -279,6 +296,7 @@
       "addSource": "Ajouter une source"
     },
     "handsOptions": {
+      "single": "1 pour l'ensemble du jeu de données",
       "1perfile": "1 par fichier",
       "1perfolder": "1 par dossier",
       "less10": "Inférieur ou égal à 10 (peu)",
@@ -301,6 +319,7 @@
       "pages": "Pages",
       "characters": "Caractères",
       "regions": "Zones",
+      "images": "Images",
       "files": "Fichiers XML"
     },
     "analyzePattern": "Filtre de fichiers",

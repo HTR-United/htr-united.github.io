@@ -227,6 +227,22 @@
     "step3Title": "3. Add to HTR-United",
     "step3Desc": "Create a new file inside our catalog/ folder, or paste the content in your own htr-united.yml file.",
     "mandatory": "Fields marked with * are required.",
+    "validation": {
+      "heading": "Please fix the following before generating:",
+      "title": "Title is required.",
+      "url": "Link to repository is required.",
+      "description": "Description is required.",
+      "license": "License is required.",
+      "languages": "At least one language is required.",
+      "scripts": "At least one script is required.",
+      "format": "At least one data format is required.",
+      "software": "Software used to produce the data is required.",
+      "dates": "Both source start-year and end-year are required.",
+      "volume": "At least one quantity metric with a value is required.",
+      "authorSurname": "At least one contributor with a last name is required.",
+      "authorRoles": "At least one contributor role is required.",
+      "orcidFormat": "ORCID for {name} is not correctly formatted (expected 0000-0000-0000-0000)."
+    },
     "sectionDs": "General information about the dataset",
     "sectionProject": "General information about the project",
     "sectionData": "General information about the data",
@@ -257,6 +273,7 @@
       "roleQualityControl": "Quality Control",
       "roleDigitizer": "Digitization",
       "roleSupport": "Support",
+      "roleDataProvider": "Data Provider",
       "yearStart": "Source Start-Year",
       "yearEnd": "Source End-Year",
       "yearInfo": "For centuries, please prefer the use of 1200 when a dataset starts in the 13th century and 1299 when it ends in the 13th century. Dates do not need to be precise.",
@@ -279,6 +296,7 @@
       "addSource": "Add a source"
     },
     "handsOptions": {
+      "single": "1 for the whole dataset",
       "1perfile": "1 per file",
       "1perfolder": "1 per folder",
       "less10": "Less than or equal to 10 (few)",
@@ -301,6 +319,7 @@
       "pages": "Pages",
       "characters": "Characters",
       "regions": "Zones",
+      "images": "Images",
       "files": "XML Files"
     },
     "analyzePattern": "File pattern",

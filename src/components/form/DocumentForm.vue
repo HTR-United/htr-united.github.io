@@ -36,19 +36,19 @@
         <h2>{{ $t('form.sectionDs') }}</h2>
         <div class="form-group">
           <label class="form-label">{{ $t('form.fields.title') }} <span class="req">*</span></label>
-          <input class="form-input" v-model="form.title" :placeholder="$t('form.fields.title')">
+          <input class="form-input" v-model="form.title" :placeholder="$t('form.fields.title')" data-testid="title">
         </div>
         <div class="form-group">
           <label class="form-label">{{ $t('form.fields.url') }} <span class="req">*</span></label>
-          <input class="form-input" v-model="form.url" placeholder="https://github.com/...">
+          <input class="form-input" v-model="form.url" placeholder="https://github.com/..." data-testid="url">
         </div>
         <div class="form-group">
-          <label class="form-label">{{ $t('form.fields.desc') }}</label>
-          <textarea class="form-input" rows="3" v-model="form.description"></textarea>
+          <label class="form-label">{{ $t('form.fields.desc') }} <span class="req">*</span></label>
+          <textarea class="form-input" rows="3" v-model="form.description" data-testid="description"></textarea>
         </div>
         <div class="form-group">
           <label class="form-label">{{ $t('form.fields.license') }} <span class="req">*</span></label>
-          <select class="form-input form-select" v-model="form.license">
+          <select class="form-input form-select" v-model="form.license" data-testid="license">
             <option value="">—</option>
             <option value="CC-BY 4.0">CC-BY 4.0</option>
             <option value="CC-BY-SA 4.0">CC-BY-SA 4.0</option>
@@ -62,8 +62,9 @@
           <p class="form-help">{{ $t('form.fields.cffInfo') }}</p>
         </div>
         <div class="form-group">
-          <label class="form-label">{{ $t('form.fields.format') }}</label>
-          <select multiple v-model="form.formats" class="form-input form-select" size="3">
+          <label class="form-label">{{ $t('form.fields.format') }} <span class="req">*</span></label>
+          <select v-model="form.format" class="form-input form-select" data-testid="format">
+            <option value="">—</option>
             <option v-for="fmt in formats" :key="fmt.value" :value="fmt.value">{{ fmt.label }}</option>
           </select>
         </div>
@@ -101,29 +102,29 @@
             <div class="form-row" style="grid-template-columns:1fr 1fr 1fr">
               <div class="form-group" style="margin-bottom:0">
                 <label class="form-label">{{ $t('form.fields.authorName') }}</label>
-                <input class="form-input" v-model="author.name">
+                <input class="form-input" v-model="author.name" :data-testid="`author-name-${idx}`">
               </div>
               <div class="form-group" style="margin-bottom:0">
                 <label class="form-label">{{ $t('form.fields.authorSurname') }}</label>
-                <input class="form-input" v-model="author.surname">
+                <input class="form-input" v-model="author.surname" :data-testid="`author-surname-${idx}`">
               </div>
               <div class="form-group" style="margin-bottom:0">
                 <label class="form-label">ORCID</label>
-                <input class="form-input" v-model="author.orcid" placeholder="0000-0000-0000-0000" style="font-family:var(--mono);font-size:13px">
+                <input class="form-input" v-model="author.orcid" placeholder="0000-0000-0000-0000" style="font-family:var(--mono);font-size:13px" :data-testid="`author-orcid-${idx}`">
               </div>
             </div>
             <div class="form-group" style="margin-top:12px;margin-bottom:0">
               <label class="form-label">{{ $t('form.fields.roles') }}</label>
               <div class="checkbox-grid">
                 <label v-for="role in authorRoles" :key="role.value" class="checkbox-item">
-                  <input type="checkbox" :value="role.value" v-model="author.roles">
-                  {{ $t('form.fields.role' + capitalize(role.value)) }}
+                  <input type="checkbox" :value="role.value" v-model="author.roles" :data-testid="`author-role-${idx}-${role.value}`">
+                  {{ $t('form.fields.' + role.labelKey) }}
                 </label>
               </div>
             </div>
             <div class="form-group" style="margin-top:10px;margin-bottom:0">
               <label class="checkbox-item">
-                <input type="checkbox" v-model="author.isInstitution">
+                <input type="checkbox" v-model="author.isInstitution" :data-testid="`author-institution-${idx}`">
                 {{ $t('form.fields.authorIsInstitution') }}
               </label>
             </div>
@@ -135,8 +136,8 @@
 
         <!-- Software -->
         <div class="form-group">
-          <label class="form-label">{{ $t('form.fields.software') }}</label>
-          <input class="form-input" v-model="form.software" placeholder="eScriptorium, Kraken, Transkribus…">
+          <label class="form-label">{{ $t('form.fields.software') }} <span class="req">*</span></label>
+          <input class="form-input" v-model="form.software" placeholder="eScriptorium, Kraken, Transkribus…" data-testid="software">
           <div class="tag-selector" style="margin-top:8px">
             <button v-for="sw in commonSoftware" :key="sw" class="tag-btn" :class="{ 'is-on': form.software === sw }" @click="form.software = sw">{{ sw }}</button>
           </div>
@@ -146,24 +147,25 @@
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">{{ $t('form.fields.yearStart') }} <span class="req">*</span></label>
-            <input class="form-input" type="number" v-model.number="form.dateStart" placeholder="1200">
+            <input class="form-input" type="number" v-model.number="form.dateStart" placeholder="1200" data-testid="date-start">
           </div>
           <div class="form-group">
             <label class="form-label">{{ $t('form.fields.yearEnd') }} <span class="req">*</span></label>
-            <input class="form-input" type="number" v-model.number="form.dateEnd" placeholder="1299">
+            <input class="form-input" type="number" v-model.number="form.dateEnd" placeholder="1299" data-testid="date-end">
           </div>
         </div>
         <p class="form-help">{{ $t('form.fields.yearInfo') }}</p>
 
         <!-- Languages -->
         <div class="form-group">
-          <label class="form-label">{{ $t('form.fields.languages') }}</label>
-          <input class="form-input" v-model="langSearch" :placeholder="$t('form.fields.languages')" @keydown.enter.prevent="addLanguage(langSearch)">
+          <label class="form-label">{{ $t('form.fields.languages') }} <span class="req">*</span></label>
+          <input class="form-input" v-model="langSearch" :placeholder="$t('form.fields.languages')" @keydown.enter.prevent="addLanguage(langSearch)" data-testid="lang-search">
           <div v-if="langSearch.length > 1" style="border:1px solid var(--line-2);border-top:none;border-radius:0 0 8px 8px;background:var(--surface);max-height:180px;overflow-y:auto">
             <div v-for="opt in filteredLanguages" :key="opt.value"
               style="padding:8px 13px;cursor:pointer;font-size:13.5px"
               @mousedown.prevent="selectLanguage(opt)"
               :style="{ background: form.languages.includes(opt.value) ? 'var(--olive-tint-2)' : '' }"
+              :data-testid="`lang-option-${opt.value}`"
             >{{ opt.label }} <span style="color:var(--ink-3);font-size:12px">({{ opt.value }})</span></div>
           </div>
           <div class="tag-selector" style="margin-top:8px">
@@ -175,13 +177,14 @@
 
         <!-- Scripts -->
         <div class="form-group">
-          <label class="form-label">{{ $t('form.fields.scripts') }}</label>
-          <input class="form-input" v-model="scriptSearch" :placeholder="$t('form.fields.scripts')" @keydown.enter.prevent>
+          <label class="form-label">{{ $t('form.fields.scripts') }} <span class="req">*</span></label>
+          <input class="form-input" v-model="scriptSearch" :placeholder="$t('form.fields.scripts')" @keydown.enter.prevent data-testid="script-search">
           <div v-if="scriptSearch.length > 1" style="border:1px solid var(--line-2);border-top:none;border-radius:0 0 8px 8px;background:var(--surface);max-height:180px;overflow-y:auto">
             <div v-for="opt in filteredScripts" :key="opt.value"
               style="padding:8px 13px;cursor:pointer;font-size:13.5px"
               @mousedown.prevent="selectScript(opt)"
               :style="{ background: form.scripts.includes(opt.value) ? 'var(--olive-tint-2)' : '' }"
+              :data-testid="`script-option-${opt.value}`"
             >{{ opt.label }} <span style="color:var(--ink-3);font-size:12px">({{ opt.value }})</span></div>
           </div>
           <div class="tag-selector" style="margin-top:8px">
@@ -194,7 +197,7 @@
         <!-- Script type -->
         <div class="form-group">
           <label class="form-label">{{ $t('form.fields.scriptType') }}</label>
-          <select class="form-input form-select" v-model="form.scriptType">
+          <select class="form-input form-select" v-model="form.scriptType" data-testid="script-type">
             <option v-for="(label, val) in scriptTypeOptions" :key="val" :value="val">{{ label }}</option>
           </select>
         </div>
@@ -208,13 +211,13 @@
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">{{ $t('form.fields.hands') }}</label>
-            <select class="form-input form-select" v-model="form.handsCount">
+            <select class="form-input form-select" v-model="form.handsCount" data-testid="hands-count">
               <option v-for="(label, val) in handsOptions" :key="val" :value="val">{{ label }}</option>
             </select>
           </div>
           <div class="form-group">
             <label class="form-label">{{ $t('form.fields.precision') }}</label>
-            <select class="form-input form-select" v-model="form.handsPrecision">
+            <select class="form-input form-select" v-model="form.handsPrecision" data-testid="hands-precision">
               <option v-for="(label, val) in precisionOptions" :key="val" :value="val">{{ label }}</option>
             </select>
           </div>
@@ -232,12 +235,12 @@
 
         <!-- Volume metrics -->
         <div class="form-group">
-          <label class="form-label">{{ $t('form.fields.quantities') }}</label>
+          <label class="form-label">{{ $t('form.fields.quantities') }} <span class="req">*</span></label>
           <div v-for="(metric, idx) in form.metrics" :key="idx" class="metric-row">
-            <select class="form-input form-select" style="flex:0 0 160px" v-model="metric.type">
+            <select class="form-input form-select" style="flex:0 0 160px" v-model="metric.type" :data-testid="`metric-type-${idx}`">
               <option v-for="(label, val) in metricOptions" :key="val" :value="val">{{ label }}</option>
             </select>
-            <input class="form-input" type="number" v-model.number="metric.count" placeholder="0">
+            <input class="form-input" type="number" v-model.number="metric.count" placeholder="0" :data-testid="`metric-count-${idx}`">
             <button class="btn btn--ghost" style="padding:8px 10px" @click="removeMetric(idx)">×</button>
           </div>
           <button class="add-row-btn" @click="addMetric">+ {{ $t('form.fields.addMetric') }}</button>
@@ -273,11 +276,18 @@
       <!-- Output -->
       <div class="output-section">
         <p class="step-heading"><span class="step-badge">2</span>{{ $t('form.sectionGenerate') }}</p>
-        <button class="btn btn--olive btn--lg" @click="generate" style="margin-bottom:16px">
+        <button class="btn btn--olive btn--lg" @click="generate" style="margin-bottom:16px" data-testid="generate-btn">
           {{ $t('form.generateBtn') }}
         </button>
 
-        <textarea class="output-area" readonly :value="output" rows="24"></textarea>
+        <div v-if="validationErrors.length" class="form-section" style="background:var(--red-tint-2,#fdecea);border-color:var(--red-tint,#f5c2c0);margin-bottom:16px" data-testid="validation-errors">
+          <strong>{{ $t('form.validation.heading') }}</strong>
+          <ul style="margin:8px 0 0;padding-left:20px">
+            <li v-for="(err, idx) in validationErrors" :key="idx">{{ err }}</li>
+          </ul>
+        </div>
+
+        <textarea class="output-area" readonly :value="output" rows="24" data-testid="output"></textarea>
 
         <div :class="{ 'step3-locked': !output }" style="margin-top:20px">
           <p class="step-heading"><span class="step-badge">3</span>{{ $t('form.outputSteps') }}</p>
@@ -330,7 +340,7 @@ const form = reactive({
   description:  '',
   license:      '',
   cff:          '',
-  formats:      [],
+  format:       '',
   projectName:  '',
   projectLink:  '',
   software:     '',
@@ -340,7 +350,7 @@ const form = reactive({
   languages:    [],
   scripts:      [],
   scriptType:   'only-manuscript',
-  handsCount:   '1perfile',
+  handsCount:   '1-per-file',
   handsPrecision: 'exact',
   guidelines:   '',
   metrics:      [{ type: 'lines', count: null }],
@@ -394,8 +404,13 @@ const formats = [
 const commonSoftware = ['eScriptorium + Kraken', 'Transkribus', 'Kraken', 'Tesseract', 'OCRopy']
 
 const authorRoles = [
-  { value: 'transcriber' }, { value: 'aligner' }, { value: 'mainCreator' },
-  { value: 'qualityControl' }, { value: 'digitizer' }, { value: 'support' }
+  { value: 'transcriber',     labelKey: 'roleTranscriber' },
+  { value: 'aligner',         labelKey: 'roleAligner' },
+  { value: 'project-manager', labelKey: 'roleMainCreator' },
+  { value: 'quality-control', labelKey: 'roleQualityControl' },
+  { value: 'digitization',    labelKey: 'roleDigitizer' },
+  { value: 'support',         labelKey: 'roleSupport' },
+  { value: 'data-provider',   labelKey: 'roleDataProvider' },
 ]
 
 const scriptTypeOptions = computed(() => ({
@@ -407,11 +422,12 @@ const scriptTypeOptions = computed(() => ({
 }))
 
 const handsOptions = computed(() => ({
-  '1perfile':  t('form.handsOptions.1perfile'),
-  '1perfolder':t('form.handsOptions.1perfolder'),
-  'less10':    t('form.handsOptions.less10'),
-  'more10':    t('form.handsOptions.more10'),
-  'unknown':   t('form.handsOptions.unknown'),
+  '1':             t('form.handsOptions.single'),
+  '1-per-file':    t('form.handsOptions.1perfile'),
+  '1-per-folder':  t('form.handsOptions.1perfolder'),
+  'less-than-11':  t('form.handsOptions.less10'),
+  'more-than-10':  t('form.handsOptions.more10'),
+  'unknown':       t('form.handsOptions.unknown'),
 }))
 
 const precisionOptions = computed(() => ({
@@ -424,6 +440,7 @@ const metricOptions = computed(() => ({
   'pages':      t('form.metricOptions.pages'),
   'characters': t('form.metricOptions.characters'),
   'regions':    t('form.metricOptions.regions'),
+  'images':     t('form.metricOptions.images'),
   'files':      t('form.metricOptions.files'),
 }))
 
@@ -448,8 +465,9 @@ function applyMetrics({ metrics, characters }) {
 }
 
 /* ---- YAML generation ---- */
-const output  = ref('')
-const copied  = ref(false)
+const output           = ref('')
+const copied            = ref(false)
+const validationErrors  = ref([])
 
 const LICENSES = {
   'CC-BY 4.0':     'https://creativecommons.org/licenses/by/4.0/',
@@ -458,36 +476,97 @@ const LICENSES = {
   'ODbL 1.0':      'https://opendatacommons.org/licenses/odbl/1-0/',
 }
 
+const ORCID_RE = /^\d{4}-\d{4}-\d{4}-[0-9]{3}[0-9X]$/
+
+function normalizeOrcid(raw) {
+  return (raw || '').trim().replace(/^https?:\/\/(www\.)?orcid\.org\//i, '')
+}
+
+// Institutions have no `surname` in the schema, so route them to the
+// separate `institutions` array instead of `authors`.
+function buildAuthorsAndInstitutions() {
+  const authors = []
+  const institutions = []
+  form.authors.forEach(a => {
+    if (a.isInstitution) {
+      const name = (a.name || a.surname || '').trim()
+      if (!name) return
+      institutions.push({ name, ...(a.roles.length ? { roles: a.roles } : {}) })
+    } else {
+      const surname = (a.surname || '').trim()
+      if (!surname) return
+      authors.push({
+        surname,
+        ...(a.name ? { name: a.name } : {}),
+        ...(a.roles.length ? { roles: a.roles } : {}),
+        ...(a.orcid ? { orcid: normalizeOrcid(a.orcid) } : {}),
+      })
+    }
+  })
+  return { authors, institutions }
+}
+
+function validate() {
+  const errors = []
+  if (!form.title.trim()) errors.push(t('form.validation.title'))
+  if (!form.url.trim()) errors.push(t('form.validation.url'))
+  if (!form.description.trim()) errors.push(t('form.validation.description'))
+  if (!form.license) errors.push(t('form.validation.license'))
+  if (form.languages.length === 0) errors.push(t('form.validation.languages'))
+  if (form.scripts.length === 0) errors.push(t('form.validation.scripts'))
+  if (!form.format) errors.push(t('form.validation.format'))
+  if (!form.software.trim()) errors.push(t('form.validation.software'))
+  if (form.dateStart === null || form.dateStart === '' || form.dateEnd === null || form.dateEnd === '') {
+    errors.push(t('form.validation.dates'))
+  }
+  if (!form.metrics.some(m => m.count !== null && m.count !== '')) errors.push(t('form.validation.volume'))
+
+  const { authors, institutions } = buildAuthorsAndInstitutions()
+  if (authors.length === 0 && institutions.length === 0) errors.push(t('form.validation.authorSurname'))
+  if (![...authors, ...institutions].some(a => a.roles && a.roles.length > 0)) errors.push(t('form.validation.authorRoles'))
+
+  form.authors.forEach(a => {
+    const orcid = normalizeOrcid(a.orcid)
+    if (orcid && !ORCID_RE.test(orcid)) {
+      errors.push(t('form.validation.orcidFormat', { name: `${a.name} ${a.surname}`.trim() || '—' }))
+    }
+  })
+
+  return errors
+}
+
 function generate() {
+  const errors = validate()
+  validationErrors.value = errors
+  if (errors.length) {
+    output.value = ''
+    return
+  }
+
+  const { authors, institutions } = buildAuthorsAndInstitutions()
+
   const doc = {
-    'schema-location': 'https://htr-united.github.io/schema/2023-06-27/schema.json',
-    title: form.title || 'Untitled',
-    url:   form.url || '',
-    authors: form.authors
-      .filter(a => a.name || a.surname)
-      .map(a => ({
-        ...(a.isInstitution ? { name: a.name || a.surname } : { name: a.name, surname: a.surname }),
-        roles: a.roles,
-        ...(a.orcid ? { orcid: a.orcid } : {}),
-        ...(a.isInstitution ? { isni: '' } : {}),
-      })),
-    institutions: [],
+    schema: 'https://htr-united.github.io/schema/2023-06-27/schema.json',
+    title: form.title,
+    url:   form.url,
+    authors,
+    institutions,
     description: form.description,
     'project-name': form.projectName || undefined,
     'project-website': form.projectLink || undefined,
     language: form.languages,
-    script: form.scripts,
+    script: form.scripts.map(s => ({ iso: s })),
     'script-type': form.scriptType,
-    'production-software': form.software || undefined,
+    'production-software': form.software,
     time: {
-      notBefore: form.dateStart !== null ? String(form.dateStart) : '',
-      notAfter:  form.dateEnd   !== null ? String(form.dateEnd)   : '',
+      notBefore: String(form.dateStart),
+      notAfter:  String(form.dateEnd),
     },
     hands: { count: form.handsCount, precision: form.handsPrecision },
     'transcription-guidelines': form.guidelines || undefined,
     volume: form.metrics
       .filter(m => m.count !== null && m.count !== '')
-      .map(m => ({ metric: m.type, count: String(m.count), scope: 'document' })),
+      .map(m => ({ metric: m.type, count: Number(m.count) })),
     'automatically-aligned': form.autoAligned,
     ...(() => {
       const hasMembers = form.characters?.members?.length > 0
@@ -499,10 +578,8 @@ function generate() {
         }
       }
     })(),
-    license: form.license
-      ? [{ name: form.license, url: LICENSES[form.license] || '' }]
-      : [],
-    format: form.formats,
+    license: { name: form.license, url: LICENSES[form.license] || '' },
+    format: form.format,
     ...(form.cff ? { 'citation-file-link': form.cff } : {}),
   }
 
@@ -536,7 +613,4 @@ async function copyOutput() {
   } catch { /* fallback: select textarea */ }
 }
 
-function capitalize(s) {
-  return s.charAt(0).toUpperCase() + s.slice(1)
-}
 </script>
