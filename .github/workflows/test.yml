@@ -1,0 +1,45 @@
+name: Tests
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+
+jobs:
+  document-form-e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install JS dependencies
+        run: npm ci
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: tests/requirements.txt
+
+      - name: Install Python test dependencies
+        run: |
+          python -m venv env
+          env/bin/pip install --upgrade pip
+          env/bin/pip install -r tests/requirements.txt
+
+      - name: Install Playwright browser
+        run: env/bin/playwright install --with-deps chromium
+
+      - name: Start dev server
+        run: |
+          npm run dev -- --port 5173 &
+          timeout 30 bash -c 'until curl -sf http://localhost:5173 >/dev/null; do sleep 1; done'
+
+      - name: Run tests
+        run: env/bin/python -m pytest tests/ -v

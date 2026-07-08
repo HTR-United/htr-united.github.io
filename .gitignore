@@ -3,4 +3,4 @@ catalog.json
 node_modules/
 dist/
 .vite/
-
+__pycache__
