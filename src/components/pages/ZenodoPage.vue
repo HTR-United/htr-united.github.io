@@ -270,7 +270,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch } from 'vue'
+import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import jsyaml from 'js-yaml'
 import TopBar from '../TopBar.vue'
@@ -278,6 +278,7 @@ import AppFooter from '../AppFooter.vue'
 import UnitCard from '../zenodo/UnitCard.vue'
 import { generateReadme, generateCff } from '../../utils/readmeGenerator.js'
 import { generateZip, downloadBlob } from '../../utils/zenodoZip.js'
+import { installGlobalDropGuard } from '../../utils/dropFiles.js'
 import { renderGfm } from '../../utils/markdown.js'
 import StatsChart from '../zenodo/StatsChart.vue'
 
@@ -288,6 +289,12 @@ const zipping  = ref(false)
 const copied   = ref(false)
 const yamlInput      = ref(null)
 const importedFrom   = ref('')
+
+// Without this, a folder dropped anywhere but a unit's dropzone makes the
+// browser navigate to file:/// (a security error) instead of doing nothing.
+let removeDropGuard = null
+onMounted(() => { removeDropGuard = installGlobalDropGuard() })
+onUnmounted(() => { removeDropGuard?.() })
 
 const PREFIX_OPTIONS = computed(() => [
   { value: 'language',  label: t('zenodo.prefixLanguage') },

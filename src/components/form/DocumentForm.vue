@@ -323,15 +323,22 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import jsyaml from 'js-yaml'
 import TopBar from '../TopBar.vue'
 import AppFooter from '../AppFooter.vue'
 import LocalAnalyzer from './LocalAnalyzer.vue'
+import { installGlobalDropGuard } from '../../utils/dropFiles.js'
 import { languages as ALL_LANGUAGES, scripts as ALL_SCRIPTS } from '../../data/formConsts.js'
 
 const { t } = useI18n()
+
+// Without this, a folder dropped anywhere but the analyzer's dropzone makes the
+// browser navigate to file:/// (a security error) instead of doing nothing.
+let removeDropGuard = null
+onMounted(() => { removeDropGuard = installGlobalDropGuard() })
+onUnmounted(() => { removeDropGuard?.() })
 
 /* ---- form state ---- */
 const form = reactive({

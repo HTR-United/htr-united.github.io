@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<alto xmlns="http://www.loc.gov/standards/alto/ns-v4#">
+  <Layout>
+    <Page ID="P2" WIDTH="1000" HEIGHT="1400">
+      <PrintSpace>
+        <TextBlock ID="tb1" TYPE="MainZone">
+          <TextLine ID="tl1" TYPE="DefaultLine">
+            <String CONTENT="troisieme ligne"/>
+          </TextLine>
+        </TextBlock>
+      </PrintSpace>
+    </Page>
+  </Layout>
+</alto>

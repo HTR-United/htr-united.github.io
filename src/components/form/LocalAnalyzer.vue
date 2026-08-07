@@ -65,6 +65,7 @@
     >
       <input
         ref="fileInput"
+        data-testid="la-folder-input"
         type="file"
         webkitdirectory
         multiple
@@ -84,6 +85,14 @@
     <div v-if="analyzing" class="la-progress">
       <div class="la-progress__bar" :style="{ width: progressPct + '%' }"></div>
       <span class="la-progress__label">{{ $t('form.analyzeProgress', { done, total }) }}</span>
+    </div>
+
+    <!-- Nothing usable was dropped/selected -->
+    <div v-if="noMatch" class="la-errors" data-testid="la-nomatch">
+      <template v-if="noMatch.received">
+        {{ $t('form.analyzeNoMatch', { received: noMatch.received, pattern: pattern || '*.xml' }) }}
+      </template>
+      <template v-else>{{ $t('form.analyzeNoFiles') }}</template>
     </div>
 
     <!-- Results -->
@@ -161,6 +170,7 @@
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { analyzeFiles, charLabel, sortedCharFreq, NORM_MODES } from '../../utils/xmlAnalyzer.js'
+import { filesFromDropEvent } from '../../utils/dropFiles.js'
 
 const { t } = useI18n()
 const emit = defineEmits(['apply'])
@@ -173,6 +183,7 @@ const done         = ref(0)
 const total        = ref(0)
 const showAllChars = ref(false)
 const applied      = ref(false)
+const noMatch      = ref(null)
 const pattern       = ref('*.xml')
 const ignorePattern = ref('.*, Thumbs.db, desktop.ini')
 const normMode      = ref('NFKC')
@@ -209,15 +220,26 @@ const displayedChars = computed(() => {
 
 /* ── run analysis ── */
 async function run(fileList) {
-  if (!fileList || fileList.length === 0) return
   result.value  = null
   applied.value = false
+  noMatch.value = null
+  const received = fileList ? Array.from(fileList) : []
+  if (!received.length) {
+    noMatch.value = { received: 0 }
+    return
+  }
   analyzing.value = true
   done.value = 0
   const matcher       = buildMatcher(pattern.value || '*.xml')
   const ignoreMatcher = buildMatcher(ignorePattern.value)
-  const keep = (f) => matcher(f.name) && !ignoreMatcher(f.name)
-  total.value = Array.from(fileList).filter(keep).length
+  // analyzeFiles calls the matcher with a *filename*, not a File.
+  const keep = (name) => matcher(name) && !ignoreMatcher(name)
+  total.value = received.filter(f => keep(f.name)).length
+  if (!total.value) {
+    analyzing.value = false
+    noMatch.value = { received: received.length }
+    return
+  }
 
   try {
     result.value = await analyzeFiles(
@@ -233,27 +255,9 @@ async function run(fileList) {
 
 function onPick(e) { run(e.target.files) }
 
-function onDrop(e) {
+async function onDrop(e) {
   dragging.value = false
-  const files = []
-  const collect = (entry) => new Promise(resolve => {
-    if (entry.isFile) {
-      entry.file(f => { files.push(f); resolve() })
-    } else if (entry.isDirectory) {
-      const reader = entry.createReader()
-      const readAll = () => reader.readEntries(entries => {
-        if (!entries.length) return resolve()
-        Promise.all(entries.map(collect)).then(readAll)
-      })
-      readAll()
-    } else resolve()
-  })
-  const items = Array.from(e.dataTransfer.items || [])
-  if (items.length && items[0].webkitGetAsEntry) {
-    Promise.all(items.map(i => collect(i.webkitGetAsEntry()))).then(() => run(files))
-  } else {
-    run(e.dataTransfer.files)
-  }
+  run(await filesFromDropEvent(e))
 }
 
 /* ── apply to form ── */
@@ -279,6 +283,7 @@ function applyToForm() {
 function reset() {
   result.value = null
   applied.value = false
+  noMatch.value = null
   if (fileInput.value) fileInput.value.value = ''
 }
 

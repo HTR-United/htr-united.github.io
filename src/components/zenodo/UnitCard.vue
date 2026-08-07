@@ -78,9 +78,10 @@
         @dragover.prevent="dragging = true"
         @dragleave="dragging = false"
         @drop.prevent="onDrop"
-        @click="fileInput.click()"
       >
-        <input ref="fileInput" type="file" multiple style="display:none" @change="onPick">
+        <input ref="fileInput" data-testid="unit-file-input" type="file" multiple style="display:none" @change="onPick">
+        <!-- webkitdirectory needs its own input: one input cannot offer both modes -->
+        <input ref="folderInput" data-testid="unit-folder-input" type="file" webkitdirectory multiple style="display:none" @change="onPick">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
           style="width:28px;height:28px;color:var(--ink-3);flex-shrink:0">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -89,7 +90,21 @@
         <div>
           <strong style="font-size:13.5px;color:var(--ink)">{{ $t('zenodo.dropFiles') }}</strong>
           <span style="display:block;font-size:12px;color:var(--ink-3)">{{ $t('zenodo.dropFilesHint') }}</span>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+            <button class="btn btn--ghost" style="padding:4px 10px;font-size:12px" @click.stop="folderInput.click()">
+              {{ $t('zenodo.pickFolder') }}
+            </button>
+            <button class="btn btn--ghost" style="padding:4px 10px;font-size:12px" @click.stop="fileInput.click()">
+              {{ $t('zenodo.pickFiles') }}
+            </button>
+          </div>
         </div>
+      </div>
+
+      <!-- Nothing usable was dropped/selected -->
+      <div v-if="noMatch" class="unit-nomatch" data-testid="unit-nomatch">
+        <template v-if="noMatch.received">{{ $t('zenodo.noXmlFound', { received: noMatch.received }) }}</template>
+        <template v-else>{{ $t('zenodo.noFilesReceived') }}</template>
       </div>
 
       <!-- Analyzing -->
@@ -141,6 +156,7 @@ import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { analyzeFiles } from '../../utils/xmlAnalyzer.js'
 import { autoSlug } from '../../utils/zenodoZip.js'
+import { filesFromDropEvent } from '../../utils/dropFiles.js'
 
 const { t } = useI18n()
 const props = defineProps({
@@ -152,8 +168,10 @@ const props = defineProps({
 const emit = defineEmits(['update', 'remove'])
 
 const fileInput     = ref(null)
+const folderInput   = ref(null)
 const dragging      = ref(false)
 const analyzing     = ref(false)
+const noMatch       = ref(null)
 const ignorePattern = ref('.*, Thumbs.db, desktop.ini')
 
 function buildIgnoreMatcher(raw) {
@@ -187,12 +205,21 @@ const xmlCount = computed(() =>
 )
 
 async function addFiles(list) {
+  noMatch.value = null
+  const received = list ? Array.from(list) : []
+  if (!received.length) {
+    noMatch.value = { received: 0 }
+    return
+  }
   const ignoreMatcher = buildIgnoreMatcher(ignorePattern.value)
-  const incoming = Array.from(list).filter(f => !ignoreMatcher(f.name))
+  const incoming = received.filter(f => !ignoreMatcher(f.name))
   const all = [...(props.unit.files || []), ...incoming]
   emit('update', { files: all })
   const xmlFiles = all.filter(f => f.name.toLowerCase().endsWith('.xml'))
-  if (!xmlFiles.length) return
+  if (!xmlFiles.length) {
+    noMatch.value = { received: received.length }
+    return
+  }
   analyzing.value = true
   try {
     const result = await analyzeFiles(xmlFiles)
@@ -207,11 +234,16 @@ async function addFiles(list) {
   }
 }
 
-function onPick(e) { addFiles(e.target.files) }
-function onDrop(e) { dragging.value = false; addFiles(e.dataTransfer.files) }
+function onPick(e) { addFiles(e.target.files); e.target.value = '' }
+async function onDrop(e) {
+  dragging.value = false
+  addFiles(await filesFromDropEvent(e))
+}
 function clearFiles() {
+  noMatch.value = null
   emit('update', { files: [], stats: { lines: 0, chars: 0, regions: 0, files: 0 } })
   if (fileInput.value) fileInput.value.value = ''
+  if (folderInput.value) folderInput.value.value = ''
 }
 function updateStat(key, val) {
   emit('update', { stats: { ...props.unit.stats, [key]: Number(val) || 0 } })
@@ -237,6 +269,10 @@ function fmt(n) { return (n || 0).toLocaleString() }
 .unit-card__path { font-family: var(--mono); font-size: 12px; color: var(--olive-deep); }
 .unit-card__body { padding: 20px; display: flex; flex-direction: column; gap: 0; }
 .unit-drop { padding: 16px 18px; margin-top: 8px; }
+.unit-nomatch {
+  margin-top: 10px; padding: 9px 13px; border-radius: var(--radius-sm);
+  background: var(--rose-bg); color: var(--rose-ink); font-size: 12.5px;
+}
 .unit-files { margin-top: 12px; }
 .unit-files__summary { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13px; color: var(--ink-2); margin-bottom: 10px; }
 .unit-files__count { font-weight: 700; color: var(--ink); }

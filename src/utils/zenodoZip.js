@@ -1,5 +1,6 @@
 import JSZip from 'jszip'
 import { generateReadme, generateCff, generateHtrUnitedYml } from './readmeGenerator.js'
+import { safeRelPath } from './dropFiles.js'
 
 function slugify(str) {
   return str.toLowerCase()
@@ -20,6 +21,15 @@ export function unitDataPath(unit, orgLevels = 1) {
   return 'data/' + parts.join('/') + '/'
 }
 
+/** Number of leading directory segments shared by every path (never the filename). */
+function commonRootDepth(paths) {
+  if (paths.length < 1) return 0
+  const dirs = paths.map(p => p.split('/').slice(0, -1))
+  let depth = 0
+  while (dirs.every(d => d.length > depth && d[depth] === dirs[0][depth])) depth++
+  return depth
+}
+
 export async function generateZip(state, badgeBlobs = []) {
   const zip = new JSZip()
   const projectSlug = slugify(state.title || 'dataset') || 'dataset'
@@ -37,10 +47,16 @@ export async function generateZip(state, badgeBlobs = []) {
   // Data files per unit
   for (const unit of state.units) {
     const basePath = unitDataPath(unit, state.orgLevels)
-    for (const file of (unit.files || [])) {
+    const files    = unit.files || []
+    // Keep the folder hierarchy (flattening to file.name would let same-named
+    // files in different subfolders overwrite each other), but drop the
+    // directory the user happened to drop, so paths start at the unit root.
+    const strip = commonRootDepth(files.map(safeRelPath))
+    for (const file of files) {
       try {
         const buffer = await file.arrayBuffer()
-        zip.file(basePath + file.name, buffer)
+        const relative = safeRelPath(file).split('/').slice(strip).join('/')
+        zip.file(basePath + relative, buffer)
       } catch (e) {
         console.warn('Could not read file', file.name, e)
       }
