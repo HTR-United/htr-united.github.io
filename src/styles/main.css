@@ -82,6 +82,10 @@ a:hover { color: var(--accent-deep); text-decoration: underline; }
 .brand svg { width: 18px; height: 18px; opacity: .6; }
 .brand:hover { text-decoration: none; color: var(--ink); }
 
+.brand_gh{
+  margin-left: -0.5em;
+}
+
 .nav { display: flex; gap: 2px; flex: 1; flex-wrap: wrap; }
 .nav a {
   display: flex; align-items: center; gap: 6px;
